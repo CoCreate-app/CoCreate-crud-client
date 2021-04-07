@@ -14,7 +14,11 @@
       }
       const commonFunc = require("@cocreate/socket-client/src/common-fun.js")
       const utils = require("./utils.crud.js")
-      module.exports = factory(wnd, commonFunc, utils);
+      if (window) {
+        module.exports = factory(window, commonFunc, utils);
+      } else {
+        module.exports = factory(wnd, commonFunc, utils);
+      }
     } else {
         root.returnExports = factory(window, root["@cocreate/socket-client/src/common-fun.js"], root["./utils.crud.js"]);
   }

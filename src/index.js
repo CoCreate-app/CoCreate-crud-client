@@ -10,7 +10,11 @@
       }
       const CoCreateCRUD = require("@cocreate/crud-client/src/crud.js")
       const CoCreateSocket = require("@cocreate/socket-client")
-      module.exports = factory(false, CoCreateSocket, CoCreateCRUD);
+      let isBrowser = false;
+      if (window && window.config) {
+        isBrowser = true;
+      }
+      module.exports = factory(isBrowser, CoCreateSocket, CoCreateCRUD);
     } else {
         root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/crud-client/src/crud.js"]);
   }
