@@ -14,11 +14,7 @@
       }
       const commonFunc = require("@cocreate/socket-client/src/common-fun.js")
       const utils = require("./utils.crud.js")
-      if (window) {
-        module.exports = factory(window, commonFunc, utils);
-      } else {
-        module.exports = factory(wnd, commonFunc, utils);
-      }
+      module.exports = factory(wnd, commonFunc, utils);
     } else {
         root.returnExports = factory(window, root["@cocreate/socket-client/src/common-fun.js"], root["./utils.crud.js"]);
   }
@@ -66,7 +62,7 @@
     },
     
     updateDocument: function(info) {
-      if( !info || !info['document_id'] ) return;
+      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) return;
       
       let commonData = commonFunc.getCommonParamsExtend(info);
       
@@ -97,7 +93,7 @@
         return;
       }
       
-      if (!info['document_id'] || !info) {
+      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
         return;
       }
       
@@ -109,7 +105,7 @@
     
     
     deleteDocument: function(info) {
-      if (!info['document_id'] || !info) {
+      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
         return;
       }
       

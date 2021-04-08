@@ -186,6 +186,16 @@
     return false;
   }
   
+  function checkDocumentId(document_id) {
+    try {
+      if (!document_id) return false;
+      if (document_id.toLowerCase() === "null") return false;
+      return true;
+    } catch(error) {
+      return false;
+    }
+  }
+  
   
   return {
     decodeObject,
@@ -197,7 +207,8 @@
     isSaveAttr,
     isUpdateAttr,
     checkValue,
-    isCRDT
+    isCRDT,
+    checkDocumentId
   }
 
 }));
