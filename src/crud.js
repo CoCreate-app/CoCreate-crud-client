@@ -1,6 +1,4 @@
 // import {getCommonParams, getCommonParamsExtend, generateSocketClient} from "@cocreate/socket-client/src/common-fun.js"
-// import utilsCrud from "@cocreate/crud/src/utils.crud.js"
-
 
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
