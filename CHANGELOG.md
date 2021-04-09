@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.2...v1.0.3) (2021-04-09)
+
+
+### Bug Fixes
+
+* UMD clientside issue during compile ([dbfc73e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dbfc73e9bb14d111092a8bed222fc28150c8ac03))
+
 ## [1.0.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.1...v1.0.2) (2021-04-08)
 
 
