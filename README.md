@@ -9,7 +9,7 @@ A simple crud-client component in vanilla javascript. Easily configured using HT
 
 ![CoCreate-crud-client](https://cdn.cocreate.app/docs/CoCreate-crud-client.gif)
 
-## [Docs & Demo](https://cocreate.app/docs/clone)
+## [Docs & Demo](https://cocreate.app/docs/crud-client)
 
 For a complete guide and working demo refer to the [doumentation](https://cocreate.app/docs/crud-client)
 
