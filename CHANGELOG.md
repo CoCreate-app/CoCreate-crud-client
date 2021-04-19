@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.4...v1.0.5) (2021-04-19)
+
+
+### Bug Fixes
+
+* add missing packages ([796389e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/796389e87f5c017ef8f9f9c7da9f5d699c8fdae3))
+
 ## [1.0.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.3...v1.0.4) (2021-04-19)
 
 
