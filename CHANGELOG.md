@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.3...v1.0.4) (2021-04-19)
+
+
+### Bug Fixes
+
+* ci and build process ([4f082f3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4f082f398f42aa30a615a7bf02908f21da0cb4c3))
+* npm publish and cdn deployment ([b4cbfd3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b4cbfd33d898e1f5b7bd2b0477622d2bae1e7e7f))
+
 ## [1.0.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.2...v1.0.3) (2021-04-09)
 
 
