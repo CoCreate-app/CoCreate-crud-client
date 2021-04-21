@@ -11,15 +11,7 @@
         <meta name="robots" content="index,follow" />
         
         <!-- CoCreate CSS -->
-        <link rel="stylesheet" href="https://cdn.cocreate.app/latest/CoCreate.min.css" type="text/css" />
-        
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" crossorigin="anonymous" />    
-        
-        <!-- Codemirror -->
-        <link rel="stylesheet" href="https://server.cocreate.app/CoCreate-plugins/CoCreate-codemirror/src/CoCreate-codemirror.css" type="text/css" />
-        <link rel=stylesheet href="https://codemirror.net/lib/codemirror.css"  async defer>
-
+        <link rel="stylesheet" href="https://cdn.cocreate.app/latest/CoCreate.min.css" type="text/css"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css" rel="stylesheet" />
     </head>
 
@@ -40,21 +32,33 @@
             <p class="max-width:500px margin:20px_10px">A simple HTML5, CSS and pure javascript component. Easy configuration using data-attributes and highly styleable.</p>
             <div id="crud-client-section" class="display:flex flex-wrap:wrap">
                 <div class="flex-grow:1 width:300px padding:20px_10px">
-                    <h2 class="border-bottom:1px_solid_lightgrey padding:5px_0px">Install</h2>
-                    <pre class="margin-top:15px"><code class="language-javascript">npm install cocreate-crud-client</code></pre>
+                    <div>
+                       <h2 id="crud-client-installation" data-hover="display:block" data-target="" class="border-bottom:1px_solid_lightgrey padding:5px_0px">Install</h2>
+                       <a class="display:none" href="#crud-client-installation"><i class="fas fa-link"></i></a>
+                    </div>
+                    <pre class="margin-top:15px"><code class="language-javascript">npm install @cocreate/cocreate-crud-client</code></pre>
                     <p class="padding:10px_0px">Or you can use cdn link:</p>
-                    <pre><code class="language-javascript">https://cdn.cocreate.app/js/CoCreate-crud-client.min.js</code></pre>
+                    <pre><code class="language-javascript">https://cdn.cocreate.app/latest/cocreate.min.js</code></pre>
                     
-                    <h2 class="border-bottom:1px_solid_lightgrey margin-top:20px padding:5px_0px">Usage</h2>
+                    <div>
+                       <h2 id="crud-client-usage" data-hover="display:block" data-target="" class="border-bottom:1px_solid_lightgrey margin-top:80px padding:5px_0px">Usage</h2>
+                       <a class="display:none" href="#crud-client-usage"><i class="fas fa-link"></i></a>
+                    </div>
                     <p class="padding:10px_0px">crud-client usage content</p>
                     <pre><code class="language-html">&lt;div&gt;&lt;/div&gt;</code></pre>
                     
-                    <h2 class="border-bottom:1px_solid_lightgrey margin-top:20px padding:5px_0px">Reference</h2>
+                    <div>
+                       <h2 id="crud-client-reference" data-hover="display:block" data-target="" class="border-bottom:1px_solid_lightgrey margin-top:40px padding:5px_0px">Reference</h2>
+                       <a class="display:none" href="#crud-client-reference"><i class="fas fa-link"></i></a>
+                    </div>
                     <p class="padding:10px_0px">This is crud-client reference content</p>
                     <pre><code class="language-javascript">&lt;div&gt;&lt;/div&gt;</code></pre>
                     <p class="padding:10px_0px">This is crud-client reference content</p>
 
-                    <h2 class="border-bottom:1px_solid_lightgrey margin-top:20px padding:5px_0px">Attributes</h2>
+                    <div>
+                       <h2 id="crud-client-attributes" data-hover="display:block" data-target="" class="border-bottom:1px_solid_lightgrey margin-top:30px padding:5px_0px">Attributes</h2>
+                       <a class="display:none" href="#crud-client-attributes"><i class="fas fa-link"></i></a>
+                    </div>
                     <ul class="list-style-type:none ">
                         <li class="padding:15px_0px border-bottom:1px_solid_lightgrey">
                             <h4><span>data-crud-client</span> <span class="cocreate-badge success">string</span> <span class="cocreate-badge warning">optional</span></h4>
@@ -68,8 +72,13 @@
                 </div>
                 
                 <div class="flex-grow:1 width:300px padding:0px_10px margin:20px_0px  border-bottom:1px_solid_lightgrey">
+                    
                     <!-- SandBox -->
-                    <h2 class="border-bottom:1px_solid_lightgrey padding:5px_0px">Demo</h2>
+
+                    <div>
+                       <h2 id="crud-client-demo" data-hover="display:block" data-target="" class="border-bottom:1px_solid_lightgrey padding:5px_0px">Demo</h2>
+                       <a class="display:none" href="#crud-client-demo"><i class="fas fa-link"></i></a>
+                    </div>
                     <div class="position:sticky top:0 padding:10px_0px height:100vh">
         			    <div class="container svColumn overflow:hidden card border-radius:2px width:auto height:100%" id="sandbox">
         			       <div class="font-size:20px position:absolute top:10px right:10px opacity:0.6 z-index:7">
@@ -129,11 +138,7 @@
         </script>
     
         <!--CoCreateJS-->
-        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
-        
-        <!-- CoCreate CodeMiirror -->
-        <script type="text/javascript" src="https://server.cocreate.app/CoCreate-plugins/CoCreate-codemirror/dist/CoCreate-codemirror.js" async></script>
-        
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js" ></script>
         <!-- Prism -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js"></script>
     </body>
