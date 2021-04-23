@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.5...v1.0.6) (2021-04-23)
+
+
+### Bug Fixes
+
+* readme and documentation. Removed securitykeys ([94a5e26](https://github.com/CoCreate-app/CoCreate-crud-client/commit/94a5e26b0c534ce2ad878ab9ac5888f5a10d3223))
+
 ## [1.0.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.4...v1.0.5) (2021-04-19)
 
 
