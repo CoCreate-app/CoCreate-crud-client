@@ -97,7 +97,7 @@
       
       let commonData = commonFunc.getCommonParamsExtend(info);
       let request_data = {...info, ...commonData};
-      console.log(request_data)
+      console.log("crud.readDocument => ",request_data)
       this.socket.send('readDocument', request_data);
     },
     
