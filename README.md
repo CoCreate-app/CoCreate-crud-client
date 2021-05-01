@@ -1,6 +1,6 @@
 # CoCreate-crud-client
 
-A simple crud-client component in vanilla javascript. Easily configured using HTML5 data-attributes and/or JavaScript API. Take it for a spin in our [playground!](https://cocreate.app/docs/crud-client)
+An useful CRUD api operate Create, read, update, delete with built in database. Can be used as a firebase alternative. Easily configured using HTML5 data-attributes and/or JavaScript API. Take it for a spin in our [playground!](https://cocreate.app/docs/crud-client)
 
 ![GitHub file size in bytes](https://img.shields.io/github/size/CoCreate-app/CoCreate-crud-client/dist/CoCreate-crud-client.min.js?label=minified%20size&style=for-the-badge)
 ![GitHub latest release](https://img.shields.io/github/v/release/CoCreate-app/CoCreate-crud-client?style=for-the-badge)
