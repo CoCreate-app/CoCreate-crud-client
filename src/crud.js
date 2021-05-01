@@ -25,20 +25,21 @@
     },
 
     readDocumentList(info){
-      if( !info ) return;
+      if( !info ) return false;
       let request_data = commonFunc.getCommonParams();
-      if (!info.collection || !info.operator) {
-        return;
+      if (!info.collection) {
+        return false;
       }
       
       request_data = {...request_data, ...info};
       
       this.socket.send('readDocumentList', request_data);
+      return true;
     },
     
     createDocument: function(info) {
       if (info === null) {
-        return;
+        return false;
       }
       let commonData = commonFunc.getCommonParamsExtend(info);
       let request_data = {...info, ...commonData};
@@ -57,10 +58,11 @@
   
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
       this.socket.send('createDocument', request_data, room);
+      return true;
     },
     
     updateDocument: function(info) {
-      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) return;
+      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) return false;
       
       let commonData = commonFunc.getCommonParamsExtend(info);
       
@@ -71,7 +73,7 @@
       }
       if( Array.isArray(info['delete_fields']) ) request_data['unset'] = info['delete_fields'];
       
-      if(!request_data['set'] && !request_data['unset']) return;
+      if(!request_data['set'] && !request_data['unset']) return false;
       
       if (info.broadcast === false) {
         request_data['broadcast'] = false;
@@ -84,27 +86,30 @@
       
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
       this.socket.send('updateDocument', request_data, room);
+      
+      return true;
     },
     
     readDocument: function(info) {
       if (info === null) {
-        return;
+        return false;
       }
       
       if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
-        return;
+        return false;
       }
       
       let commonData = commonFunc.getCommonParamsExtend(info);
       let request_data = {...info, ...commonData};
       console.log("crud.readDocument => ",request_data)
       this.socket.send('readDocument', request_data);
+      return true;
     },
     
     
     deleteDocument: function(info) {
       if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
-        return;
+        return false;
       }
       
       let commonData = commonFunc.getCommonParamsExtend(info);
@@ -112,6 +117,7 @@
       
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
       this.socket.send('deleteDocument', request_data, room);
+      return true;
     },
   
   
