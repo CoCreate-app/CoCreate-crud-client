@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.7...v1.0.8) (2021-05-03)
+
+
+### Bug Fixes
+
+* bug that created multiple instances ([f329c84](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f329c842039f1e36b8426788a990cd9e9422ed4f))
+
 ## [1.0.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.6...v1.0.7) (2021-04-27)
 
 
