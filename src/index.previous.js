@@ -1,6 +1,6 @@
 import CoCreateSocket from "@cocreate/socket-client"
 import {getCommonParams, getCommonParamsExtend, generateSocketClient} from "@cocreate/socket-client/src/common-fun.js"
-import utilsCrud from "@cocreate/crud/src/utils.crud.js"
+import utilsCrud from "./utils.crud.previous.js"
 
 let crud_socket = new CoCreateSocket('ws');
 
