@@ -841,12 +841,13 @@
     parse-html-comments "^1.3.1"
     ws "^7.3.1"
 
-"@cocreate/socket-client@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@cocreate/socket-client/-/socket-client-1.0.2.tgz"
-  integrity sha512-HEljHKHNkqRI6Nj58Fyis6lvpr/p2+l64zofZTKXHHrgyOeotQnEGlS3ScMfy1MEZePRTYllp0yB9l2SLVKQNg==
+"@cocreate/socket-client@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@cocreate/socket-client/-/socket-client-1.0.9.tgz#e9604f906ef50bc6563832c61457d9b136591733"
+  integrity sha512-RWNcqJWkS+Y0nfJvA3dbEy4nV48vX9XGLtzjfXqYwvg9NfnZ+Nfis/+BnV1AK5aU6QC/XrxrSFcuEfrp+lc/mg==
   dependencies:
     "@cocreate/docs" "^1.0.3"
+    mini-css-extract-plugin "^1.5.0"
     ws "^7.4.4"
 
 "@discoveryjs/json-ext@^0.5.0":

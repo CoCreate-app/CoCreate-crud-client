@@ -16,7 +16,14 @@
   }
 }(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, CoCreateCRUD) {
   if (isBrowser) {
-    let crud_socket = new CoCreateSocket('ws');
+    
+    let crud_socket = window.CoCreateCrudSocket
+
+    if (!crud_socket) {
+      crud_socket = new CoCreateSocket('ws');
+      window.CoCreateCrudSocket = crud_socket;
+    }
+    
     CoCreateCRUD.setSocket(crud_socket);
     CoCreateCRUD.createSocket(window.config.host ? window.config.host : window.location.hostname, window.config.organization_Id)
   } 
