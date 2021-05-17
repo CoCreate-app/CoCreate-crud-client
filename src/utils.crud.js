@@ -58,6 +58,27 @@
     return key;
   }
   
+  function getValueByPath(path, data)
+  {
+    try {
+      if (!path || !data) return null;
+      
+      if (data[path]) return data[path];
+
+      let keys = path.split('.');
+      
+      let tmp = { ...data};
+      for (var i = 0; i < keys.length; i++ ) {
+        if (!tmp) break;
+        tmp = tmp[keys[i]];
+      }
+      return tmp;
+
+    } catch {
+      return null;
+    }
+  }
+  
   function isObject(item) {
     return (!!item) && (item.constructor === Object);
   }
@@ -124,12 +145,14 @@
     let is_save = isSaveAttr(el);
     let is_read = isReadAttr(el);
     let is_update = isUpdateAttr(el);
+    let is_flat = isFlatAttr(el);
     return { is_realtime, is_save, is_read, is_update }
   }
   
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
   const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
+  const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
   // const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isRealtimeAttr = (el) => {
     if (!el) return false
@@ -206,9 +229,11 @@
     isReadAttr,
     isSaveAttr,
     isUpdateAttr,
+    isFlatAttr,
     checkValue,
     isCRDT,
-    checkDocumentId
+    checkDocumentId,
+    getValueByPath
   }
 
 }));
