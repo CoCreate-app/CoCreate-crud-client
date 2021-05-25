@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.10...v1.1.0) (2021-05-25)
+
+
+### Features
+
+* async/await crud objects and array of names for readDocument ([453d3cb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/453d3cb3c232d16626b36cc9ad8c6bbb9fcd7de8))
+
 ## [1.0.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.0.9...v1.0.10) (2021-05-17)
 
 
