@@ -24,7 +24,7 @@
       this.socket = socket;
     },
 
-    readDocumentList(info){
+    readDocumentList: async function(info){
       if( !info ) return false;
       let request_data = commonFunc.getCommonParams();
       if (!info.collection) {
@@ -33,11 +33,19 @@
       
       request_data = {...request_data, ...info};
       
-      this.socket.send('readDocumentList', request_data);
-      return true;
+      const room = commonFunc.generateSocketClient(info.namespace, info.room);
+      const request_id = this.socket.send('readDocumentList', request_data);
+      
+      try {
+        let response = await this.socket.listenAsync(request_id);
+        return response;
+      } catch(e) {
+        console.log(e)
+        return null;
+      }
     },
     
-    createDocument: function(info) {
+    createDocument: async function(info) {
       if (info === null) {
         return false;
       }
@@ -57,17 +65,23 @@
       request_data['data'] = data;
   
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
-      this.socket.send('createDocument', request_data, room);
-      return true;
+      let request_id = this.socket.send('createDocument', request_data, room);
+      
+      try {
+        let response = await this.socket.listenAsync(request_id);
+        return response;
+      } catch(e) {
+        console.log(e)
+        return null;
+      }
     },
     
-    updateDocument: function(info) {
+    updateDocument: async function(info) {
       if (!info) return false;
       
       if (info['document_id'] && !utilsCrud.checkDocumentId(info['document_id']))
         return false;
-      // if (!info || !utilsCrud.checkDocumentId(info['document_id'])) return false;
-      
+
       let commonData = commonFunc.getCommonParamsExtend(info);
       
       let request_data = {...info, ...commonData};
@@ -89,30 +103,21 @@
       }
       
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
-      this.socket.send('updateDocument', request_data, room);
+      let request_id = this.socket.send('updateDocument', request_data, room);
       
-      return true;
-    },
-    
-    readDocument: function(info) {
-      if (info === null) {
-        return false;
+      try {
+        let response = await this.socket.listenAsync(request_id);
+        return response;
+      } catch(e) {
+        console.log(e)
+        return null;
       }
-      
-      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
-        return false;
-      }
-      
-      let commonData = commonFunc.getCommonParamsExtend(info);
-      let request_data = {...info, ...commonData};
-      this.socket.send('readDocument', request_data);
-      return true;
     },
     
     /**
      * Usage: var data = await crud.readDocumentNew({collection, document_id})
      */
-    readDocumentNew: async(info) => {
+    readDocument: async function(info) {
       
       //. 
       if (info === null) {
@@ -130,7 +135,7 @@
       try {
         //. new section
         const room = commonFunc.generateSocketClient(info.namespace, info.room);
-        let response = await this.socket.onMessageAsync(room, request_id);
+        let response = await this.socket.listenAsync(request_id);
         return response;
       } catch (e) {
         console.log(e)
@@ -139,17 +144,24 @@
     },
     
     
-    deleteDocument: function(info) {
+    deleteDocument: async function (info) {
       if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
-        return false;
+        return null;
       }
       
       let commonData = commonFunc.getCommonParamsExtend(info);
       let request_data = {...info, ...commonData};
       
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
-      this.socket.send('deleteDocument', request_data, room);
-      return true;
+      let request_id = this.socket.send('deleteDocument', request_data, room);
+      try {
+        //. new section
+        let response = await this.socket.listenAsync(request_id);
+        return response;
+      } catch (e) {
+        console.log(e)
+        return null;
+      }
     },
   
   
