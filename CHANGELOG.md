@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.1...v1.1.2) (2021-06-06)
+
+
+### Bug Fixes
+
+* update packages, add uuid, add data-parse to demos ([0681b83](https://github.com/CoCreate-app/CoCreate-crud-client/commit/0681b83abb47604e751d7c5af48abf2666a3049c))
+
 ## [1.1.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.0...v1.1.1) (2021-05-25)
 
 
