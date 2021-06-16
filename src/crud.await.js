@@ -55,7 +55,7 @@
       let data = info.data || {};
       
       if (!data['organization_id']) {
-        data['organization_id'] = wnd.config.organization_Id
+        data['organization_id'] = commonData.organization_id
       }
       if (info['data']) {
         data = {...data, ...info['data']}
@@ -103,6 +103,12 @@
       }
       
       const room = commonFunc.generateSocketClient(info.namespace, info.room);
+      
+      /** set organization_id in upsert case **/
+      if (request_data.upsert) {
+        request_data['set'] = {...request_data['set'], organization_id: commonData.organization_id}
+      }
+      
       let request_id = this.socket.send('updateDocument', request_data, room);
       
       try {
