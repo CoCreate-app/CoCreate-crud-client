@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.2...v1.1.3) (2021-06-16)
+
+
+### Bug Fixes
+
+* added header for seo ([bb993fb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/bb993fb0fd3c80ebc14d8644e0266ccf9e0849d4))
+
 ## [1.1.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.1...v1.1.2) (2021-06-06)
 
 
