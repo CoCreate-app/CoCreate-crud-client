@@ -136,27 +136,7 @@
     let collection = el.getAttribute('data-collection')
     let document_id = el.getAttribute('data-document_id')
     let name = el.getAttribute('name')
-    let room = el.getAttribute('data-room')
-    
-    let is_realtime = isRealtimeAttr(el);
-    let is_save = isSaveAttr(el);
-    let is_read = isReadAttr(el);
-    let is_update = isUpdateAttr(el);
-    let broadcast = isBoradcast(el)
-    let broadcast_sender = isBoradcastSender(el)
-
-    return { 
-      collection, 
-      document_id, 
-      name, 
-      is_realtime, 
-      is_save, 
-      is_read, 
-      is_update, 
-      broadcast, 
-      broadcast_sender,
-      room
-    }
+    return { collection, document_id, name }
   }
   
   function getFlagAttr(el) {
@@ -173,8 +153,6 @@
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
   const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
   const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
-  const isBoradcast = (el) => ( __isValueOfAttr(el, 'data-broadcast'));
-  const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'data-broadcast_sender'));
   // const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isRealtimeAttr = (el) => {
     if (!el) return false
