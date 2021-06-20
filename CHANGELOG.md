@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.3...v1.1.4) (2021-06-20)
+
+
+### Bug Fixes
+
+* new mutaionObserver init function ([bb77dc5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/bb77dc58b1c04401488719fbb81c1e7cdfc2013b))
+
 ## [1.1.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.2...v1.1.3) (2021-06-16)
 
 
