@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.4...v1.1.5) (2021-06-23)
+
+
+### Bug Fixes
+
+* update to new crud.save and crud.read ([609a463](https://github.com/CoCreate-app/CoCreate-crud-client/commit/609a46326c46a4fc87c4eedccfd303e3e6b3e7d9))
+
 ## [1.1.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.3...v1.1.4) (2021-06-20)
 
 
