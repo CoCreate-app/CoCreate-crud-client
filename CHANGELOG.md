@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.5...v1.1.6) (2021-06-23)
+
+
+### Bug Fixes
+
+* update checkValue to crud.checkAttrValue ([709d770](https://github.com/CoCreate-app/CoCreate-crud-client/commit/709d770fc66d652a3580d98e15e1d06019f0d486))
+
 ## [1.1.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.4...v1.1.5) (2021-06-23)
 
 
