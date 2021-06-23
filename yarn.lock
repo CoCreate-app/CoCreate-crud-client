@@ -887,6 +887,16 @@
     parse-html-comments "^1.3.1"
     ws "^7.3.1"
 
+"@cocreate/docs@latest":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@cocreate/docs/-/docs-1.1.11.tgz#68b390a79eb3474365589316544fad021fd731a7"
+  integrity sha512-i0fUZObffSaNtWHMpNEyApnyat4UxYTdv97u8wf2iOXuRfiJSEm86ovQzoCKensLCqLUTkUD8hivzY92llZC3A==
+  dependencies:
+    extract-comments "^1.1.0"
+    glob "^7.1.6"
+    parse-html-comments "^1.3.1"
+    ws "^7.3.1"
+
 "@cocreate/hosting@^1.0.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@cocreate/hosting/-/hosting-1.1.1.tgz#15277431a1c3583a496b9fa33f05d0fc8d8e2770"
@@ -901,6 +911,15 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@cocreate/socket-client/-/socket-client-1.1.2.tgz#3adb8c344b4ec321f423a6cffec4a2ba72369409"
   integrity sha512-b1Dcd7IxfUKDYLbJ7s4iasffvRXIrWEDPFqvAPy29Y0cbga1orgCS76QKv3Tnec38kQdRQLxY043MTh8Cq14Iw==
+  dependencies:
+    "@cocreate/docs" "^1.0.3"
+    "@cocreate/uuid" "^1.0.6"
+    ws "^7.4.4"
+
+"@cocreate/socket-client@latest":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@cocreate/socket-client/-/socket-client-1.1.3.tgz#65f6815d5f9dd88ff0880d97b1aa5bca91d986d3"
+  integrity sha512-Jl+GrkfmAoJFtndZBPMuilpU5VN9BvZ+JZZT8i524CWc6Zao7/eb0UvE2velbqtZnOONutVcrhmq8UCVjukufw==
   dependencies:
     "@cocreate/docs" "^1.0.3"
     "@cocreate/uuid" "^1.0.6"
