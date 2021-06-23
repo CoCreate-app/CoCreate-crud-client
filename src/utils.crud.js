@@ -181,13 +181,13 @@
     return flag
   }
   
-  // ToDo: duplicate it is in form and not sure what this is for
-  function checkValue(value) {
+  // if value empty  or document_id="{{data.value}}" return false
+  function checkAttrValue(value) {
     if (!value) return false;
     if (/{{\s*([\w\W]+)\s*}}/g.test(value)) {
       return false;
     }
-  
+    
     return true;
   }
   
@@ -225,6 +225,7 @@
     return false;
   }
   
+  // ToDo: used for checking document_id null for crdt persistance false
   function checkDocumentId(document_id) {
     try {
       if (!document_id) return false;
@@ -260,7 +261,7 @@
     isSaveAttr,
     isUpdateAttr,
     isFlatAttr,
-    checkValue,
+    checkAttrValue,
     isCRDT,
     checkDocumentId,
     getValueByPath,
