@@ -217,6 +217,79 @@
   		}
   	},
   	
+		read: async function(element, is_flat) {
+      const {collection, document_id, name, namespace, room, is_read } = utilsCrud.getAttr(element)
+      if (is_flat !== false) is_flat = true
+      
+      if (utilsCrud.isJsonString(collection) || 
+          utilsCrud.isJsonString(document_id)) 
+      {
+        return null
+      }
+      
+      if (document_id && collection && is_read) {
+        const responseData = await this.readDocument({ namespace,	room, collection, document_id, name, is_flat })
+        return responseData
+      } 
+      return null;
+		},
+		
+		save: async function (el_data_list) {
+			if (!el_data_list) return;
+			for (let i = 0; i < el_data_list.length; i++) {
+				await this.saveElement(el_data_list[i]);
+			}
+		},
+		
+		saveElement: async function({ element, value, is_flat }) {
+			if (!element || value === null) return;
+			const {collection, document_id, name, namespace, room, broadcast, broadcast_sender, is_save } = utilsCrud.getAttr(element)
+			
+			if (!is_save || !collection || !name) {
+				return;
+			}
+			
+			if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
+				wnd.CoCreate.crdt.replaceText({
+					collection,
+					name, 
+					document_id,
+					name, 
+					value
+				})
+			} else {
+				let data = await this.updateDocument({
+					namespace,
+					room,
+					collection,
+					document_id,
+					upsert: true, 
+					broadcast,
+					broadcast_sender,
+					is_flat : is_flat !== false ? true : false,
+					data: {
+						[name]: value
+					},
+				})
+  			if (data.document_id && document_id !== data.document_id) {
+  				await this.setDocumentId({element, docuement_id: data.document_id}) // element, collection, docuement_id
+  			}
+			}
+		},
+
+
+    // ToDo: if form we need to send collection and document_id
+    setDocumentId: async function({element, form, document_id}) {
+    	if (!form && element) {
+    		form = element.closest('form');
+    	}
+    	if (form) {
+    	    await CoCreate.form.setDocumentId(form)
+    	} else if (element) {
+    		element.setAttribute('data-document_id', document_id);
+    	}
+    },
+  	
   	...utilsCrud
   }
   

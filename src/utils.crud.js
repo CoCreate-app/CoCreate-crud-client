@@ -136,23 +136,38 @@
     let collection = el.getAttribute('data-collection')
     let document_id = el.getAttribute('data-document_id')
     let name = el.getAttribute('name')
-    return { collection, document_id, name }
-  }
-  
-  function getFlagAttr(el) {
-    if (!el) return {}
+    let room = el.getAttribute('data-room')
+    
     let is_realtime = isRealtimeAttr(el);
     let is_save = isSaveAttr(el);
     let is_read = isReadAttr(el);
     let is_update = isUpdateAttr(el);
-    let is_flat = isFlatAttr(el);
-    return { is_realtime, is_save, is_read, is_update }
+    let is_listen = isListen(el);
+    let broadcast = isBoradcast(el)
+    let broadcast_sender = isBoradcastSender(el)
+
+    return { 
+      collection, 
+      document_id, 
+      name, 
+      is_realtime, 
+      is_save, 
+      is_read, 
+      is_update, 
+      is_listen, 
+      broadcast, 
+      broadcast_sender,
+      room
+    }
   }
   
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
   const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
   const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
+  const isBoradcast = (el) => ( __isValueOfAttr(el, 'data-broadcast'));
+  const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'data-broadcast_sender'));
+  const isListen = (el) => ( __isValueOfAttr(el, 'data-listen'));
   // const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isRealtimeAttr = (el) => {
     if (!el) return false
@@ -166,6 +181,7 @@
     return flag
   }
   
+  // ToDo: duplicate it is in form and not sure what this is for
   function checkValue(value) {
     if (!value) return false;
     if (/{{\s*([\w\W]+)\s*}}/g.test(value)) {
@@ -219,12 +235,26 @@
     }
   }
   
+  function isJsonString(str_data) {
+  try {
+    let json_data = JSON.parse(str_data);
+    if (typeof json_data === "object" && json_data != null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  catch (e) {
+    return false;
+  }
+}
+  
   
   return {
     decodeObject,
     encodeObject,
     getAttr,
-    getFlagAttr,
     isRealtimeAttr,
     isReadAttr,
     isSaveAttr,
@@ -233,7 +263,8 @@
     checkValue,
     isCRDT,
     checkDocumentId,
-    getValueByPath
+    getValueByPath,
+    isJsonString
   }
 
 }));

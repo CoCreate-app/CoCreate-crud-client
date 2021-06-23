@@ -49,13 +49,13 @@ async function saveElement(element) {
 }
 
 // crud.setDocumentId
-async function setDocumentId(element) {
-	if (!form && element) {
-		form = element.closest('form');
-	}
-	if (form) {
-	    await	CoCreate.form.setDocumentId(form)
-	} else if (element) {
-		element.setAttribute('data-document_id', document_id);
-	}
-}
+// async function setDocumentId(element) {
+// 	if (!form && element) {
+// 		form = element.closest('form');
+// 	}
+// 	if (form) {
+// 	    await	CoCreate.form.setDocumentId(form)
+// 	} else if (element) {
+// 		element.setAttribute('data-document_id', document_id);
+// 	}
+// }
