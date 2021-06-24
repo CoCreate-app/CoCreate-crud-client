@@ -1,3 +1,11 @@
+## [1.1.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.7...v1.1.8) (2021-06-24)
+
+
+### Bug Fixes
+
+* add method to turn on and off console.log while in development ([8c3c4a2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8c3c4a2d57ad6639e5181c2e016b2315e3220afd))
+* update all [@cocreate](https://github.com/cocreate) to use latest versions ([3b34c14](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3b34c14fae9bf2b9af77ff3c854f9e2b5343e685))
+
 ## [1.1.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.6...v1.1.7) (2021-06-23)
 
 
