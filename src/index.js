@@ -1,6 +1,6 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(["@cocreate/socket-client", "./crud.await.js"], function(CoCreateSocket, CoCreateCRUD) {
+        define(["@cocreate/socket-client", "./crud.js"], function(CoCreateSocket, CoCreateCRUD) {
         	return factory(true, CoCreateSocket, CoCreateCRUD)
         });
     } else if (typeof module === 'object' && module.exports) {
@@ -8,11 +8,11 @@
         config: {},
         File: {}
       }
-      const CoCreateCRUD = require("./crud.await.js")
+      const CoCreateCRUD = require("./crud.js")
       const CoCreateSocket = require("@cocreate/socket-client")
       module.exports = factory(false, CoCreateSocket, CoCreateCRUD);
     } else {
-        root.returnExports = factory(true, root["@cocreate/socket-client"], root["./crud.await.js"]);
+        root.returnExports = factory(true, root["@cocreate/socket-client"], root["./crud.js"]);
   }
 }(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, CoCreateCRUD) {
   if (isBrowser) {

@@ -168,13 +168,8 @@
   const isBoradcast = (el) => ( __isValueOfAttr(el, 'data-broadcast'));
   const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'data-broadcast_sender'));
   const isListen = (el) => ( __isValueOfAttr(el, 'data-listen'));
-  // const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
-  const isRealtimeAttr = (el) => {
-    if (!el) return false
-    let flag = el.getAttribute('data-realtime') == "false" ? false : true;
-    return flag
-  };
-  
+  const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
+
   function __isValueOfAttr(el, attr) {
     if (!el) return false;
     let flag = el.getAttribute(attr) === "false" ? false : true;
@@ -187,7 +182,8 @@
     if (/{{\s*([\w\W]+)\s*}}/g.test(value)) {
       return false;
     }
-    
+    // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
+    if (value.toLowerCase() === "null") return false;
     return true;
   }
   
@@ -225,7 +221,7 @@
     return false;
   }
   
-  // ToDo: used for checking document_id null for crdt persistance false
+  // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
   function checkDocumentId(document_id) {
     try {
       if (!document_id) return false;

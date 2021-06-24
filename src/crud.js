@@ -196,6 +196,7 @@
       this.socket.listen(message, fun);
     },
     
+    // ToDo: Depreciate?
     listenAsync: function(eventname) {
       return this.socket.listenAsync(eventname);
     },
@@ -219,6 +220,8 @@
   	
 		read: async function(element, is_flat) {
       const {collection, document_id, name, namespace, room, is_read } = utilsCrud.getAttr(element)
+      if ( utilsCrud.checkAttrValue(document_id)) return;
+      
       if (is_flat !== false) is_flat = true
       
       if (utilsCrud.isJsonString(collection) || 
