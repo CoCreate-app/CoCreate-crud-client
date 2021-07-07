@@ -138,11 +138,13 @@
     let name = el.getAttribute('name')
     let room = el.getAttribute('data-room')
     
+    let is_crud = isCrudAttr(el);
+    let is_crdt = isCrdtAttr(el);
     let is_realtime = isRealtimeAttr(el);
     let is_save = isSaveAttr(el);
     let is_read = isReadAttr(el);
     let is_update = isUpdateAttr(el);
-    let is_listen = isListen(el);
+    let is_listen = isListenAttr(el);
     let broadcast = isBoradcast(el)
     let broadcast_sender = isBoradcastSender(el)
 
@@ -150,6 +152,8 @@
       collection, 
       document_id, 
       name, 
+      is_crud, 
+      is_crdt, 
       is_realtime, 
       is_save, 
       is_read, 
@@ -161,14 +165,16 @@
     }
   }
   
+  const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
+  const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'data-crdt'));
+  const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
   const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
   const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
   const isBoradcast = (el) => ( __isValueOfAttr(el, 'data-broadcast'));
   const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'data-broadcast_sender'));
-  const isListen = (el) => ( __isValueOfAttr(el, 'data-listen'));
-  const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
+  const isListenAttr = (el) => ( __isValueOfAttr(el, 'data-listen'));
 
   function __isValueOfAttr(el, attr) {
     if (!el) return false;
@@ -203,8 +209,9 @@
   }
   
   function isCRDT(input) {
-    const { collection, document_id, name } = getAttr(input)
-    
+    if (window && !window.CoCreate.crdt) return false;
+
+    const { collection, document_id, name, is_read } = getAttr(input)
     if (isJsonString(collection)) return false;
     if (isJsonString(name)) return false;
   
@@ -216,7 +223,6 @@
       if (input.type === 'password') return false;
       if (!isReadAttr(input)) return false;
       return true;
-      
     }
     return false;
   }

@@ -55,7 +55,7 @@
       let data = info.data || {};
       
       if (!data['organization_id']) {
-        data['organization_id'] = wnd.config.organization_Id
+        data['organization_id'] = commonData.organization_id || wnd.config.organization_Id
       }
       if (info['data']) {
         data = {...data, ...info['data']}
@@ -218,9 +218,9 @@
   		}
   	},
   	
-		read: async function(element, is_flat) {
+    read: async function(element, is_flat) {
       const {collection, document_id, name, namespace, room, is_read } = utilsCrud.getAttr(element)
-      if ( utilsCrud.checkAttrValue(document_id)) return;
+      if (!utilsCrud.checkAttrValue(document_id)) return;
       
       if (is_flat !== false) is_flat = true
       
