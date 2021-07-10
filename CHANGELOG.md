@@ -1,3 +1,10 @@
+## [1.1.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.13...v1.1.14) (2021-07-10)
+
+
+### Bug Fixes
+
+* gitignore all logs ([213a516](https://github.com/CoCreate-app/CoCreate-crud-client/commit/213a51689a17845f5f770febb91c2d60be5dd15e))
+
 ## [1.1.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.12...v1.1.13) (2021-07-07)
 
 
