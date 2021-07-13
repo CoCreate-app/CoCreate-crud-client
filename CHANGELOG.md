@@ -1,3 +1,11 @@
+## [1.1.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.14...v1.1.15) (2021-07-13)
+
+
+### Bug Fixes
+
+* add yarn lockfile to git ignore ([a235bd6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a235bd659def5bd2f1625efe236a9d6ed88e6c1b))
+* remove yarn.lock ([8680649](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8680649c345efc98dcb9a10a7c78baf9f41e2526))
+
 ## [1.1.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.13...v1.1.14) (2021-07-10)
 
 
