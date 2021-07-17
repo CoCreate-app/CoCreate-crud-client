@@ -252,7 +252,7 @@
 				return;
 			}
 			
-			if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
+			if (false && utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
 				wnd.CoCreate.crdt.replaceText({
 					collection,
 					name, 
@@ -274,20 +274,20 @@
 						[name]: value
 					},
 				})
-  			if (data.document_id && document_id !== data.document_id) {
-  				await this.setDocumentId({element, docuement_id: data.document_id}) // element, collection, docuement_id
+  			if (data.document_id && (!document_id || document_id !== data.document_id)) {
+  				await this.setDocumentId({element, document_id: data.document_id,collection}) // element, collection, docuement_id
   			}
 			}
 		},
 
 
     // ToDo: if form we need to send collection and document_id
-    setDocumentId: async function({element, form, document_id}) {
+    setDocumentId: async function({element, form, document_id,collection}) {
     	if (!form && element) {
     		form = element.closest('form');
     	}
     	if (form) {
-    	    await CoCreate.form.setDocumentId(form)
+    	    await CoCreate.form.setDocumentId(form,{collection, document_id})
     	} else if (element) {
     		element.setAttribute('data-document_id', document_id);
     	}
