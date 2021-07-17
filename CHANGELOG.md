@@ -1,3 +1,11 @@
+## [1.1.17](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.16...v1.1.17) (2021-07-17)
+
+
+### Bug Fixes
+
+* init and update demos scripts ([66e5da4](https://github.com/CoCreate-app/CoCreate-crud-client/commit/66e5da4b177e2b30e396feae66be045f87d45f13))
+* workflows ([7cc85c9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7cc85c90c9aa2936a4735cd66d42c020613adafc))
+
 ## [1.1.16](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.15...v1.1.16) (2021-07-14)
 
 
