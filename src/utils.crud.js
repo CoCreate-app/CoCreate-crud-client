@@ -208,13 +208,14 @@
     }
   }
   
+  // ToDo isCrdt is not about inputs and textareas.. it is all for all elements using crdt
   function isCRDT(input) {
     if (window && !window.CoCreate.crdt) return false;
 
     const { collection, document_id, name, is_read } = getAttr(input)
     if (isJsonString(collection)) return false;
     if (isJsonString(name)) return false;
-    if (!document_id) return false;
+
   
     if ((input.tagName === "INPUT" && ["text", "email", "tel", "url"].includes(input.type)) || input.tagName === "TEXTAREA") {
       
