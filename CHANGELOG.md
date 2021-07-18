@@ -1,3 +1,10 @@
+## [1.1.18](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.17...v1.1.18) (2021-07-18)
+
+
+### Bug Fixes
+
+* crud.save creates document ([d82436c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d82436c7358b8d01956833eba445c84108a76444))
+
 ## [1.1.17](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.16...v1.1.17) (2021-07-17)
 
 
