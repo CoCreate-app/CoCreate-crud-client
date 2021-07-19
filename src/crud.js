@@ -300,25 +300,6 @@
         return;
       }
 
-      // 	if (!document_id) {
-      // 		let data = await this.createDocument({
-      // 			namespace,
-      // 			room,
-      // 			collection,
-      // 			document_id,
-      // 			broadcast,
-      // 			broadcast_sender,
-      // 			is_flat : is_flat !== false ? true : false,
-      // 			data: {
-      // 				[name]: value
-      // 			},
-      // 		})
-      // 	}
-
-
-
-
-
       let data;
       if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
         if (!document_id)
