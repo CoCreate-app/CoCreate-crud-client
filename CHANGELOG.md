@@ -1,3 +1,10 @@
+## [1.1.19](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.18...v1.1.19) (2021-07-19)
+
+
+### Bug Fixes
+
+* remove commented code ([073b5d4](https://github.com/CoCreate-app/CoCreate-crud-client/commit/073b5d49f7f1bc2fbf5cad79603bec16a55448d4))
+
 ## [1.1.18](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.17...v1.1.18) (2021-07-18)
 
 
