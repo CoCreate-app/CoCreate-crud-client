@@ -89,7 +89,7 @@
     updateDocument: async function(info) {
       if (!info) return false;
 
-      if (info['document_id'] && !utilsCrud.checkDocumentId(info['document_id']))
+      if (info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
         return false;
 
       let commonData = commonFunc.getCommonParamsExtend(info);
@@ -137,7 +137,7 @@
         return null;
       }
 
-      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
+      if (!info || !utilsCrud.checkAttrValue(info['document_id'])) {
         return null;
       }
 
@@ -161,7 +161,7 @@
 
 
     deleteDocument: async function(info) {
-      if (!info || !utilsCrud.checkDocumentId(info['document_id'])) {
+      if (!info || !utilsCrud.checkAttrValue(info['document_id'])) {
         return null;
       }
 
@@ -257,7 +257,7 @@
         utilsCrud.isJsonString(document_id)) {
         return null
       }
-
+     
       if (document_id && collection && is_read) {
         const responseData = await this.readDocument({
           namespace,
@@ -279,11 +279,7 @@
       }
     },
 
-    saveElement: async function({
-      element,
-      value,
-      is_flat
-    }) {
+    saveElement: async function({element, value, is_flat}) {
       if (!element || value === null) return;
       let {
         collection,
@@ -296,30 +292,32 @@
         is_save
       } = utilsCrud.getAttr(element)
 
-      if (!is_save || !collection || !name) {
+      if (!is_save || !collection || !name || document_id === 'pending') {
         return;
       }
 
       let data;
-      if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
-        if (!document_id)
-          data = await this.createDocument({
-            collection,
-            broadcast,
-            broadcast_sender,
-            is_flat: is_flat !== false ? true : false,
-            data: {
-              [name]: value
-            },
-          })
-
-        wnd.CoCreate.crdt.replaceText({
+      if (!document_id) {
+        element.setAttribute('data-document_id', 'pending');
+        data = await this.createDocument({
           collection,
-          name,
-          document_id: data? data.document_id : document_id,
-          value
+          broadcast,
+          broadcast_sender,
+          is_flat: is_flat !== false ? true : false,
+          data: {
+            [name]: value
+          },
         })
       }
+    
+      // if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
+      //   wnd.CoCreate.crdt.replaceText({
+      //     collection,
+      //     name,
+      //     document_id: data? data.document_id : document_id,
+      //     value
+      //   })
+      // }
       else {
         data = await this.updateDocument({
           namespace,

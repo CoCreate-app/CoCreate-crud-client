@@ -182,14 +182,17 @@
     return flag
   }
   
-  // if value empty  or document_id="{{data.value}}" return false
-  function checkAttrValue(value) {
-    if (!value) return false;
-    if (/{{\s*([\w\W]+)\s*}}/g.test(value)) {
+  // if value empty, null, pending  or document_id="{{data.value}}" return false
+
+  function checkAttrValue(attr) {
+    if (!attr) return false;
+    if (/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
       return false;
     }
+    if (attr == 'pending') return false;
+
     // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
-    if (value.toLowerCase() === "null") return false;
+    if (attr.toLowerCase() === "null") return false;
     return true;
   }
   
@@ -230,15 +233,15 @@
   }
   
   // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
-  function checkDocumentId(document_id) {
-    try {
-      if (!document_id) return false;
-      if (document_id.toLowerCase() === "null") return false;
-      return true;
-    } catch(error) {
-      return false;
-    }
-  }
+  // function checkDocumentId(document_id) {
+  //   try {
+  //     if (!document_id) return false;
+  //     if (document_id.toLowerCase() === "null") return false;
+  //     return true;
+  //   } catch(error) {
+  //     return false;
+  //   }
+  // }
   
   function isJsonString(str_data) {
   try {
@@ -267,7 +270,7 @@
     isFlatAttr,
     checkAttrValue,
     isCRDT,
-    checkDocumentId,
+    // checkDocumentId,
     getValueByPath,
     isJsonString
   }
