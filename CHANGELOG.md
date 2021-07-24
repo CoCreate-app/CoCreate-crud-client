@@ -1,3 +1,10 @@
+## [1.1.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.19...v1.1.20) (2021-07-24)
+
+
+### Bug Fixes
+
+* replaced form.checkDoumentId  with crud.checkAttrValue ([be42601](https://github.com/CoCreate-app/CoCreate-crud-client/commit/be4260143f9894b963f43c3d507779f612159066))
+
 ## [1.1.19](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.18...v1.1.19) (2021-07-19)
 
 
