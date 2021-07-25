@@ -166,7 +166,7 @@
   }
   
   const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
-  const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'data-crdt'));
+  const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'crdt'));
   const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
@@ -196,21 +196,7 @@
     return true;
   }
   
-  function isJsonString(str_data) {
-    try {
-      let json_data = JSON.parse(str_data);
-      if (typeof json_data === "object" && json_data != null) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-    catch (e) {
-      return false;
-    }
-  }
-  
+
   // ToDo isCrdt is not about inputs and textareas.. it is all for all elements using crdt
   function isCRDT(input) {
     if (window && !window.CoCreate.crdt) return false;
@@ -270,6 +256,7 @@
     isFlatAttr,
     checkAttrValue,
     isCRDT,
+    isCrdtAttr,
     // checkDocumentId,
     getValueByPath,
     isJsonString

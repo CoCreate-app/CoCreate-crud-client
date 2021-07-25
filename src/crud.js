@@ -272,10 +272,10 @@
       return null;
     },
 
-    save: async function(el_data_list) {
+    save: function(el_data_list) {
       if (!el_data_list) return;
       for (let i = 0; i < el_data_list.length; i++) {
-        await this.saveElement(el_data_list[i]);
+        this.saveElement(el_data_list[i]);
       }
     },
 
@@ -299,43 +299,49 @@
       let data;
       if (!document_id) {
         element.setAttribute('data-document_id', 'pending');
-        data = await this.createDocument({
-          collection,
-          broadcast,
-          broadcast_sender,
-          is_flat: is_flat !== false ? true : false,
-          data: {
-            [name]: value
-          },
-        })
+        let form = element.closest('form');
+        if (form) {
+          CoCreate.form.save(form)
+        }
+        else {
+          data = await this.createDocument({
+            collection,
+            broadcast,
+            broadcast_sender,
+            is_flat: is_flat !== false ? true : false,
+            data: {
+              [name]: value
+            },
+          })
+        }
       }
-    
-      // if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
-      //   wnd.CoCreate.crdt.replaceText({
-      //     collection,
-      //     name,
-      //     document_id: data? data.document_id : document_id,
-      //     value
-      //   })
-      // }
       else {
-        data = await this.updateDocument({
-          namespace,
-          room,
-          collection,
-          document_id,
-          upsert: true,
-          broadcast,
-          broadcast_sender,
-          is_flat: is_flat !== false ? true : false,
-          data: {
-            [name]: value
-          },
-        })
-
+        if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
+          wnd.CoCreate.crdt.replaceText({
+            collection,
+            name,
+            document_id: data? data.document_id : document_id,
+            value
+          })
+        }
+        else {
+          data = await this.updateDocument({
+            namespace,
+            room,
+            collection,
+            document_id,
+            upsert: true,
+            broadcast,
+            broadcast_sender,
+            is_flat: is_flat !== false ? true : false,
+            data: {
+              [name]: value
+            },
+          })
+        }
       }
       if (data && (!document_id || document_id !== data.document_id)) {
-        await this.setDocumentId({
+        this.setDocumentId({
           element,
           collection,
           document_id: data.document_id
@@ -344,7 +350,7 @@
     },
 
 
-    setDocumentId: async function({
+    setDocumentId: function({
       element,
       form,
       collection,
@@ -354,7 +360,7 @@
         form = element.closest('form');
       }
       if (form) {
-        await CoCreate.form.setDocumentId(form, {
+        CoCreate.form.setDocumentId(form, {
           collection,
           document_id
         })
