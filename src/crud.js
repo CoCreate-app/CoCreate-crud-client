@@ -316,7 +316,7 @@
         }
       }
       else {
-        if (utilsCrud.isCRDT(element) && wnd.CoCreate.crdt) {
+        if (wnd.CoCreate.crdt) {
           wnd.CoCreate.crdt.replaceText({
             collection,
             name,

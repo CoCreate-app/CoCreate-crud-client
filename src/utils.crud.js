@@ -136,7 +136,17 @@
     let collection = el.getAttribute('data-collection')
     let document_id = el.getAttribute('data-document_id')
     let name = el.getAttribute('name')
-    let room = el.getAttribute('data-room')
+    let isCrud = el.getAttribute('crud')
+    let isCrdt = el.getAttribute('crdt')
+    let isRealtime = el.getAttribute('realtime')
+    let isSave = el.getAttribute('save')
+    let isUpdate = el.getAttribute('udpdate')
+    let isRead = el.getAttribute('read')
+    let isListen = el.getAttribute('listen')
+    let room = el.getAttribute('room')
+    let namespace = el.getAttribute('namespace')
+    let isBroadcast = el.getAttribute('broadcast')
+    let isBroadcastSender = el.getAttribute('broadcast-sender')
     
     let is_crud = isCrudAttr(el);
     let is_crdt = isCrdtAttr(el);
@@ -152,6 +162,17 @@
       collection, 
       document_id, 
       name, 
+      isCrud, 
+      isCrdt, 
+      isRealtime, 
+      isSave, 
+      isUpdate,
+      isRead, 
+      isListen,
+      isBroadcast,
+      isBroadcastSender,
+      room, 
+      namespace, 
       is_crud, 
       is_crdt, 
       is_realtime, 
@@ -160,8 +181,7 @@
       is_update, 
       is_listen, 
       broadcast, 
-      broadcast_sender,
-      room
+      broadcast_sender
     }
   }
   
