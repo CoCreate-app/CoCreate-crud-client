@@ -1,3 +1,11 @@
+## [1.1.22](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.21...v1.1.22) (2021-07-27)
+
+
+### Bug Fixes
+
+* add additional attributes to utils ([4478e87](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4478e873c37773b54791fb24df15bd2bf248741a))
+* remove document_id pending ([4441b6f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4441b6fd929820a454eb61afe241569efd5c302b))
+
 ## [1.1.21](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.20...v1.1.21) (2021-07-25)
 
 
