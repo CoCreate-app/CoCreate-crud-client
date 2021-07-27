@@ -79,13 +79,17 @@
     }
   }
   
+  // ToDo: currently not in use
   function isObject(item) {
     return (!!item) && (item.constructor === Object);
   }
+  
+  
   function isArray(item) {
     return (!!item) && (item.constructor === Array);
   }
   
+  // ToDo: currently not in use
   function decodeObject(data) {
     let keys = Object.keys(data)
     let objectData = {};
@@ -103,7 +107,8 @@
     })
     return objectData;
   }
-  
+
+  // ToDo: currently use only by htmltags
   function encodeObject(data) {
     let keys = Object.keys(data);
     let newData = {};
@@ -148,8 +153,8 @@
     let isBroadcast = el.getAttribute('broadcast')
     let isBroadcastSender = el.getAttribute('broadcast-sender')
     
-    let is_crud = isCrudAttr(el);
-    let is_crdt = isCrdtAttr(el);
+    // let is_crud = isCrudAttr(el);
+    // let is_crdt = isCrdtAttr(el);
     let is_realtime = isRealtimeAttr(el);
     let is_save = isSaveAttr(el);
     let is_read = isReadAttr(el);
@@ -173,8 +178,8 @@
       isBroadcastSender,
       room, 
       namespace, 
-      is_crud, 
-      is_crdt, 
+      // is_crud, 
+      // is_crdt, 
       is_realtime, 
       is_save, 
       is_read, 
@@ -185,8 +190,8 @@
     }
   }
   
-  const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
-  const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'crdt'));
+  // const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
+  // const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'crdt'));
   const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
@@ -218,25 +223,25 @@
   
 
   // ToDo isCrdt is not about inputs and textareas.. it is all for all elements using crdt
-  function isCRDT(input) {
-    if (window && !window.CoCreate.crdt) return false;
+  // function isCRDT(input) {
+  //   if (window && !window.CoCreate.crdt) return false;
 
-    const { collection, document_id, name, is_read } = getAttr(input)
-    if (isJsonString(collection)) return false;
-    if (isJsonString(name)) return false;
+  //   const { collection, document_id, name, is_read } = getAttr(input)
+  //   if (isJsonString(collection)) return false;
+  //   if (isJsonString(name)) return false;
 
   
-    if ((input.tagName === "INPUT" && ["text", "email", "tel", "url"].includes(input.type)) || input.tagName === "TEXTAREA") {
+  //   if ((input.tagName === "INPUT" && ["text", "email", "tel", "url"].includes(input.type)) || input.tagName === "TEXTAREA") {
       
-      if (!name) return false;
-      if (!isRealtimeAttr(input)) return false;
-      if (input.getAttribute("data-unique") === "true") return false;
-      if (input.type === 'password') return false;
-      if (!isReadAttr(input)) return false;
-      return true;
-    }
-    return false;
-  }
+  //     if (!name) return false;
+  //     if (!isRealtimeAttr(input)) return false;
+  //     if (input.getAttribute("data-unique") === "true") return false;
+  //     if (input.type === 'password') return false;
+  //     if (!isReadAttr(input)) return false;
+  //     return true;
+  //   }
+  //   return false;
+  // }
   
   // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
   // function checkDocumentId(document_id) {
@@ -275,9 +280,9 @@
     isUpdateAttr,
     isFlatAttr,
     checkAttrValue,
-    isCRDT,
-    isCrdtAttr,
-    // checkDocumentId,
+    // isCRDT,
+    // isCrdtAttr,
+        // checkDocumentId,
     getValueByPath,
     isJsonString
   }
