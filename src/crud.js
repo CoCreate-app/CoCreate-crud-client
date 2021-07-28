@@ -247,7 +247,7 @@
                 name,
                 namespace,
                 room,
-                is_read
+                isRead
             } = utilsCrud.getAttr(element)
             if (!utilsCrud.checkAttrValue(document_id)) return;
 
@@ -258,7 +258,8 @@
                 return null
             }
 
-            if (document_id && collection && is_read) {
+            if (isRead == "false") return;
+            if (document_id && collection) {
                 const responseData = await this.readDocument({
                     namespace,
                     room,
@@ -281,15 +282,15 @@
 
         saveElement: async function ({ element, value, is_flat }) {
             if (!element || value === null) return;
-            let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, is_save } = utilsCrud.getAttr(element)
+            let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element)
 
-            if (!is_save || !collection || !name || document_id === 'pending') {
+            if (isSave == "false" || !collection || !name) {
                 return;
             }
 
             let data;
             if (!document_id) {
-                // element.setAttribute('data-document_id', 'pending');
+                // element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
                 if (form) {
                     CoCreate.form.save(form)
@@ -357,7 +358,7 @@
                 })
             }
             else if (element) {
-                element.setAttribute('data-document_id', document_id);
+                element.setAttribute('document_id', document_id);
             }
         },
 

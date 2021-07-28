@@ -138,8 +138,8 @@
   function getAttr(el) {
     if (!el) return
   
-    let collection = el.getAttribute('data-collection')
-    let document_id = el.getAttribute('data-document_id')
+    let collection = el.getAttribute('collection')
+    let document_id = el.getAttribute('document_id')
     let name = el.getAttribute('name')
     let isCrud = el.getAttribute('crud')
     let isCrdt = el.getAttribute('crdt')
@@ -155,11 +155,11 @@
     
     // let is_crud = isCrudAttr(el);
     // let is_crdt = isCrdtAttr(el);
-    let is_realtime = isRealtimeAttr(el);
-    let is_save = isSaveAttr(el);
-    let is_read = isReadAttr(el);
-    let is_update = isUpdateAttr(el);
-    let is_listen = isListenAttr(el);
+    // let is_realtime = isRealtimeAttr(el);
+    // let is_save = isSaveAttr(el);
+    // let is_read = isReadAttr(el);
+    // let is_update = isUpdateAttr(el);
+    // let is_listen = isListenAttr(el);
     let broadcast = isBoradcast(el)
     let broadcast_sender = isBoradcastSender(el)
 
@@ -180,11 +180,11 @@
       namespace, 
       // is_crud, 
       // is_crdt, 
-      is_realtime, 
-      is_save, 
-      is_read, 
-      is_update, 
-      is_listen, 
+      // is_realtime, 
+      // is_save, 
+      // is_read, 
+      // is_update, 
+      // is_listen, 
       broadcast, 
       broadcast_sender
     }
@@ -192,13 +192,13 @@
   
   // const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
   // const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'crdt'));
-  const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'data-realtime'));
+  const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'realtime'));
   const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
   const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
   const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
   const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
-  const isBoradcast = (el) => ( __isValueOfAttr(el, 'data-broadcast'));
-  const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'data-broadcast_sender'));
+  const isBoradcast = (el) => ( __isValueOfAttr(el, 'broadcast'));
+  const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'broadcast-sender'));
   const isListenAttr = (el) => ( __isValueOfAttr(el, 'data-listen'));
 
   function __isValueOfAttr(el, attr) {
@@ -207,15 +207,14 @@
     return flag
   }
   
-  // if value empty, null, pending  or document_id="{{data.value}}" return false
+  // if value empty, null  or document_id="{{data.value}}" return false
 
   function checkAttrValue(attr) {
     if (!attr) return false;
     if (/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
       return false;
     }
-    if (attr == 'pending') return false;
-
+    
     // ToDo temporary... Once we update crdt to not use document_id Null will no longer need
     if (attr.toLowerCase() === "null") return false;
     return true;
