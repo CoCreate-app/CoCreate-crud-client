@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.0...v1.2.1) (2021-07-28)
+
+
+### Bug Fixes
+
+* remove data- from fetch, pass and filter ([8924ee5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8924ee5497078272f87e58feb95201e5fef2eed5))
+
 # [1.2.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.22...v1.2.0) (2021-07-28)
 
 
