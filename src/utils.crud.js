@@ -193,13 +193,13 @@
   // const isCrudAttr = (el) => ( __isValueOfAttr(el, 'data-crud'));
   // const isCrdtAttr = (el) => ( __isValueOfAttr(el, 'crdt'));
   const isRealtimeAttr = (el) => ( __isValueOfAttr(el, 'realtime'));
-  const isReadAttr = (el) => ( __isValueOfAttr(el, 'data-read_value'));
-  const isSaveAttr = (el) => ( __isValueOfAttr(el, 'data-save_value'));
-  const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'data-update_value'));
+  const isReadAttr = (el) => ( __isValueOfAttr(el, 'read'));
+  const isSaveAttr = (el) => ( __isValueOfAttr(el, 'save'));
+  const isUpdateAttr = (el) => ( __isValueOfAttr(el, 'update'));
   const isFlatAttr = (el) => ( __isValueOfAttr(el, 'data-flat'));
   const isBoradcast = (el) => ( __isValueOfAttr(el, 'broadcast'));
   const isBoradcastSender = (el) => ( __isValueOfAttr(el, 'broadcast-sender'));
-  const isListenAttr = (el) => ( __isValueOfAttr(el, 'data-listen'));
+  const isListenAttr = (el) => ( __isValueOfAttr(el, 'listen'));
 
   function __isValueOfAttr(el, attr) {
     if (!el) return false;
