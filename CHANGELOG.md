@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.22...v1.2.0) (2021-07-28)
+
+
+### Features
+
+* add new is{attribute} system and remove data- from attributtes ([71a39be](https://github.com/CoCreate-app/CoCreate-crud-client/commit/71a39be34331d00040d4f34ad62d01691ec68cb2))
+
 ## [1.1.22](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.1.21...v1.1.22) (2021-07-27)
 
 
