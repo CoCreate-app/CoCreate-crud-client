@@ -1,3 +1,11 @@
+## [1.2.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.1...v1.2.2) (2021-08-02)
+
+
+### Bug Fixes
+
+* remove data- from attributes ([4a7aac8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4a7aac8fc1e10bed1bcb1330746551ef73eb4ff3))
+* update data-fullscreen to fullscreen ([5a84b5e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5a84b5e995461886cf0474ed491dbd083fedabd0))
+
 ## [1.2.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.0...v1.2.1) (2021-07-28)
 
 
