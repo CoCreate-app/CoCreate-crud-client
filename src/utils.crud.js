@@ -136,7 +136,7 @@
   }
   
   function getAttr(el) {
-    if (!el) return
+    if (!el) return;
   
     let collection = el.getAttribute('collection')
     let document_id = el.getAttribute('document_id')
