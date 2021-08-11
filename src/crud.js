@@ -209,8 +209,9 @@
             let request_data = commonFunc.getCommonParamsExtend(info)
             request_data['collection'] = info['collection']
             request_data['import_type'] = extension;
+            request_data['file'] = file;
             this.socket.send('importDB', request_data)
-            this.socket.sendFile(file);
+            // this.socket.sendFile(file);
         },
 
         listen: function (message, fun) {
