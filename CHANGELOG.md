@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.3...v1.2.4) (2021-08-12)
+
+
+### Bug Fixes
+
+* update data-module_id to document_id ([73327d0](https://github.com/CoCreate-app/CoCreate-crud-client/commit/73327d014e0f853487a82349166b1291e1ef58ff))
+
 ## [1.2.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.2...v1.2.3) (2021-08-10)
 
 
