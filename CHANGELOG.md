@@ -1,3 +1,11 @@
+## [1.2.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.4...v1.2.5) (2021-08-13)
+
+
+### Bug Fixes
+
+* remove exportCollection function ([3c1d3af](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3c1d3af9db6bd372edd37eccd233f3dadab3bbfc))
+* update to  docs ([830141b](https://github.com/CoCreate-app/CoCreate-crud-client/commit/830141b11638c5641be4e163a496472de280b72c))
+
 ## [1.2.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.3...v1.2.4) (2021-08-12)
 
 
