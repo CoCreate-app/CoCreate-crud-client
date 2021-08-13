@@ -1,12 +1,12 @@
 // import {getCommonParams, getCommonParamsExtend, generateSocketClient} from "@cocreate/socket-client/src/common-fun.js"
 
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(["@cocreate/socket-client/src/common-fun.js", "./utils.crud.js"], function (commonFunc, utilsCrud) {
+(function(root, factory) {
+    if(typeof define === 'function' && define.amd) {
+        define(["@cocreate/socket-client/src/common-fun.js", "./utils.crud.js"], function(commonFunc, utilsCrud) {
             return factory(window, commonFunc, utilsCrud)
         });
     }
-    else if (typeof module === 'object' && module.exports) {
+    else if(typeof module === 'object' && module.exports) {
         let wnd = {
             config: {},
             File: {}
@@ -18,40 +18,16 @@
     else {
         root.returnExports = factory(window, root["@cocreate/socket-client/src/common-fun.js"], root["./utils.crud.js"]);
     }
-}(typeof self !== 'undefined' ? self : this, function (wnd, commonFunc, utilsCrud) {
+}(typeof self !== 'undefined' ? self : this, function(wnd, commonFunc, utilsCrud) {
 
     const CoCreateCRUD = {
         socket: null,
-        setSocket: function (socket) {
+        setSocket: function(socket) {
             this.socket = socket;
         },
 
-        readDocumentList: async function (info) {
-            if (!info) return false;
-            let request_data = commonFunc.getCommonParams();
-            if (!info.collection) {
-                return false;
-            }
-
-            request_data = { ...request_data,
-                ...info
-            };
-
-            const room = commonFunc.generateSocketClient(info.namespace, info.room);
-            const request_id = this.socket.send('readDocumentList', request_data);
-
-            try {
-                let response = await this.socket.listenAsync(request_id);
-                return response;
-            }
-            catch (e) {
-                console.log(e)
-                return null;
-            }
-        },
-
-        createDocument: async function (info) {
-            if (info === null) {
+        createDocument: async function(info) {
+            if(info === null) {
                 return false;
             }
             let commonData = commonFunc.getCommonParamsExtend(info);
@@ -61,10 +37,10 @@
 
             let data = info.data || {};
 
-            if (!data['organization_id']) {
+            if(!data['organization_id']) {
                 data['organization_id'] = commonData.organization_id || wnd.config.organization_Id
             }
-            if (info['data']) {
+            if(info['data']) {
                 data = { ...data,
                     ...info['data']
                 }
@@ -80,16 +56,16 @@
                 let response = await this.socket.listenAsync(request_id);
                 return response;
             }
-            catch (e) {
+            catch(e) {
                 console.log(e)
                 return null;
             }
         },
 
-        updateDocument: async function (info) {
-            if (!info) return false;
+        updateDocument: async function(info) {
+            if(!info) return false;
 
-            if (info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
+            if(info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
                 return false;
 
             let commonData = commonFunc.getCommonParamsExtend(info);
@@ -98,19 +74,19 @@
                 ...commonData
             };
 
-            if (typeof info['data'] === 'object') {
+            if(typeof info['data'] === 'object') {
                 request_data['set'] = info['data']
             }
-            if (Array.isArray(info['delete_fields'])) request_data['unset'] = info['delete_fields'];
+            if(Array.isArray(info['delete_fields'])) request_data['unset'] = info['delete_fields'];
 
-            if (!request_data['set'] && !request_data['unset']) return false;
+            if(!request_data['set'] && !request_data['unset']) return false;
 
-            if (info.broadcast === false) {
+            if(info.broadcast === false) {
                 request_data['broadcast'] = false;
             }
 
             /** socket parameters **/
-            if (info['broadcast_sender'] === undefined) {
+            if(info['broadcast_sender'] === undefined) {
                 request_data['broadcast_sender'] = true;
             }
 
@@ -121,7 +97,7 @@
                 let response = await this.socket.listenAsync(request_id);
                 return response;
             }
-            catch (e) {
+            catch(e) {
                 console.log(e)
                 return null;
             }
@@ -130,14 +106,14 @@
         /**
          * Usage: var data = await crud.readDocumentNew({collection, document_id})
          */
-        readDocument: async function (info) {
+        readDocument: async function(info) {
 
             //. 
-            if (info === null) {
+            if(info === null) {
                 return null;
             }
 
-            if (!info || !utilsCrud.checkAttrValue(info['document_id'])) {
+            if(!info || !utilsCrud.checkAttrValue(info['document_id'])) {
                 return null;
             }
 
@@ -153,15 +129,15 @@
                 let response = await this.socket.listenAsync(request_id);
                 return response;
             }
-            catch (e) {
+            catch(e) {
                 console.log(e)
                 return null;
             }
         },
 
 
-        deleteDocument: async function (info) {
-            if (!info || !utilsCrud.checkAttrValue(info['document_id'])) {
+        deleteDocument: async function(info) {
+            if(!info || !utilsCrud.checkAttrValue(info['document_id'])) {
                 return null;
             }
 
@@ -177,54 +153,76 @@
                 let response = await this.socket.listenAsync(request_id);
                 return response;
             }
-            catch (e) {
+            catch(e) {
                 console.log(e)
                 return null;
             }
         },
 
+        readDocumentList: async function(info) {
+            if(!info) return false;
+            let request_data = commonFunc.getCommonParams();
+            if(!info.collection) {
+                return false;
+            }
 
-        /** export / import db functions **/
-        exportCollection: function (info) {
-            if (info === null) return;
+            request_data = { ...request_data,
+                ...info
+            };
 
-            let request_data = commonFunc.getCommonParamsExtend(info);
-            request_data['collection'] = info['collection'];
-            request_data['export_type'] = info['export_type'];
+            const room = commonFunc.generateSocketClient(info.namespace, info.room);
+            const request_id = this.socket.send('readDocumentList', request_data);
 
-            request_data['metadata'] = info['metadata']
-            this.socket.send('exportDB', request_data);
+            try {
+                let response = await this.socket.listenAsync(request_id);
+                return response;
+            }
+            catch(e) {
+                console.log(e)
+                return null;
+            }
         },
 
-        importCollection: function (info) {
-            const {
-                file
-            } = info;
-            if (info === null || !(file instanceof wnd.File)) return;
-
-            const extension = file.name.split(".").pop();
-
-            if (!['json', 'csv'].some((item) => item === extension)) return;
-
-            let request_data = commonFunc.getCommonParamsExtend(info)
-            request_data['collection'] = info['collection']
-            request_data['import_type'] = extension;
-            request_data['file'] = file;
-            this.socket.send('importDB', request_data)
-            // this.socket.sendFile(file);
+        importCollection: function(info) {
+            const { file } = info;
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+                let fileContent = event.target.result;
+                
+                try{
+                    let parsed = JSON.parse(fileContent);
+                    //assuming the json is an array a validation required
+                    parsed.forEach(item=>{
+                        if (item.hasOwnProperty('_id')) {
+                            delete item['_id']  
+                        }
+                        let collection = info['collection'];
+                        this.createDocument({
+                            collection,
+                            data: item
+                        });
+                    });
+        			document.dispatchEvent(new CustomEvent('imported', {
+        				detail: {}
+        			}))
+                }catch(err){
+                    console.error('json failed');
+                }
+            });
+            reader.readAsText(file);
         },
 
-        listen: function (message, fun) {
+        listen: function(message, fun) {
             this.socket.listen(message, fun);
         },
 
         // ToDo: Depreciate?
-        listenAsync: function (eventname) {
+        listenAsync: function(eventname) {
             return this.socket.listenAsync(eventname);
         },
 
-        createSocket: function (host, namespace) {
-            if (namespace) {
+        createSocket: function(host, namespace) {
+            if(namespace) {
                 this.socket.create({
                     namespace: namespace,
                     room: null,
@@ -241,7 +239,7 @@
             }
         },
 
-        read: async function (element, is_flat) {
+        read: async function(element, is_flat) {
             const {
                 collection,
                 document_id,
@@ -250,17 +248,17 @@
                 room,
                 isRead
             } = utilsCrud.getAttr(element)
-            if (!utilsCrud.checkAttrValue(document_id)) return;
+            if(!utilsCrud.checkAttrValue(document_id)) return;
 
-            if (is_flat !== false) is_flat = true
+            if(is_flat !== false) is_flat = true
 
-            if (utilsCrud.isJsonString(collection) ||
+            if(utilsCrud.isJsonString(collection) ||
                 utilsCrud.isJsonString(document_id)) {
                 return null
             }
 
-            if (isRead == "false") return;
-            if (document_id && collection) {
+            if(isRead == "false") return;
+            if(document_id && collection) {
                 const responseData = await this.readDocument({
                     namespace,
                     room,
@@ -274,26 +272,26 @@
             return null;
         },
 
-        save: function (el_data_list) {
-            if (!el_data_list) return;
-            for (let i = 0; i < el_data_list.length; i++) {
+        save: function(el_data_list) {
+            if(!el_data_list) return;
+            for(let i = 0; i < el_data_list.length; i++) {
                 this.saveElement(el_data_list[i]);
             }
         },
 
-        saveElement: async function ({ element, value, is_flat }) {
-            if (!element || value === null) return;
+        saveElement: async function({ element, value, is_flat }) {
+            if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element)
 
-            if (isSave == "false" || !collection || !name) {
+            if(isSave == "false" || !collection || !name) {
                 return;
             }
 
             let data;
-            if (!document_id) {
+            if(!document_id) {
                 // element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
-                if (form) {
+                if(form) {
                     CoCreate.form.save(form)
                 }
                 else {
@@ -309,7 +307,7 @@
                 }
             }
             else {
-                if (wnd.CoCreate.crdt) {
+                if(wnd.CoCreate.crdt) {
                     wnd.CoCreate.crdt.replaceText({
                         collection,
                         name,
@@ -333,7 +331,7 @@
                     })
                 }
             }
-            if (data && (!document_id || document_id !== data.document_id)) {
+            if(data && (!document_id || document_id !== data.document_id)) {
                 this.setDocumentId({
                     element,
                     collection,
@@ -343,22 +341,22 @@
         },
 
 
-        setDocumentId: function ({
+        setDocumentId: function({
             element,
             form,
             collection,
             document_id
         }) {
-            if (!form && element) {
+            if(!form && element) {
                 form = element.closest('form');
             }
-            if (form) {
+            if(form) {
                 CoCreate.form.setDocumentId(form, {
                     collection,
                     document_id
                 })
             }
-            else if (element) {
+            else if(element) {
                 element.setAttribute('document_id', document_id);
             }
         },
