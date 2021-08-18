@@ -272,14 +272,7 @@
             return null;
         },
 
-        save: function(el_data_list) {
-            if(!el_data_list) return;
-            for(let i = 0; i < el_data_list.length; i++) {
-                this.saveElement(el_data_list[i]);
-            }
-        },
-
-        saveElement: async function({ element, value, is_flat }) {
+        save: async function(element, value, is_flat) {
             if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element)
 
@@ -289,7 +282,6 @@
 
             let data;
             if(!document_id) {
-                // element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
                 if(form) {
                     CoCreate.form.save(form)
