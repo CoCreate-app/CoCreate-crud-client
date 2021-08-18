@@ -1,3 +1,11 @@
+## [1.2.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.5...v1.2.6) (2021-08-18)
+
+
+### Bug Fixes
+
+* refactor crud.save() ([47af466](https://github.com/CoCreate-app/CoCreate-crud-client/commit/47af4663975d3df9d9ac910cb66ae057c9e7f1ee))
+* refactor setDocumentId ([d014cfa](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d014cfa135c74b3adda415f79e9b7e759b4c0053))
+
 ## [1.2.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.4...v1.2.5) (2021-08-13)
 
 
