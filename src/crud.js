@@ -188,13 +188,13 @@
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
                 let fileContent = event.target.result;
-                
-                try{
+
+                try {
                     let parsed = JSON.parse(fileContent);
                     //assuming the json is an array a validation required
-                    parsed.forEach(item=>{
-                        if (item.hasOwnProperty('_id')) {
-                            delete item['_id']  
+                    parsed.forEach(item => {
+                        if(item.hasOwnProperty('_id')) {
+                            delete item['_id']
                         }
                         let collection = info['collection'];
                         this.createDocument({
@@ -202,10 +202,11 @@
                             data: item
                         });
                     });
-        			document.dispatchEvent(new CustomEvent('imported', {
-        				detail: {}
-        			}))
-                }catch(err){
+                    document.dispatchEvent(new CustomEvent('imported', {
+                        detail: {}
+                    }))
+                }
+                catch(err) {
                     console.error('json failed');
                 }
             });
@@ -320,35 +321,25 @@
                         data: {
                             [name]: value
                         },
-                    })
+                    });
                 }
             }
             if(data && (!document_id || document_id !== data.document_id)) {
-                this.setDocumentId({
-                    element,
-                    collection,
-                    document_id: data.document_id
-                })
+                this.setDocumentId(element, collection, data.document_id);
             }
         },
 
 
-        setDocumentId: function({
-            element,
-            form,
-            collection,
-            document_id
-        }) {
-            if(!form && element) {
-                form = element.closest('form');
-            }
+        setDocumentId: function(element, collection, document_id) {
+            if (!element) return;
+            let form = element.closest('form');
             if(form) {
                 CoCreate.form.setDocumentId(form, {
                     collection,
                     document_id
-                })
+                });
             }
-            else if(element) {
+            else {
                 element.setAttribute('document_id', document_id);
             }
         },
