@@ -3,16 +3,16 @@
 (function(root, factory) {
     if(typeof define === 'function' && define.amd) {
         define(["@cocreate/socket-client/src/common-fun.js", "./utils.crud.js"], function(commonFunc, utilsCrud) {
-            return factory(window, commonFunc, utilsCrud)
+            return factory(window, commonFunc, utilsCrud);
         });
     }
     else if(typeof module === 'object' && module.exports) {
         let wnd = {
             config: {},
             File: {}
-        }
-        const commonFunc = require("@cocreate/socket-client/src/common-fun.js")
-        const utils = require("./utils.crud.js")
+        };
+        const commonFunc = require("@cocreate/socket-client/src/common-fun.js");
+        const utils = require("./utils.crud.js");
         module.exports = factory(wnd, commonFunc, utils);
     }
     else {
@@ -38,12 +38,12 @@
             let data = info.data || {};
 
             if(!data['organization_id']) {
-                data['organization_id'] = commonData.organization_id || wnd.config.organization_Id
+                data['organization_id'] = commonData.organization_id || wnd.config.organization_Id;
             }
             if(info['data']) {
                 data = { ...data,
                     ...info['data']
-                }
+                };
             }
 
             //. rebuild data
@@ -57,7 +57,7 @@
                 return response;
             }
             catch(e) {
-                console.log(e)
+                console.log(e);
                 return null;
             }
         },
@@ -75,7 +75,7 @@
             };
 
             if(typeof info['data'] === 'object') {
-                request_data['set'] = info['data']
+                request_data['set'] = info['data'];
             }
             if(Array.isArray(info['delete_fields'])) request_data['unset'] = info['delete_fields'];
 
@@ -98,7 +98,7 @@
                 return response;
             }
             catch(e) {
-                console.log(e)
+                console.log(e);
                 return null;
             }
         },
@@ -130,7 +130,7 @@
                 return response;
             }
             catch(e) {
-                console.log(e)
+                console.log(e);
                 return null;
             }
         },
@@ -154,7 +154,7 @@
                 return response;
             }
             catch(e) {
-                console.log(e)
+                console.log(e);
                 return null;
             }
         },
@@ -178,7 +178,7 @@
                 return response;
             }
             catch(e) {
-                console.log(e)
+                console.log(e);
                 return null;
             }
         },
@@ -194,7 +194,7 @@
                     //assuming the json is an array a validation required
                     parsed.forEach(item => {
                         if(item.hasOwnProperty('_id')) {
-                            delete item['_id']
+                            delete item['_id'];
                         }
                         let collection = info['collection'];
                         this.createDocument({
@@ -204,7 +204,7 @@
                     });
                     document.dispatchEvent(new CustomEvent('imported', {
                         detail: {}
-                    }))
+                    }));
                 }
                 catch(err) {
                     console.error('json failed');
@@ -248,14 +248,14 @@
                 namespace,
                 room,
                 isRead
-            } = utilsCrud.getAttr(element)
+            } = utilsCrud.getAttr(element);
             if(!utilsCrud.checkAttrValue(document_id)) return;
 
-            if(is_flat !== false) is_flat = true
+            if(is_flat !== false) is_flat = true;
 
             if(utilsCrud.isJsonString(collection) ||
                 utilsCrud.isJsonString(document_id)) {
-                return null
+                return null;
             }
 
             if(isRead == "false") return;
@@ -267,22 +267,24 @@
                     document_id,
                     name,
                     is_flat
-                })
-                return responseData
+                });
+                return responseData;
             }
             return null;
         },
 
         save: async function(element, value, is_flat) {
             if(!element || value === null) return;
-            let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element)
+            let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
 
+            // if(isSave == "false" || !collection || !name || document_id == 'pending') {
             if(isSave == "false" || !collection || !name) {
                 return;
             }
 
             let data;
             if(!document_id) {
+                // element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
                 if(form) {
                     CoCreate.form.save(form)
@@ -296,7 +298,7 @@
                         data: {
                             [name]: value
                         },
-                    })
+                    });
                 }
             }
             else {
@@ -306,7 +308,7 @@
                         name,
                         document_id: data ? data.document_id : document_id,
                         value
-                    })
+                    });
                 }
                 else {
                     data = await this.updateDocument({
@@ -345,7 +347,7 @@
         },
 
         ...utilsCrud
-    }
+    };
 
     return CoCreateCRUD;
 }));
