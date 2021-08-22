@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.9...v1.2.10) (2021-08-22)
+
+
+### Bug Fixes
+
+* removed data- from main-content, clone, filter-value_type ([1b00231](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1b0023122a7d80255613c08db0aca13ae3fa1f59))
+
 ## [1.2.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.8...v1.2.9) (2021-08-22)
 
 
