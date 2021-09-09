@@ -1,3 +1,10 @@
+## [1.2.16](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.15...v1.2.16) (2021-09-09)
+
+
+### Bug Fixes
+
+* CoCreate.config directory, path, name and  public ([1e8ebde](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1e8ebde0c8d06570da0fdf3a43b05e6617c1150d))
+
 ## [1.2.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.14...v1.2.15) (2021-09-08)
 
 
