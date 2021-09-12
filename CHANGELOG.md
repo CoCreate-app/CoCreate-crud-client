@@ -1,3 +1,10 @@
+## [1.2.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.19...v1.2.20) (2021-09-12)
+
+
+### Bug Fixes
+
+* update sidenav to use resize and toggle ([b762f8e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b762f8ee8a1d2e0eff778f8a7320d72007a6faee))
+
 ## [1.2.19](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.18...v1.2.19) (2021-09-09)
 
 
