@@ -1,3 +1,10 @@
+## [1.2.21](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.20...v1.2.21) (2021-09-13)
+
+
+### Bug Fixes
+
+* document_id pending state ([b7533df](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b7533df82d701b235459ce312e2c851d7c3301af))
+
 ## [1.2.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.19...v1.2.20) (2021-09-12)
 
 
