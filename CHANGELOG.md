@@ -1,3 +1,10 @@
+## [1.2.22](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.21...v1.2.22) (2021-09-13)
+
+
+### Bug Fixes
+
+* return if document_id='pending' in save function ([c8d08fa](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c8d08fac44bfeee7fd942b76cdbdf79c815ba83e))
+
 ## [1.2.21](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.20...v1.2.21) (2021-09-13)
 
 
