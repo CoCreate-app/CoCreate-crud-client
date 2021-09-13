@@ -1,3 +1,4 @@
+/* global CoCreate, CustomEvent */
 // import {getCommonParams, getCommonParamsExtend, generateSocketClient} from "@cocreate/socket-client/src/common-fun.js"
 
 (function(root, factory) {
@@ -124,7 +125,6 @@
             let request_id = this.socket.send('readDocument', request_data);
 
             try {
-                //. new section
                 const room = commonFunc.generateSocketClient(info.namespace, info.room);
                 let response = await this.socket.listenAsync(request_id);
                 return response;
@@ -284,10 +284,10 @@
 
             let data;
             if(!document_id) {
-                // element.setAttribute('document_id', 'pending');
+                element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
                 if(form) {
-                    CoCreate.form.save(form)
+                    CoCreate.form.save(form);
                 }
                 else {
                     data = await this.createDocument({
@@ -334,15 +334,14 @@
 
         setDocumentId: function(element, collection, document_id) {
             if (!element) return;
+            element.setAttribute('document_id', document_id);
             let form = element.closest('form');
             if(form) {
                 CoCreate.form.setDocumentId(form, {
                     collection,
                     document_id
                 });
-            }
-            else {
-                element.setAttribute('document_id', document_id);
+                
             }
         },
 
