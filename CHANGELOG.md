@@ -1,3 +1,10 @@
+## [1.2.24](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.23...v1.2.24) (2021-09-14)
+
+
+### Bug Fixes
+
+* add cocreate.app to domains ([dce6ed8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dce6ed8827871725401239047d094079975d960a))
+
 ## [1.2.23](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.22...v1.2.23) (2021-09-13)
 
 
