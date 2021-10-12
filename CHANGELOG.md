@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.33...v1.3.0) (2021-10-12)
+
+
+### Features
+
+* Added crud.listen function ([fc2dfd6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/fc2dfd66cd08b99143330bfd9e035c28b890b31b))
+
 ## [1.2.33](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.32...v1.2.33) (2021-10-06)
 
 
