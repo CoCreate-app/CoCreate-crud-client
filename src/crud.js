@@ -213,6 +213,11 @@
             reader.readAsText(file);
         },
 
+        send: function(message, fun) {
+            // const room = commonFunc.generateSocketClient(info.namespace, info.room);
+            this.socket.send(message, fun);
+        },
+        
         listen: function(message, fun) {
             this.socket.listen(message, fun);
         },
