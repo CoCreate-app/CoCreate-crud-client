@@ -213,9 +213,9 @@
             reader.readAsText(file);
         },
 
-        send: function(message, fun) {
+        send: function(message, data, room) {
             // const room = commonFunc.generateSocketClient(info.namespace, info.room);
-            this.socket.send(message, fun);
+            this.socket.send(message, data, room);
         },
         
         listen: function(message, fun) {
