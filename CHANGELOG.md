@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.3.0...v1.4.0) (2021-10-12)
+
+
+### Features
+
+* send function support room ([eed2f8d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/eed2f8dfa6369340c49c881ea16a30b990448c25))
+
 # [1.3.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.2.33...v1.3.0) (2021-10-12)
 
 
