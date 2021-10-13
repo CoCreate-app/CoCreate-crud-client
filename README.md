@@ -1,6 +1,6 @@
 # CoCreate-crud-client
 
-An useful CRUD api operate Create, read, update, delete with built in database. Can be used as a firebase alternative. Easily configured using HTML5 data-attributes and/or JavaScript API. Take it for a spin in our [playground!](https://cocreate.app/docs/crud-client)
+An useful CRUD api operate Create, read, update, delete with built in database. Can be used as a firebase alternative. Easily configured using HTML5 attributes and/or JavaScript API. Take it for a spin in our [playground!](https://cocreate.app/docs/crud-client)
 
 ![minified](https://img.badgesize.io/https://cdn.cocreate.app/crud-client/latest/CoCreate-crud-client.min.js?style=flat-square&label=minified&color=orange)
 ![gzip](https://img.badgesize.io/https://cdn.cocreate.app/crud-client/latest/CoCreate-crud-client.min.js?compression=gzip&style=flat-square&label=gzip&color=yellow)
