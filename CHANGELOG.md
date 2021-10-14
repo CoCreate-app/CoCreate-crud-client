@@ -1,3 +1,11 @@
+## [1.4.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.2...v1.4.3) (2021-10-14)
+
+
+### Bug Fixes
+
+* commonFunc of socket now accessed from socket.xxx ([7de5b0a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7de5b0a26b0b751182d0e3a30a3d53677fe8aa41))
+* updated dependencies ([d3f77e8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d3f77e8c1bd78d196c97b28f4b155e97e943e3b2))
+
 ## [1.4.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.1...v1.4.2) (2021-10-13)
 
 
