@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.5...v1.4.6) (2021-10-15)
+
+
+### Bug Fixes
+
+* re added common-fun.js ([03401c2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/03401c21900d4cd2c1f8acdb91ae87b9123824ba))
+
 ## [1.4.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.4...v1.4.5) (2021-10-15)
 
 
