@@ -1,8 +1,8 @@
 /* global CoCreate, CustomEvent */
 (function(root, factory) {
     if(typeof define === 'function' && define.amd) {
-        define(["./utils.crud.js"], function(utilsCrud) {
-            return factory(window, utilsCrud);
+        define(["@cocreate/socket-client/src/common-fun.js", "./utils.crud.js"], function(commonFunc, utilsCrud) {
+            return factory(window, commonFunc, utilsCrud);
         });
     }
     else if(typeof module === 'object' && module.exports) {
@@ -10,13 +10,14 @@
             config: {},
             File: {}
         };
+        const commonFunc = require("@cocreate/socket-client/src/common-fun.js");
         const utils = require("./utils.crud.js");
-        module.exports = factory(wnd, utils);
+        module.exports = factory(wnd, commonFunc, utils);
     }
     else {
-        root.returnExports = factory(window, root["./utils.crud.js"]);
+        root.returnExports = factory(window, root["@cocreate/socket-client/src/common-fun.js"], root["./utils.crud.js"]);
     }
-}(typeof self !== 'undefined' ? self : this, function(wnd,  utilsCrud) {
+}(typeof self !== 'undefined' ? self : this, function(wnd, commonFunc, utilsCrud) {
 
     const CoCreateCRUD = {
         socket: null,
@@ -28,7 +29,7 @@
             if(info === null) {
                 return false;
             }
-            let commonData = this.socket.getCommonParamsExtend(info);
+            let commonData = commonFunc.getCommonParamsExtend(info);
             let request_data = { ...info,
                 ...commonData
             };
@@ -47,7 +48,7 @@
             //. rebuild data
             request_data['data'] = data;
 
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
+            const room = commonFunc.generateSocketClient(info.namespace, info.room);
             let request_id = this.socket.send('createDocument', request_data, room);
 
             try {
@@ -66,7 +67,7 @@
             if(info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
                 return false;
 
-            let commonData = this.socket.getCommonParamsExtend(info);
+            let commonData = commonFunc.getCommonParamsExtend(info);
 
             let request_data = { ...info,
                 ...commonData
@@ -88,7 +89,7 @@
                 request_data['broadcast_sender'] = true;
             }
 
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
+            const room = commonFunc.generateSocketClient(info.namespace, info.room);
             let request_id = this.socket.send('updateDocument', request_data, room);
 
             try {
@@ -115,14 +116,14 @@
                 return null;
             }
 
-            let commonData = this.socket.getCommonParamsExtend(info);
+            let commonData = commonFunc.getCommonParamsExtend(info);
             let request_data = { ...info,
                 ...commonData
             };
             let request_id = this.socket.send('readDocument', request_data);
 
             try {
-                const room = this.socket.generateSocketClient(info.namespace, info.room);
+                const room = commonFunc.generateSocketClient(info.namespace, info.room);
                 let response = await this.socket.listenAsync(request_id);
                 return response;
             }
@@ -138,12 +139,12 @@
                 return null;
             }
 
-            let commonData = this.socket.getCommonParamsExtend(info);
+            let commonData = commonFunc.getCommonParamsExtend(info);
             let request_data = { ...info,
                 ...commonData
             };
 
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
+            const room = commonFunc.generateSocketClient(info.namespace, info.room);
             let request_id = this.socket.send('deleteDocument', request_data, room);
             try {
                 //. new section
@@ -158,7 +159,7 @@
 
         readDocumentList: async function(info) {
             if(!info) return false;
-            let request_data = this.socket.getCommonParams();
+            let request_data = commonFunc.getCommonParams();
             if(!info.collection) {
                 return false;
             }
@@ -167,7 +168,7 @@
                 ...info
             };
 
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
+            const room = commonFunc.generateSocketClient(info.namespace, info.room);
             const request_id = this.socket.send('readDocumentList', request_data);
 
             try {
@@ -211,7 +212,6 @@
         },
 
         send: function(message, data, room) {
-            // const room = this.socket.generateSocketClient(info.namespace, info.room);
             this.socket.send(message, data, room);
         },
         
