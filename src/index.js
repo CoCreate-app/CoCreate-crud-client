@@ -17,11 +17,11 @@
 }(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, CoCreateCRUD) {
   if (isBrowser) {
     
-    let crud_socket = window.CoCreateCrudSocket
+    let crud_socket = window.CoCreateSockets
 
     if (!crud_socket) {
       crud_socket = new CoCreateSocket('ws');
-      window.CoCreateCrudSocket = crud_socket;
+      window.CoCreateSockets = crud_socket;
     }
     
     CoCreateCRUD.setSocket(crud_socket);
