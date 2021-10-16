@@ -1,3 +1,10 @@
+## [1.4.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.8...v1.4.9) (2021-10-16)
+
+
+### Bug Fixes
+
+* define room ([89496e9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/89496e99849b018ab4342c158e281c6126556ebf))
+
 ## [1.4.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.7...v1.4.8) (2021-10-15)
 
 
