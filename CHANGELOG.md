@@ -1,3 +1,13 @@
+## [1.4.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.12...v1.4.13) (2021-10-16)
+
+
+### Bug Fixes
+
+* merged index.js and crud.js. updated socket refrence ([f2fa220](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f2fa22016b548cbd7df7817f0f3b2a6c4c424092))
+* socket.send has better namespace and room support ([7fbe4e5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7fbe4e5512e56f7c10cdc7ab3a8056ca2ca9595b))
+* updated socket dependency ([83b2a57](https://github.com/CoCreate-app/CoCreate-crud-client/commit/83b2a579c0e7c451a7731423b0f6e84956cb9082))
+* updated to new async socket... ex. await socket.send() ([ea2abcc](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ea2abcc845b78bdc18c906747953e9472d45c34d))
+
 ## [1.4.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.11...v1.4.12) (2021-10-16)
 
 
