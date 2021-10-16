@@ -1,3 +1,10 @@
+## [1.4.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.14...v1.4.15) (2021-10-16)
+
+
+### Bug Fixes
+
+* fixed bug event name cant be found when socket-client used on server side ([a74b235](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a74b235eebdeb7abfc342010b54c63d3216c830c))
+
 ## [1.4.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.13...v1.4.14) (2021-10-16)
 
 
