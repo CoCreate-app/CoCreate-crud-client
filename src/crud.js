@@ -48,10 +48,10 @@
             request_data['data'] = data;
 
             const room = this.socket.generateSocketClient(info.namespace, info.room);
-            let request_id = this.socket.send('createDocument', request_data, room);
+            // let request_id = this.socket.send('createDocument', request_data, room);
 
             try {
-                let response = await this.socket.listenAsync(request_id);
+                let response = await this.socket.send('createDocument', request_data, room);
                 return response;
             }
             catch(e) {
@@ -89,10 +89,10 @@
             }
 
             const room = this.socket.generateSocketClient(info.namespace, info.room);
-            let request_id = this.socket.send('updateDocument', request_data, room);
+            // let request_id = this.socket.send('updateDocument', request_data, room);
 
             try {
-                let response = await this.socket.listenAsync(request_id);
+                let response = await this.socket.send('updateDocument', request_data, room);
                 return response;
             }
             catch(e) {
@@ -101,12 +101,7 @@
             }
         },
 
-        /**
-         * Usage: var data = await crud.readDocumentNew({collection, document_id})
-         */
         readDocument: async function(info) {
-
-            //. 
             if(info === null) {
                 return null;
             }
@@ -122,9 +117,9 @@
             let room = this.socket.generateSocketClient(info.namespace, info.room);
             if (!room) 
                 room = commonData.organization_Id;
-            let request_id = this.socket.send('readDocument', request_data,  room);
+            // let request_id = this.socket.send('readDocument', request_data,  room);
             try {
-                let response = await this.socket.listenAsync(request_id);
+                let response = await this.socket.send('readDocument', request_data,  room);
                 return response;
             }
             catch(e) {
@@ -145,10 +140,9 @@
             };
 
             const room = this.socket.generateSocketClient(info.namespace, info.room);
-            let request_id = this.socket.send('deleteDocument', request_data, room);
+            // let request_id = this.socket.send('deleteDocument', request_data, room);
             try {
-                //. new section
-                let response = await this.socket.listenAsync(request_id);
+                let response = await this.socket.send('deleteDocument', request_data, room);
                 return response;
             }
             catch(e) {
@@ -171,10 +165,10 @@
             if (!room) 
                 room = commonData.organization_Id;
 
-            const request_id = this.socket.send('readDocumentList', request_data, room);
+            // const request_id = this.socket.send('readDocumentList', request_data, room);
 
             try {
-                let response = await this.socket.listenAsync(request_id);
+                let response = await this.socket.send('readDocumentList', request_data, room);
                 return response;
             }
             catch(e) {
@@ -220,11 +214,6 @@
         listen: function(message, fun) {
             this.socket.listen(message, fun);
         },
-
-        // ToDo: Depreciate?
-        // listenAsync: function(eventname) {
-        //     return this.socket.listenAsync(eventname);
-        // },
 
         createSocket: function(host, namespace) {
             if(namespace) {
