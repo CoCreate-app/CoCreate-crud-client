@@ -19,37 +19,34 @@
     const CoCreateCRUD = {
         socket: null,
         
-        init: function(socket) {
+        setSocket: function(socket) {
             this.socket = socket;
    
             if (isBrowser) {
-                let crud_socket = window.CoCreateSockets
+                let crud_socket = window.CoCreateSockets;
         
                 if (!crud_socket) {
                     crud_socket = new CoCreateSocket('ws');
                     window.CoCreateSockets = crud_socket;
                 }
         
-                    this.socket = crud_socket;
-                    this.socket.create(window.config);
+                this.socket = crud_socket;
+                this.socket.create(window.config);
             }
         },
 
 
         createDocument: async function(info) {
-            if(info === null) {
-                return false;
-            }
-            let commonData = this.socket.getCommonParamsExtend(info);
-            let request_data = { ...info,
-                ...commonData
-            };
+            if(!info) return false;
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
 
             let data = info.data || {};
 
             if(!data['organization_id']) {
                 data['organization_id'] = commonData.organization_id || window.config.organization_Id;
             }
+            
             if(info['data']) {
                 data = { ...data,
                     ...info['data']
@@ -57,13 +54,10 @@
             }
 
             //. rebuild data
-            request_data['data'] = data;
-
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
-            // let request_id = this.socket.send('createDocument', request_data, room);
+            requestData['data'] = data;
 
             try {
-                let response = await this.socket.send('createDocument', request_data, room);
+                let response = await this.socket.send('createDocument', requestData);
                 return response;
             }
             catch(e) {
@@ -74,37 +68,22 @@
 
         updateDocument: async function(info) {
             if(!info) return false;
-
             if(info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
                 return false;
 
-            let commonData = this.socket.getCommonParamsExtend(info);
+            let commonData = this.socket.getCommonParams(info);
 
-            let request_data = { ...info,
-                ...commonData
-            };
+            let requestData = { ...commonData, ...info };
 
             if(typeof info['data'] === 'object') {
-                request_data['set'] = info['data'];
+                requestData['set'] = info['data'];
             }
-            if(Array.isArray(info['delete_fields'])) request_data['unset'] = info['delete_fields'];
+            if(Array.isArray(info['delete_fields'])) requestData['unset'] = info['delete_fields'];
 
-            if(!request_data['set'] && !request_data['unset']) return false;
-
-            if(info.broadcast === false) {
-                request_data['broadcast'] = false;
-            }
-
-            /** socket parameters **/
-            if(info['broadcast_sender'] === undefined) {
-                request_data['broadcast_sender'] = true;
-            }
-
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
-            // let request_id = this.socket.send('updateDocument', request_data, room);
+            if(!requestData['set'] && !requestData['unset']) return false;
 
             try {
-                let response = await this.socket.send('updateDocument', request_data, room);
+                let response = await this.socket.send('updateDocument', requestData);
                 return response;
             }
             catch(e) {
@@ -114,24 +93,16 @@
         },
 
         readDocument: async function(info) {
-            if(info === null) {
-                return null;
-            }
-
+            if(!info) return false;
             if(!info || !utilsCrud.checkAttrValue(info['document_id'])) {
                 return null;
             }
 
-            let commonData = this.socket.getCommonParamsExtend(info);
-            let request_data = { ...info,
-                ...commonData
-            };
-            let room = this.socket.generateSocketClient(info.namespace, info.room);
-            if (!room) 
-                room = commonData.organization_Id;
-            // let request_id = this.socket.send('readDocument', request_data,  room);
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
+            
             try {
-                let response = await this.socket.send('readDocument', request_data,  room);
+                let response = await this.socket.send('readDocument', requestData);
                 return response;
             }
             catch(e) {
@@ -146,15 +117,11 @@
                 return null;
             }
 
-            let commonData = this.socket.getCommonParamsExtend(info);
-            let request_data = { ...info,
-                ...commonData
-            };
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
 
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
-            // let request_id = this.socket.send('deleteDocument', request_data, room);
             try {
-                let response = await this.socket.send('deleteDocument', request_data, room);
+                let response = await this.socket.send('deleteDocument', requestData);
                 return response;
             }
             catch(e) {
@@ -164,23 +131,13 @@
         },
 
         readDocumentList: async function(info) {
-            if(!info) return false;
-            if(!info.collection) {
-                return false;
-            }
-            let commonData = this.socket.getCommonParamsExtend(info);
-            let request_data = { ...info,
-                ...commonData
-            };
-
-            const room = this.socket.generateSocketClient(info.namespace, info.room);
-            if (!room) 
-                room = commonData.organization_Id;
-
-            // const request_id = this.socket.send('readDocumentList', request_data, room);
+            if(!info && !info.collection) return false;
+            
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
 
             try {
-                let response = await this.socket.send('readDocumentList', request_data, room);
+                let response = await this.socket.send('readDocumentList', requestData);
                 return response;
             }
             catch(e) {
@@ -219,8 +176,8 @@
             reader.readAsText(file);
         },
 
-        send: function(message, data, room) {
-            this.socket.send(message, data, room);
+        send: function(message, data) {
+            this.socket.send(message, data);
         },
         
         listen: function(message, fun) {
@@ -331,7 +288,7 @@
         ...utilsCrud
     };
     
-    CoCreateCRUD.init()
+    CoCreateCRUD.setSocket()
     
     return CoCreateCRUD;
 }));
