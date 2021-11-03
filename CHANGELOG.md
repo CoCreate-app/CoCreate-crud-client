@@ -1,3 +1,10 @@
+## [1.4.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.19...v1.4.20) (2021-11-03)
+
+
+### Bug Fixes
+
+* removed from isJsonString readDocument and crud.utils ([3a04f65](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3a04f658f67f476a1c41127fb78839b269b58058))
+
 ## [1.4.19](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.18...v1.4.19) (2021-11-03)
 
 
