@@ -197,11 +197,6 @@
 
             if(is_flat !== false) is_flat = true;
 
-            if(utilsCrud.isJsonString(collection) ||
-                utilsCrud.isJsonString(document_id)) {
-                return null;
-            }
-
             if(isRead == "false") return;
             if(document_id && collection) {
                 const responseData = await this.readDocument({

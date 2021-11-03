@@ -190,30 +190,12 @@
 		return true;
 	}
 
-
-	function isJsonString(str_data) {
-		try {
-			let json_data = JSON.parse(str_data);
-			if(typeof json_data === "object" && json_data != null) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		catch(e) {
-			return false;
-		}
-	}
-
-
 	return {
 		decodeObject,
 		encodeObject,
 		getAttr,
 		checkAttrValue,
 		getValueByPath,
-		isJsonString
 	};
 
 }));
