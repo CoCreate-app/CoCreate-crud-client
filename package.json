@@ -1,6 +1,6 @@
 {
   "name": "@cocreate/crud-client",
-  "version": "1.4.21",
+  "version": "1.4.22",
   "description": "An useful CRUD api operate Create, read, update, delete with built in database. Can be used as a firebase alternative. Easily configured using HTML5 attributes and/or JavaScript API.",
   "keywords": [
     "crud-client",
