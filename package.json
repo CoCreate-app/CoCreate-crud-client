@@ -61,7 +61,7 @@
     "webpack-log": "^3.0.1"
   },
   "dependencies": {
-    "@cocreate/docs": "^1.2.45",
-    "@cocreate/socket-client": "^1.4.0"
+    "@cocreate/docs": "^1.2.46",
+    "@cocreate/socket-client": "^1.4.1"
   }
 }
