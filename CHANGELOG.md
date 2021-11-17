@@ -1,3 +1,10 @@
+## [1.4.27](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.26...v1.4.27) (2021-11-17)
+
+
+### Bug Fixes
+
+* if input.type == number crdt is false ([45396a0](https://github.com/CoCreate-app/CoCreate-crud-client/commit/45396a0df3cb23948241850b32500efe7bebe390))
+
 ## [1.4.26](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.25...v1.4.26) (2021-11-16)
 
 
