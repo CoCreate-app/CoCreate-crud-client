@@ -238,7 +238,7 @@
                 }
             }
             else {
-                if(window.CoCreate.crdt) {
+                if(element.type != 'number' && window.CoCreate.crdt) {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
