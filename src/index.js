@@ -283,7 +283,7 @@
         ...utilsCrud
     };
     
-    CoCreateCRUD.setSocket()
+    CoCreateCRUD.setSocket();
     
     return CoCreateCRUD;
 }));
