@@ -1,3 +1,10 @@
+## [1.4.32](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.31...v1.4.32) (2021-11-20)
+
+
+### Bug Fixes
+
+* if value is an array will not use crdt.. will default to crud ([763ab57](https://github.com/CoCreate-app/CoCreate-crud-client/commit/763ab5719dea0668ae93468074f143fd3781bc12))
+
 ## [1.4.31](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.30...v1.4.31) (2021-11-20)
 
 
