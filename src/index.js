@@ -238,7 +238,7 @@
                 }
             }
             else {
-                if(element.type != 'number' && window.CoCreate.crdt) {
+                if(element.type != 'number' && !Array.isArray(value) && window.CoCreate.crdt) {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
