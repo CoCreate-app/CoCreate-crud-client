@@ -137,7 +137,7 @@
 				newData[k] = data[k];
 			}
 		});
-		return newData;
+		return {...newData, ...data};
 	}
 
 	function getAttr(el) {
