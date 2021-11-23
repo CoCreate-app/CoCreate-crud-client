@@ -1,3 +1,10 @@
+## [1.4.33](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.32...v1.4.33) (2021-11-23)
+
+
+### Bug Fixes
+
+* updated encodefunction to have flat data and not flat ([661dd83](https://github.com/CoCreate-app/CoCreate-crud-client/commit/661dd834bbdc2e02cef9d9efcde4a5d649278df2))
+
 ## [1.4.32](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.31...v1.4.32) (2021-11-20)
 
 
