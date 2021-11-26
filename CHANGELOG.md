@@ -1,3 +1,10 @@
+## [1.4.36](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.35...v1.4.36) (2021-11-26)
+
+
+### Bug Fixes
+
+* docs sidenav width ([2825d30](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2825d300c2b5d26434a142eb7843165e74153e9d))
+
 ## [1.4.35](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.34...v1.4.35) (2021-11-26)
 
 
