@@ -1,3 +1,10 @@
+## [1.4.37](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.36...v1.4.37) (2021-11-27)
+
+
+### Bug Fixes
+
+* update docs api and cocreateJS script ([c85f0b4](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c85f0b48792990020121cce78dfc98dd081b3d89))
+
 ## [1.4.36](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.35...v1.4.36) (2021-11-26)
 
 
