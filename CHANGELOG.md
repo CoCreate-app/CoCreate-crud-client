@@ -1,3 +1,10 @@
+## [1.4.42](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.41...v1.4.42) (2022-01-01)
+
+
+### Bug Fixes
+
+* get-value attribute value now supports a selector added # to all values currently in get-value attributes ([1fb062b](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1fb062bdf1281c80973f4a930956333bee4860d2))
+
 ## [1.4.41](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.40...v1.4.41) (2021-12-15)
 
 
