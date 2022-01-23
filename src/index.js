@@ -216,7 +216,7 @@
             if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
 
-            if(isSave == "false" || !collection || !name || document_id == 'pending') return;
+            if(isSave == "false" || !collection || !name || document_id == 'pending' || name == '_id') return;
 
             let data;
             if(!document_id) {
