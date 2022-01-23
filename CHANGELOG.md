@@ -1,3 +1,10 @@
+## [1.4.43](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.42...v1.4.43) (2022-01-23)
+
+
+### Bug Fixes
+
+* save function will  return if name == _id ([a90e788](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a90e7889aae23941807a6922dd78a83020e3189e))
+
 ## [1.4.42](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.41...v1.4.42) (2022-01-01)
 
 
