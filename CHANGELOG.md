@@ -1,3 +1,10 @@
+## [1.4.45](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.44...v1.4.45) (2022-02-03)
+
+
+### Bug Fixes
+
+* replaced show and hide class hidden with attribute hidden ([ab65334](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ab65334b69f17aae53458fee3338871d040e65ed))
+
 ## [1.4.44](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.43...v1.4.44) (2022-02-01)
 
 
