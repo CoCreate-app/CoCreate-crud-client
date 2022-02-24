@@ -1,3 +1,11 @@
+## [1.4.49](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.48...v1.4.49) (2022-02-24)
+
+
+### Bug Fixes
+
+* CoCreate.config replace CoCreate.app with * ([f7033d6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f7033d64c1c8b44f7fb0e6ea3893abd8bdbb85de))
+* update param is_flat to isFlat ([dcc89b5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dcc89b56e2e0faedb9bbdb859be3b22f597d95bc))
+
 ## [1.4.48](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.47...v1.4.48) (2022-02-16)
 
 
