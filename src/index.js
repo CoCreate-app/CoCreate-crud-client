@@ -184,7 +184,7 @@
             this.socket.listen(message, fun);
         },
 
-        read: async function(element, is_flat) {
+        read: async function(element, isFlat) {
             const {
                 collection,
                 document_id,
@@ -195,7 +195,7 @@
             } = utilsCrud.getAttr(element);
             if(!utilsCrud.checkAttrValue(document_id)) return;
 
-            if(is_flat !== false) is_flat = true;
+            if(isFlat !== false) isFlat = true;
 
             if(isRead == "false") return;
             if(document_id && collection) {
@@ -205,14 +205,14 @@
                     collection,
                     document_id,
                     name,
-                    is_flat
+                    isFlat
                 });
                 return responseData;
             }
             return null;
         },
 
-        save: async function(element, value, is_flat) {
+        save: async function(element, value, isFlat) {
             if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
 
@@ -230,7 +230,7 @@
                         collection,
                         broadcast,
                         broadcast_sender,
-                        is_flat: is_flat !== false ? true : false,
+                        isFlat: isFlat !== false ? true : false,
                         data: {
                             [name]: value
                         },
@@ -255,7 +255,7 @@
                         upsert: true,
                         broadcast,
                         broadcast_sender,
-                        is_flat: is_flat !== false ? true : false,
+                        isFlat: isFlat !== false ? true : false,
                         data: {
                             [name]: value
                         },
