@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.49...v1.5.0) (2022-04-01)
+
+
+### Bug Fixes
+
+* reduced size of createDocument function using same convention as the other crud functions ([a8b1275](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a8b1275657519708765cf5a0d79d705b66843ed2))
+
+
+### Features
+
+* readCollections fuction to return a list of collections ([5258d47](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5258d470c7fde4eab3c734cf7acc2276f7222ec0))
+
 ## [1.4.49](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.4.48...v1.4.49) (2022-02-24)
 
 
