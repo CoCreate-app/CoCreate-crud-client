@@ -38,24 +38,10 @@
 
         createDocument: async function(info) {
             if(!info) return false;
+
             let commonData = this.socket.getCommonParams(info);
             let requestData = { ...commonData, ...info };
-
-            let data = info.data || {};
-
-            if(!data['organization_id']) {
-                data['organization_id'] = commonData.organization_id || window.config.organization_Id;
-            }
             
-            if(info['data']) {
-                data = { ...data,
-                    ...info['data']
-                };
-            }
-
-            //. rebuild data
-            requestData['data'] = data;
-
             try {
                 let response = await this.socket.send('createDocument', requestData);
                 return response;
