@@ -132,6 +132,21 @@
             }
         },
 
+        readCollections: async function(info) {
+            // if(!info && !info.collection) return false;
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
+
+            try {
+                let response = await this.socket.send('readCollections', requestData);
+                return response;
+            }
+            catch(e) {
+                console.log(e);
+                return null;
+            }
+        },
+
         importCollection: function(info) {
             const { file } = info;
             const reader = new FileReader();
