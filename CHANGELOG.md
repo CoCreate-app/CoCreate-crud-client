@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.5.1...v1.5.2) (2022-05-14)
+
+
+### Performance Improvements
+
+* renamed function readDocumentList. BREAKING CHANGfunction readDocumentList has been renamed to to readDocuments ([053a977](https://github.com/CoCreate-app/CoCreate-crud-client/commit/053a977974d60cb56acb1aa8d27fa99e5a0557b2))
+
 ## [1.5.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.5.0...v1.5.1) (2022-05-06)
 
 
