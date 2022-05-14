@@ -116,14 +116,14 @@
             }
         },
 
-        readDocumentList: async function(info) {
+        readDocuments: async function(info) {
             if(!info && !info.collection) return false;
             
             let commonData = this.socket.getCommonParams(info);
             let requestData = { ...commonData, ...info };
 
             try {
-                let response = await this.socket.send('readDocumentList', requestData);
+                let response = await this.socket.send('readDocuments', requestData);
                 return response;
             }
             catch(e) {
