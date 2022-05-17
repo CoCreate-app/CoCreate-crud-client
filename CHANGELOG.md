@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.6.0...v1.6.1) (2022-05-17)
+
+
+### Bug Fixes
+
+* update document_id on link index.css ([8445869](https://github.com/CoCreate-app/CoCreate-crud-client/commit/84458695850aa639a661699ab164eacb586e24ba))
+
 # [1.6.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.5.2...v1.6.0) (2022-05-14)
 
 
