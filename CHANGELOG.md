@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.6.1...v1.6.2) (2022-05-18)
+
+
+### Bug Fixes
+
+* updateDocument - if name= _id delete from object ([99f88f3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/99f88f34f1e1cd2e4d3b37e7bad839cc7fe009c8))
+
 ## [1.6.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.6.0...v1.6.1) (2022-05-17)
 
 
