@@ -60,11 +60,14 @@
             let commonData = this.socket.getCommonParams(info);
 
             let requestData = { ...commonData, ...info };
-
-            if(typeof info['data'] === 'object') {
+            if (info['data']['_id'])
+                delete info['data']['_id']
+                
+            if(typeof info['data'] === 'object')
                 requestData['set'] = info['data'];
-            }
-            if(Array.isArray(info['delete_fields'])) requestData['unset'] = info['delete_fields'];
+            
+            if(Array.isArray(info['delete_fields'])) 
+                requestData['unset'] = info['delete_fields'];
 
             if(!requestData['set'] && !requestData['unset']) return false;
 
