@@ -180,8 +180,9 @@
             reader.readAsText(file);
         },
 
-        send: function(message, data) {
-            this.socket.send(message, data);
+        send: async function(message, data) {
+            let response = await this.socket.send(message, data);
+            return response;
         },
         
         listen: function(message, fun) {
