@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.6.3...v1.7.0) (2022-05-29)
+
+
+### Features
+
+* send function will now work as async await ([58e0bdf](https://github.com/CoCreate-app/CoCreate-crud-client/commit/58e0bdfbd6cd9956eadf945a622bac2a23e5240d))
+
 ## [1.6.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.6.2...v1.6.3) (2022-05-23)
 
 
