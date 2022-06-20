@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.7.2...v1.8.0) (2022-06-20)
+
+
+### Features
+
+* attribute value-type=object || Json will convert string to object ([5af553d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5af553d38f56a0a85cb0c89a1f5065cd53c7dce2))
+
 ## [1.7.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.7.1...v1.7.2) (2022-06-18)
 
 
