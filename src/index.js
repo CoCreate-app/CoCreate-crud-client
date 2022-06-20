@@ -220,7 +220,9 @@
         save: async function(element, value, isFlat) {
             if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
-
+            let valueType = element.getAttribute('value-type');
+            if(valueType == 'object' || valueType == 'json')
+                value = JSON.parse(value)
             if(isSave == "false" || !collection || !name || document_id == 'pending' || name == '_id') return;
 
             let data;
@@ -243,7 +245,7 @@
                 }
             }
             else {
-                if(element.type != 'number' && !Array.isArray(value) && window.CoCreate.crdt) {
+                if(element.type != 'number' && typeof value !== 'object' && window.CoCreate.crdt) {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
