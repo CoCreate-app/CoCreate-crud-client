@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.8.0...v1.8.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* crdt.replaceText if typeof ==  string ([0956831](https://github.com/CoCreate-app/CoCreate-crud-client/commit/09568317c7844d8d47536ca32a784e8fd8734e2d))
+
 # [1.8.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.7.2...v1.8.0) (2022-06-20)
 
 
