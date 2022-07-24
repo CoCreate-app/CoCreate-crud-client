@@ -64,7 +64,7 @@
                 delete info['data']['_id']
                 
             if(typeof info['data'] === 'object')
-                requestData['set'] = info['data'];
+                requestData['set'] = utilsCrud.decodeArray(info['data'])
             
             if(Array.isArray(info['delete_fields'])) 
                 requestData['unset'] = info['delete_fields'];
