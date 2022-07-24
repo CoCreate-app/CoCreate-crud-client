@@ -13,104 +13,6 @@
 	}
 }(typeof self !== 'undefined' ? self : this, function() {
 
-	function __mergeObject(target, source) {
-		target = target || {};
-		for(let key of Object.keys(source)) {
-			if(source[key] instanceof Object) {
-				Object.assign(source[key], __mergeObject(target[key], source[key]));
-			}
-		}
-
-		Object.assign(target || {}, source);
-		return target;
-	}
-
-	function __createObject(data, path) {
-		if(!path) return data;
-
-		let keys = path.split('.');
-		let newObject = data;
-
-		for(var i = keys.length - 1; i >= 0; i--) {
-			newObject = {
-				[keys[i]]: newObject
-			};
-		}
-		return newObject;
-	}
-
-	function __createArray(key, data) {
-		try {
-			let item = /([\w\W]+)\[(\d+)\]/gm.exec(key);
-			if(item && item.length == 3) {
-				let arrayKey = item[1];
-				let index = parseInt(item[2]);
-
-				if(!data[arrayKey] || !Array.isArray(data[arrayKey])) {
-					data[arrayKey] = [];
-				}
-				data[arrayKey][index] = data[key];
-				delete data[key];
-				key = arrayKey;
-			}
-		}
-		catch {
-			console.log('create array error');
-		}
-		return key;
-	}
-
-	function getValueByPath(path, data) {
-		try {
-			if(!path || !data) return null;
-
-			if(data[path]) return data[path];
-
-			let keys = path.split('.');
-
-			let tmp = { ...data };
-			for(var i = 0; i < keys.length; i++) {
-				if(!tmp) break;
-				tmp = tmp[keys[i]];
-			}
-			return tmp;
-
-		}
-		catch {
-			return null;
-		}
-	}
-
-	// ToDo: currently not in use
-	function isObject(item) {
-		return(!!item) && (item.constructor === Object);
-	}
-
-
-	function isArray(item) {
-		return(!!item) && (item.constructor === Array);
-	}
-
-	// ToDo: currently not in use
-	function decodeObject(data) {
-		let keys = Object.keys(data);
-		let objectData = {};
-
-		keys.forEach((k) => {
-			k = __createArray(k, data);
-			if(k.split('.').length > 1) {
-				let newData = __createObject(data[k], k);
-				delete data[k];
-
-				objectData = __mergeObject(objectData, newData);
-			}
-			else {
-				objectData[k] = data[k];
-			}
-		});
-		return objectData;
-	}
-
 	function decodeArray(data) {
 		let keys = Object.keys(data);
 		let objectData = {};
@@ -121,6 +23,7 @@
 				nk = nk.replace(/\[/g, '.');
 				if (nk.endsWith(']'))
 					nk = nk.slice(0, -1)
+				nk = nk.replace(/\]./g, '.');
 				nk = nk.replace(/\]/g, '.');
 			}
 			objectData[nk] = data[k];
@@ -128,33 +31,32 @@
 		return objectData;
 	}
 
-	// ToDo: currently use only by htmltags
-	function encodeObject(data) {
-		let keys = Object.keys(data);
-		let newData = {};
-		keys.forEach((k) => {
-			let data_value = data[k];
-			if(isObject(data[k])) {
-				let new_obj = encodeObject(data[k]);
-
-				let newKeys = Object.keys(new_obj);
-				newKeys.forEach((newKey) => {
-					let value = new_obj[newKey];
-					newKey = k + "." + newKey;
-					newData[newKey] = value;
-				});
-
+	function getObjectValueByPath(json, path) {
+		try {
+			if(typeof json == 'undefined' || !path)
+				return false;
+			if (path.indexOf('.') == -1 && path.includes('collection'))
+				json = this.dataOriginal
+			if (path.includes('[0]'))
+				console.log('[0]')
+			if (/\[([0-9]*)\]/g.test(path)) {
+				path = path.replace(/\[/g, '.');
+				if (path.endsWith(']'))
+					path = path.slice(0, -1)
+				path = path.replace(/\]./g, '.');
+				path = path.replace(/\]/g, '.');
 			}
-			else if(isArray(data_value)) {
-				data_value.forEach((v, index) => {
-					newData[`${k}[${index}]`] = v;
-				});
+			let jsonData = json, subpath = path.split('.');
+			
+			for (let i = 0; i < subpath.length; i++) {
+				jsonData = jsonData[subpath[i]];
+				if (!jsonData) return false;
 			}
-			else {
-				newData[k] = data[k];
-			}
-		});
-		return {...newData, ...data};
+			return jsonData;
+		}catch(error){
+			console.log("Error in getValueFromObject", error);
+			return false;
+		}
 	}
 
 	function getAttr(el) {
@@ -211,11 +113,9 @@
 
 	return {
 		decodeArray,
-		decodeObject,
-		encodeObject,
+		getObjectValueByPath,
 		getAttr,
-		checkAttrValue,
-		getValueByPath,
+		checkAttrValue
 	};
 
 }));
