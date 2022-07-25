@@ -135,6 +135,21 @@
             }
         },
 
+        createCollection: async function(info) {
+            // if(!info && !info.collection) return false;
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
+
+            try {
+                let response = await this.socket.send('createCollection', requestData);
+                return response;
+            }
+            catch(e) {
+                console.log(e);
+                return null;
+            }
+        },
+
         readCollections: async function(info) {
             // if(!info && !info.collection) return false;
             let commonData = this.socket.getCommonParams(info);
@@ -142,6 +157,36 @@
 
             try {
                 let response = await this.socket.send('readCollections', requestData);
+                return response;
+            }
+            catch(e) {
+                console.log(e);
+                return null;
+            }
+        },
+
+        updateCollection: async function(info) {
+            // if(!info && !info.collection) return false;
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
+
+            try {
+                let response = await this.socket.send('updateCollection', requestData);
+                return response;
+            }
+            catch(e) {
+                console.log(e);
+                return null;
+            }
+        },
+
+        deleteCollection: async function(info) {
+            // if(!info && !info.collection) return false;
+            let commonData = this.socket.getCommonParams(info);
+            let requestData = { ...commonData, ...info };
+
+            try {
+                let response = await this.socket.send('deleteCollection', requestData);
                 return response;
             }
             catch(e) {
