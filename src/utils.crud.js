@@ -13,24 +13,6 @@
 	}
 }(typeof self !== 'undefined' ? self : this, function() {
 
-	function decodeArray(data) {
-		let keys = Object.keys(data);
-		let objectData = {};
-
-		keys.forEach((k) => {
-			let nk = k
-			if (/\[([0-9]*)\]/g.test(k)) {
-				nk = nk.replace(/\[/g, '.');
-				if (nk.endsWith(']'))
-					nk = nk.slice(0, -1)
-				nk = nk.replace(/\]./g, '.');
-				nk = nk.replace(/\]/g, '.');
-			}
-			objectData[nk] = data[k];
-		});
-		return objectData;
-	}
-
 	function getObjectValueByPath(json, path) {
 		try {
 			if(typeof json == 'undefined' || !path)
@@ -71,7 +53,6 @@
 		let isSave = el.getAttribute('save');
 		let isUpdate = el.getAttribute('udpdate');
 		let isUpsert = el.getAttribute('upsert');
-		let isFlat = el.getAttribute('flat');
 		let isRead = el.getAttribute('read');
 		let isListen = el.getAttribute('listen');
 		let room = el.getAttribute('room');
@@ -89,7 +70,6 @@
 			isSave,
 			isUpdate,
 			isUpsert,
-			isFlat,
 			isRead,
 			isListen,
 			isBroadcast,
@@ -112,7 +92,6 @@
 	}
 
 	return {
-		decodeArray,
 		getObjectValueByPath,
 		getAttr,
 		checkAttrValue

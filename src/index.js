@@ -37,156 +37,67 @@
 
 
         createDocument: async function(info) {
-            if(!info) return false;
-
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-            
-            try {
-                let response = await this.socket.send('createDocument', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            if(!info) 
+                return false;
+            let response = await this.sendRequest(info, 'updateDocument')
+            return response
         },
 
         updateDocument: async function(info) {
-            if(!info) return false;
             if(info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
-                return false;
-
-            let commonData = this.socket.getCommonParams(info);
-
-            let requestData = { ...commonData, ...info };
-            if (info['data']['_id'])
-                delete info['data']['_id']
-                
-            if(typeof info['data'] === 'object')
-                requestData['set'] = utilsCrud.decodeArray(info['data'])
-            
-            if(Array.isArray(info['delete_fields'])) 
-                requestData['unset'] = info['delete_fields'];
-
-            if(!requestData['set'] && !requestData['unset']) return false;
-
-            try {
-                let response = await this.socket.send('updateDocument', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
                 return null;
-            }
+            let response = await this.sendRequest(info, 'updateDocument')
+            return response
         },
 
         readDocument: async function(info) {
-            if(!info) return false;
-            if(!info || !utilsCrud.checkAttrValue(info['document_id'])) {
+            if(!info || !utilsCrud.checkAttrValue(info['document_id']))
                 return null;
-            }
-
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-            
-            try {
-                let response = await this.socket.send('readDocument', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            let response = await this.sendRequest(info, 'readDocument')
+            return response
         },
 
 
         deleteDocument: async function(info) {
-            if(!info || !utilsCrud.checkAttrValue(info['document_id'])) {
+            if(!info || !utilsCrud.checkAttrValue(info['document_id']))
                 return null;
-            }
-
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-
-            try {
-                let response = await this.socket.send('deleteDocument', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            let response = await this.sendRequest(info, 'deleteDocument')
+            return response
         },
 
         readDocuments: async function(info) {
-            if(!info && !info.collection) return false;
-            
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-
-            try {
-                let response = await this.socket.send('readDocuments', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
+            if(!info && !info.collection) 
                 return null;
-            }
+            let response = await this.sendRequest(info, 'readDocuments')
+            return response
         },
 
         createCollection: async function(info) {
-            // if(!info && !info.collection) return false;
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-
-            try {
-                let response = await this.socket.send('createCollection', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            let response = await this.sendRequest(info, 'updateCollection')
+            return response
         },
 
         readCollections: async function(info) {
-            // if(!info && !info.collection) return false;
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-
-            try {
-                let response = await this.socket.send('readCollections', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            let response = await this.sendRequest(info, 'readCollections')
+            return response
         },
 
         updateCollection: async function(info) {
-            // if(!info && !info.collection) return false;
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
-
-            try {
-                let response = await this.socket.send('updateCollection', requestData);
-                return response;
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
+            let response = await this.sendRequest(info, 'updateCollection')
+            return response
         },
 
         deleteCollection: async function(info) {
-            // if(!info && !info.collection) return false;
+            let response = await this.sendRequest(info, 'deleteCollection')
+            return response
+        },
+
+        sendRequest: async function(info, action) {
             let commonData = this.socket.getCommonParams(info);
             let requestData = { ...commonData, ...info };
 
             try {
-                let response = await this.socket.send('deleteCollection', requestData);
+                let response = await this.socket.send(action, requestData);
                 return response;
             }
             catch(e) {
@@ -234,7 +145,7 @@
             this.socket.listen(message, fun);
         },
 
-        read: async function(element, isFlat) {
+        read: async function(element) {
             const {
                 collection,
                 document_id,
@@ -245,8 +156,6 @@
             } = utilsCrud.getAttr(element);
             if(!utilsCrud.checkAttrValue(document_id)) return;
 
-            if(isFlat !== false) isFlat = true;
-
             if(isRead == "false") return;
             if(document_id && collection) {
                 const responseData = await this.readDocument({
@@ -254,21 +163,19 @@
                     room,
                     collection,
                     document_id,
-                    name,
-                    isFlat
+                    name
                 });
                 return responseData;
             }
             return null;
         },
 
-        save: async function(element, value, isFlat) {
+        save: async function(element, value) {
             if(!element || value === null) return;
             let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
             let valueType = element.getAttribute('value-type');
             if(valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
-                isFlat = false
             }
             if(isSave == "false" || !collection || !name || document_id == 'pending' || name == '_id') return;
 
@@ -284,7 +191,6 @@
                         collection,
                         broadcast,
                         broadcast_sender,
-                        isFlat: isFlat !== false ? true : false,
                         data: {
                             [name]: value
                         },
@@ -309,7 +215,6 @@
                         upsert: true,
                         broadcast,
                         broadcast_sender,
-                        isFlat: isFlat !== false ? true : false,
                         data: {
                             [name]: value
                         },
