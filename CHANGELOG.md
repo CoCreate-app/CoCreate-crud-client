@@ -1,3 +1,13 @@
+# [1.9.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.8.1...v1.9.0) (2022-07-25)
+
+
+### Features
+
+* crud support on collection names ([24c1cd7](https://github.com/CoCreate-app/CoCreate-crud-client/commit/24c1cd707326035b0f90419081568d7efb09fd94))
+* decode array to .n as mongodb supports dot notation on array indexes ([34aeef8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/34aeef8fdffb70182edb4252bfe657469e55e5af))
+* getObjectValueByPath to return a value using dotNotation string ([d70c5ec](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d70c5eca534f858e066fd861b1599043f689494a))
+* removed isFlat, moved decodeArray to serverside, reduced and optimized code ([ac4a0db](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ac4a0dba15ed8cae563264160cb71b5dae3b97b4))
+
 ## [1.8.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.8.0...v1.8.1) (2022-06-21)
 
 
