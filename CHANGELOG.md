@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.0...v1.9.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* getObjectValueByPath returns null if no match found instead of false ([3e5161a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3e5161ab71fe6a478cff744aecb90a6e26b833d0))
+
 # [1.9.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.8.1...v1.9.0) (2022-07-25)
 
 
