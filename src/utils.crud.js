@@ -16,11 +16,9 @@
 	function getObjectValueByPath(json, path) {
 		try {
 			if(typeof json == 'undefined' || !path)
-				return false;
+				return null;
 			if (path.indexOf('.') == -1 && path.includes('collection'))
 				json = this.dataOriginal
-			if (path.includes('[0]'))
-				console.log('[0]')
 			if (/\[([0-9]*)\]/g.test(path)) {
 				path = path.replace(/\[/g, '.');
 				if (path.endsWith(']'))
@@ -32,12 +30,12 @@
 			
 			for (let i = 0; i < subpath.length; i++) {
 				jsonData = jsonData[subpath[i]];
-				if (!jsonData) return false;
+				if (!jsonData) return null;
 			}
 			return jsonData;
 		}catch(error){
 			console.log("Error in getValueFromObject", error);
-			return false;
+			return null;
 		}
 	}
 
