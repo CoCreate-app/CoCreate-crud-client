@@ -73,7 +73,7 @@
         },
 
         createCollection: async function(info) {
-            let response = await this.sendRequest(info, 'updateCollection')
+            let response = await this.sendRequest(info, 'createCollection')
             return response
         },
 
