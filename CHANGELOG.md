@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.1...v1.9.2) (2022-07-29)
+
+
+### Bug Fixes
+
+* createCollection typo ([71d5c9f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/71d5c9faf12a75fc5dde225133f7338ad15fa451))
+
 ## [1.9.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.0...v1.9.1) (2022-07-26)
 
 
