@@ -39,7 +39,7 @@
         createDocument: async function(info) {
             if(!info) 
                 return false;
-            let response = await this.sendRequest(info, 'updateDocument')
+            let response = await this.sendRequest(info, 'createDocument')
             return response
         },
 
