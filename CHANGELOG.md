@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.2...v1.9.3) (2022-07-30)
+
+
+### Bug Fixes
+
+* typo createDocument ([e549741](https://github.com/CoCreate-app/CoCreate-crud-client/commit/e5497418946d9f96d7c6a8e7a7ea461d60fd7f38))
+
 ## [1.9.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.1...v1.9.2) (2022-07-29)
 
 
