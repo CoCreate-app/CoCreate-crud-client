@@ -172,12 +172,12 @@
 
         save: async function(element, value) {
             if(!element || value === null) return;
-            let { collection, document_id, name, namespace, room, broadcast, broadcast_sender, isSave } = utilsCrud.getAttr(element);
+            let { collection, document_id, name, updateName, deleteName, namespace, room, broadcast, broadcastSender, isSave } = utilsCrud.getAttr(element);
             let valueType = element.getAttribute('value-type');
             if(valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
             }
-            if(isSave == "false" || !collection || !name || document_id == 'pending' || name == '_id') return;
+            if(isSave == "false" || !collection || (!name && !deleteName && !updateName ) || document_id == 'pending' || name == '_id') return;
 
             let data;
             if(!document_id) {
@@ -190,7 +190,7 @@
                     data = await this.createDocument({
                         collection,
                         broadcast,
-                        broadcast_sender,
+                        broadcastSender,
                         data: {
                             [name]: value
                         },
@@ -198,7 +198,13 @@
                 }
             }
             else {
-                if(typeof option == 'string' && window.CoCreate.crdt) {
+                if (name)
+                    var  nameValue = {[name]: value}
+                if (updateName)
+                    updateName = {[updateName]: value}
+                if (deleteName)
+                    deleteName = {[deleteName]: ''}
+                if(typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName ) {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
@@ -214,10 +220,10 @@
                         document_id,
                         upsert: true,
                         broadcast,
-                        broadcast_sender,
-                        data: {
-                            [name]: value
-                        },
+                        broadcastSender,
+                        data: nameValue,
+                        updateName,
+                        deleteName
                     });
                 }
             }

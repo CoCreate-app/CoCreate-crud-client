@@ -45,6 +45,8 @@
 		let collection = el.getAttribute('collection');
 		let document_id = el.getAttribute('document_id');
 		let name = el.getAttribute('name');
+		let updateName = el.getAttribute('updateName');
+		let deleteName = el.getAttribute('deleteName');
 		let isCrud = el.getAttribute('crud');
 		let isCrdt = el.getAttribute('crdt');
 		let isRealtime = el.getAttribute('realtime');
@@ -55,13 +57,15 @@
 		let isListen = el.getAttribute('listen');
 		let room = el.getAttribute('room');
 		let namespace = el.getAttribute('namespace');
-		let isBroadcast = el.getAttribute('broadcast');
-		let isBroadcastSender = el.getAttribute('broadcast-sender');
+		let broadcast = el.getAttribute('broadcast');
+		let broadcastSender = el.getAttribute('broadcast-sender');
 
 		return {
 			collection,
 			document_id,
 			name,
+			updateName,
+			deleteName,
 			isCrud,
 			isCrdt,
 			isRealtime,
@@ -70,8 +74,8 @@
 			isUpsert,
 			isRead,
 			isListen,
-			isBroadcast,
-			isBroadcastSender,
+			broadcast,
+			broadcastSender,
 			room,
 			namespace,
 		};
