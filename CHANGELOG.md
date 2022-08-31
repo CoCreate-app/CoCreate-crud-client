@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.3...v1.10.0) (2022-08-31)
+
+
+### Features
+
+* updateName and deleteName to update and delete keys from db ([d6b6eb8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d6b6eb8c01ab8ddbbf6753d5df7c784b24f3a54f))
+
 ## [1.9.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.9.2...v1.9.3) (2022-07-30)
 
 
