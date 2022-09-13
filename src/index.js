@@ -2,8 +2,8 @@
 
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(["@cocreate/socket-client", "./utils.crud.js"], function(CoCreateSocket, utilsCrud) {
-            return factory(true, CoCreateSocket, utilsCrud);
+        define(["@cocreate/socket-client", "./utils.crud.js", "@cocreate/indexeddb"], function(CoCreateSocket, utilsCrud, indexeddb) {
+            return factory(true, CoCreateSocket, utilsCrud, indexeddb);
         });
     }
     else if (typeof module === 'object' && module.exports) {
@@ -12,9 +12,9 @@
         module.exports = factory(false, CoCreateSocket, utilsCrud);
     }
     else {
-        root.returnExports = factory(true, root["@cocreate/socket-client"], root["./utils.crud.js"]);
+        root.returnExports = factory(true, root["@cocreate/socket-client"], root["./utils.crud.js"], root["@cocreate/indexeddb"]);
     }
-}(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, utilsCrud) {
+}(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, utilsCrud, indexeddb) {
    
     const CoCreateCRUD = {
         socket: null,
@@ -36,69 +36,93 @@
         },
 
 
-        createDocument: async function(info) {
-            if(!info) 
+        createDocument: async function(data) {
+            if(!data) 
                 return false;
-            let response = await this.sendRequest(info, 'createDocument')
-            return response
+            data.data['created'] = {on: new Date().toISOString(), by: 'current user'}
+    
+            data = await this.sendRequest('createDocument', data)
+            return data
         },
-
-        updateDocument: async function(info) {
-            if(info['document_id'] && !utilsCrud.checkAttrValue(info['document_id']))
+        
+        readDocument: async function(data) {
+            if(!data || !utilsCrud.checkAttrValue(data['document_id']))
                 return null;
-            let response = await this.sendRequest(info, 'updateDocument')
-            return response
+    
+            data = await this.sendRequest('readDocument', data)
+            return data
         },
 
-        readDocument: async function(info) {
-            if(!info || !utilsCrud.checkAttrValue(info['document_id']))
+        updateDocument: async function(data) {
+            if(data['document_id'] && !utilsCrud.checkAttrValue(data['document_id']))
                 return null;
-            let response = await this.sendRequest(info, 'readDocument')
-            return response
+            
+            data.data['modified'] = {on: new Date().toISOString(), by: 'current user'}
+           
+            if (data.upsert != false)
+                data.upsert = true
+                    
+            data = await this.sendRequest('updateDocument', data)
+            
+            return data
         },
 
-
-        deleteDocument: async function(info) {
-            if(!info || !utilsCrud.checkAttrValue(info['document_id']))
+        deleteDocument: async function(data) {
+            if(!info || !utilsCrud.checkAttrValue(data['document_id']))
                 return null;
-            let response = await this.sendRequest(info, 'deleteDocument')
+            
+            let response = await this.sendRequest('deleteDocument', data)
             return response
         },
 
-        readDocuments: async function(info) {
-            if(!info && !info.collection) 
+        readDocuments: async function(data) {
+            if(!data && !data.collection) 
                 return null;
-            let response = await this.sendRequest(info, 'readDocuments')
+
+            let response = await this.sendRequest('readDocuments', data)
             return response
         },
 
-        createCollection: async function(info) {
-            let response = await this.sendRequest(info, 'createCollection')
+        createCollection: async function(data) {
+            let response = await this.sendRequest('createCollection', data)
             return response
         },
 
-        readCollections: async function(info) {
-            let response = await this.sendRequest(info, 'readCollections')
+        readCollections: async function(data) {
+            let response = await this.sendRequest('readCollections', data)
             return response
         },
 
-        updateCollection: async function(info) {
-            let response = await this.sendRequest(info, 'updateCollection')
+        updateCollection: async function(data) {
+            let response = await this.sendRequest('updateCollection', data)
             return response
         },
 
-        deleteCollection: async function(info) {
-            let response = await this.sendRequest(info, 'deleteCollection')
+        deleteCollection: async function(data) {
+            let response = await this.sendRequest('deleteCollection', data)
             return response
         },
 
-        sendRequest: async function(info, action) {
-            let commonData = this.socket.getCommonParams(info);
-            let requestData = { ...commonData, ...info };
+        sendRequest: async function(action, data) {
+            if (!data.database)
+                data['database'] = config.organization_id
+            if (data.document_id) {
+                if (data.data)
+                    data.data['_id'] = data.document_id 
+                else {
+                    data.data = {_id: data.document_id }
+                }
+            }
+            
+            let commonData = this.socket.getCommonParams(data);
+            let requestData = { ...commonData, ...data };
 
             try {
-                let response = await this.socket.send(action, requestData);
+                let response = await indexeddb[action](requestData)
+                this.socket.send(action, requestData);
+                
                 return response;
+
             }
             catch(e) {
                 console.log(e);
@@ -198,8 +222,9 @@
                 }
             }
             else {
-                if (name)
-                    var  nameValue = {[name]: value}
+                let  nameValue = {[name]: value}
+                if (document_id)
+                    nameValue['_id'] = document_id
                 if (updateName)
                     updateName = {[updateName]: value}
                 if (deleteName)
@@ -245,10 +270,47 @@
             }
         },
 
+        indexedDbListener: function() {
+
+            this.listen('readDocument', function(data) {
+                indexeddb.sync('readDocument', data)
+            });
+    
+            this.listen('readDocuments', async function(data) {
+                indexeddb.sync('readDocuments', data)
+            });
+            
+            this.listen('createDocument', function(data) {
+                indexeddb.sync('createDocument', data)
+            });
+            
+            this.listen('updateDocument', function(data) {
+                indexeddb.sync('updateDocument', data)
+            });
+            
+            this.listen('deleteDocument', function(data) {
+                indexeddb.deleteDocument(data);
+            });
+    
+            this.listen('createCollection', function(data) {
+                indexeddb.createCollection(data)
+            });
+            
+            this.listen('updateCollection', function(data) {
+                indexeddb.updateCollection(data)
+            });
+            
+            this.listen('deleteCollection', function(data) {
+                indexeddb.deleteCollection(data)
+            });
+        },
+
         ...utilsCrud
     };
     
     CoCreateCRUD.setSocket();
+    CoCreateCRUD.indexedDbListener();
+
     
     return CoCreateCRUD;
 }));
