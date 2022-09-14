@@ -120,7 +120,15 @@
             try {
                 let response = await indexeddb[action](requestData)
                 this.socket.send(action, requestData);
-                
+
+                if (!this.socket.connected || window && !window.navigator.onLine) {
+                    const listeners = this.socket.listeners.get(action);
+                    if (listeners) 
+                        listeners.forEach(listener => {
+                            listener(response, action);
+                        });
+                }
+
                 return response;
 
             }
@@ -271,39 +279,73 @@
         },
 
         indexedDbListener: function() {
-
+            const self = this
             this.listen('readDocument', function(data) {
-                indexeddb.sync('readDocument', data)
+                self.sync('readDocument', data)
             });
     
             this.listen('readDocuments', async function(data) {
-                indexeddb.sync('readDocuments', data)
+                self.sync('readDocuments', data)
             });
             
             this.listen('createDocument', function(data) {
-                indexeddb.sync('createDocument', data)
+                self.sync('createDocument', data)
             });
             
             this.listen('updateDocument', function(data) {
-                indexeddb.sync('updateDocument', data)
+                self.sync('updateDocument', data)
             });
             
             this.listen('deleteDocument', function(data) {
-                indexeddb.deleteDocument(data);
+                self.sync('deleteDocument', data)
             });
     
             this.listen('createCollection', function(data) {
-                indexeddb.createCollection(data)
+                self.sync('createCollection', data)
             });
             
             this.listen('updateCollection', function(data) {
-                indexeddb.updateCollection(data)
+                self.sync('updateCollection', data)
             });
             
             this.listen('deleteCollection', function(data) {
-                indexeddb.deleteCollection(data)
+                self.sync('deleteCollection', data)
             });
         },
+
+        sync: async function(action, data) {   
+            if (!this.clientId == data.clientId) {             
+                let db = await indexeddb.database(data)
+                if (['deleteDocument', 'createCollection', 'updateCollection', 'deleteCollection'].includes(action)) {
+                    indexeddb[action](data)
+                } else {
+                    let transaction = db.transaction([data.collection], "readonly");
+                    let collection = transaction.objectStore(data.collection);
+                    
+                    if (Array.isArray(data.data)) {
+                        for (let item of data.data) {
+                            indexeddb.readDocument(item, db, collection).then((doc) => {
+                                if (doc.modified.on < item.modifed.on) {
+                                    collection.put(item)
+                                }
+        
+                            })
+                        }
+                    } else {
+                        indexeddb.readDocument(item, db, collection).then((doc) => {
+                            if (doc.modified.on < item.modifed.on) {
+                                collection.put(item)
+                            }
+        
+                        })
+                    }
+                }
+
+                db.close()
+                return 'synced'
+            }
+        },
+        
 
         ...utilsCrud
     };
