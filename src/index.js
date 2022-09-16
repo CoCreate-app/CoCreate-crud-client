@@ -119,16 +119,19 @@
 
             try {
                 let response = await indexeddb[action](requestData)
-                this.socket.send(action, requestData);
+                if (!response.data || response.data.length == 0)
+                    response = await this.socket.send(action, requestData);
+                else {
+                    this.socket.send(action, requestData);
 
-                if (!this.socket.connected || window && !window.navigator.onLine) {
-                    const listeners = this.socket.listeners.get(action);
-                    if (listeners) 
-                        listeners.forEach(listener => {
-                            listener(response, action);
-                        });
+                    if (!this.socket.connected || window && !window.navigator.onLine) {
+                        const listeners = this.socket.listeners.get(action);
+                        if (listeners) 
+                            listeners.forEach(listener => {
+                                listener(response, action);
+                            });
+                    }
                 }
-
                 return response;
 
             }
@@ -314,18 +317,20 @@
         },
 
         sync: async function(action, data) {   
-            if (!this.clientId == data.clientId) {             
                 let db = await indexeddb.database(data)
                 if (['deleteDocument', 'createCollection', 'updateCollection', 'deleteCollection'].includes(action)) {
-                    indexeddb[action](data)
+                    if (this.socket.clientId !== data.clientId)           
+                        indexeddb[action](data)
                 } else {
-                    let transaction = db.transaction([data.collection], "readonly");
+                    let transaction = db.transaction([data.collection], "readwrite");
                     let collection = transaction.objectStore(data.collection);
                     
                     if (Array.isArray(data.data)) {
                         for (let item of data.data) {
-                            indexeddb.readDocument(item, db, collection).then((doc) => {
-                                if (doc.modified.on < item.modifed.on) {
+                            indexeddb.readDocument({data: item}, db, collection).then((doc) => {
+                                if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
+                                    item.database = data.database
+                                    item.collection = data.collection
                                     collection.put(item)
                                 }
         
@@ -333,7 +338,7 @@
                         }
                     } else {
                         indexeddb.readDocument(item, db, collection).then((doc) => {
-                            if (doc.modified.on < item.modifed.on) {
+                            if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
                                 collection.put(item)
                             }
         
@@ -343,7 +348,6 @@
 
                 db.close()
                 return 'synced'
-            }
         },
         
 
