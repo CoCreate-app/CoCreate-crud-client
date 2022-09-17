@@ -337,7 +337,7 @@
                             })
                         }
                     } else {
-                        indexeddb.readDocument(item, db, collection).then((doc) => {
+                        indexeddb.readDocument(data, db, collection).then((doc) => {
                             if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
                                 collection.put(item)
                             }
