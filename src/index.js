@@ -109,9 +109,8 @@
             if (data.document_id) {
                 if (data.data)
                     data.data['_id'] = data.document_id 
-                else {
+                else 
                     data.data = {_id: data.document_id }
-                }
             }
             
             let commonData = this.socket.getCommonParams(data);
@@ -233,9 +232,9 @@
                 }
             }
             else {
-                let  nameValue = {[name]: value}
-                if (document_id)
-                    nameValue['_id'] = document_id
+                let  nameValue = {};
+                if (name)
+                    nameValue = {[name]: value}
                 if (updateName)
                     updateName = {[updateName]: value}
                 if (deleteName)
@@ -329,8 +328,6 @@
                         for (let item of data.data) {
                             indexeddb.readDocument({data: item}, db, collection).then((doc) => {
                                 if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
-                                    item.database = data.database
-                                    item.collection = data.collection
                                     collection.put(item)
                                 }
         
@@ -338,8 +335,8 @@
                         }
                     } else {
                         indexeddb.readDocument(data, db, collection).then((doc) => {
-                            if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
-                                collection.put(item)
+                            if (!doc.data || doc.data.modified && (doc.data.modified.on < data.data.modified.on)) {
+                                collection.put(data)
                             }
         
                         })

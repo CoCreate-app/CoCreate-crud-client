@@ -17,8 +17,8 @@
 		try {
 			if(typeof json == 'undefined' || !path)
 				return null;
-			if (path.indexOf('.') == -1 && path.includes('collection'))
-				json = this.dataOriginal
+			// if (path.indexOf('.') == -1 && path.includes('collection'))
+			// 	json = this.dataOriginal
 			if (/\[([0-9]*)\]/g.test(path)) {
 				path = path.replace(/\[/g, '.');
 				if (path.endsWith(']'))
