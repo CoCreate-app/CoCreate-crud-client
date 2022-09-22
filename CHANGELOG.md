@@ -1,3 +1,18 @@
+# [1.11.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.10.1...v1.11.0) (2022-09-22)
+
+
+### Bug Fixes
+
+* improved sync function ([0dba9fe](https://github.com/CoCreate-app/CoCreate-crud-client/commit/0dba9fe0494cee920183eeea28c01ad1718d4580))
+* typo item/data ([d7c2e4d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d7c2e4d48755c36938cf745eb7e24f68d662312d))
+
+
+### Features
+
+* crud indexeddb before sending socket message. Supports offfline editing. ([e0ed91c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/e0ed91c15f43af64ed6bddc6fd17899929400d25))
+* fire crud.listen events to return indexeddb data if socket is not connected ([a27002c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a27002c584da7ef38a96027dd8da5b338b75faf4))
+* if data is not returned from indexeddb request from server ([5ad6c79](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5ad6c7957f10859fc527bcd06031fd2ad3ebbc7d))
+
 ## [1.10.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.10.0...v1.10.1) (2022-09-01)
 
 
