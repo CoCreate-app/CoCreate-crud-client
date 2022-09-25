@@ -105,23 +105,20 @@
 
         sendRequest: async function(action, data) {
             if (!data.database)
-                data['database'] = config.organization_id
+                data['database'] = this.socket.config.organization_id
             if (data.document_id) {
                 if (data.data)
                     data.data['_id'] = data.document_id 
                 else 
                     data.data = {_id: data.document_id }
             }
-            
-            let commonData = this.socket.getCommonParams(data);
-            let requestData = { ...commonData, ...data };
 
             try {
-                let response = await indexeddb[action](requestData)
+                let response = await indexeddb[action](data)
                 if (!response.data || response.data.length == 0)
-                    response = await this.socket.send(action, requestData);
+                    response = await this.socket.send(action, data);
                 else {
-                    this.socket.send(action, requestData);
+                    this.socket.send(action, data);
 
                     if (!this.socket.connected || window && !window.navigator.onLine) {
                         const listeners = this.socket.listeners.get(action);
