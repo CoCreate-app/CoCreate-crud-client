@@ -23,15 +23,15 @@
             this.socket = socket;
    
             if (isBrowser) {
-                let crud_socket = window.CoCreateSockets;
+                let crud_socket = window.CoCreateSocket;
         
                 if (!crud_socket) {
-                    crud_socket = new CoCreateSocket('ws');
-                    window.CoCreateSockets = crud_socket;
+                    crud_socket = new CoCreateSocket();
+                    window.CoCreateSocket = crud_socket;
                 }
         
                 this.socket = crud_socket;
-                this.socket.create(window.config);
+                this.socket.create();
             }
         },
 
