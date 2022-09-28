@@ -1,3 +1,17 @@
+# [1.12.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.11.0...v1.12.0) (2022-09-28)
+
+
+### Bug Fixes
+
+* bump dependencies ([602c47e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/602c47ed536e5c80266fe52798ec180dda5c10d0))
+* crud.socket connection refactored, isBrowser boolean ([d09531a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d09531aacc8d3926711b6f2f2f33c7d4e70a4f4b))
+* removed getCommonParams as socket applis defaults ([01d606f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/01d606f8808f9c4bf4d9bd368577012b6d7543d8))
+
+
+### Features
+
+* config is accessible from socket.config ([7557eb2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7557eb2e8b7bea6c4d596b2c9a9b6f002ffb9548))
+
 # [1.11.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.10.1...v1.11.0) (2022-09-22)
 
 
