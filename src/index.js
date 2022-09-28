@@ -22,7 +22,7 @@
         setSocket: function(socket) {
             this.socket = socket || CoCreateSocket;
    
-            if (isBrowser) {        
+            if (isBrowser) {
                 this.socket.create(); // {prefix: 'crud'}
             }
         },
