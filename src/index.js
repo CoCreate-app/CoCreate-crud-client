@@ -20,18 +20,10 @@
         socket: null,
         
         setSocket: function(socket) {
-            this.socket = socket;
+            this.socket = socket || CoCreateSocket;
    
-            if (isBrowser) {
-                let crud_socket = window.CoCreateSocket;
-        
-                if (!crud_socket) {
-                    crud_socket = new CoCreateSocket();
-                    window.CoCreateSocket = crud_socket;
-                }
-        
-                this.socket = crud_socket;
-                this.socket.create();
+            if (isBrowser) {        
+                this.socket.create(); // {prefix: 'crud'}
             }
         },
 
@@ -114,8 +106,11 @@
             }
 
             try {
-                let response = await indexeddb[action](data)
-                if (!response.data || response.data.length == 0)
+                let response;
+                if (isBrowser)
+                    response = await indexeddb[action](data)
+
+                if (!response || !response.data || response.data.length == 0)
                     response = await this.socket.send(action, data);
                 else {
                     this.socket.send(action, data);
