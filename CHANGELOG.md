@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.0...v1.12.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* config renameed to CoCreateConfig ([8598591](https://github.com/CoCreate-app/CoCreate-crud-client/commit/85985913734758931d32e6d16b43ce96de1cdd05))
+
 # [1.12.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.11.0...v1.12.0) (2022-09-28)
 
 
