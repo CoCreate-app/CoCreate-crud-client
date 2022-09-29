@@ -42,7 +42,7 @@
 	// ToDo: apply variable for attributes and check config variables and apply defaults
 	function getAttr(el) {
 		if(!el) return;
-		let attributes = window.config.attributes || {}
+		let attributes = window.CoCreateConfig.attributes || {}
 
 		let host = el.getAttribute(attributes.host || 'host');
 		let organization_id = el.getAttribute(attributes.organization_id ||  'organization_id');
