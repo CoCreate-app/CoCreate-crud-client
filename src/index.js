@@ -173,6 +173,10 @@
 
         read: async function(element) {
             const {
+                host,
+                organization_id,
+                apkey,
+                database,
                 collection,
                 document_id,
                 name,
@@ -185,8 +189,12 @@
             if(isRead == "false") return;
             if(document_id && collection) {
                 const responseData = await this.readDocument({
+                    host,
+                    organization_id,
+                    apkey,
                     namespace,
                     room,
+                    database,
                     collection,
                     document_id,
                     name
@@ -198,7 +206,22 @@
 
         save: async function(element, value) {
             if(!element || value === null) return;
-            let { collection, document_id, name, updateName, deleteName, namespace, room, broadcast, broadcastSender, isSave } = utilsCrud.getAttr(element);
+            let {
+                host,
+                organization_id,
+                apkey,
+                database,
+                collection,
+                document_id,
+                name,
+                updateName,
+                deleteName,
+                namespace,
+                room,
+                broadcast,
+                broadcastSender,
+                isSave
+            } = utilsCrud.getAttr(element);
             let valueType = element.getAttribute('value-type');
             if(valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
@@ -214,6 +237,10 @@
                 }
                 else {
                     data = await this.createDocument({
+                        host,
+                        organization_id,
+                        apkey,
+                        database,
                         collection,
                         broadcast,
                         broadcastSender,
@@ -241,8 +268,12 @@
                 }
                 else {
                     data = await this.updateDocument({
+                        host,
+                        organization_id,
+                        apkey,        
                         namespace,
                         room,
+                        database,
                         collection,
                         document_id,
                         upsert: true,

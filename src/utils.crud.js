@@ -39,28 +39,38 @@
 		}
 	}
 
+	// ToDo: apply variable for attributes and check config variables and apply defaults
 	function getAttr(el) {
 		if(!el) return;
+		let attributes = window.config.attributes || {}
 
-		let collection = el.getAttribute('collection');
-		let document_id = el.getAttribute('document_id');
-		let name = el.getAttribute('name');
-		let updateName = el.getAttribute('updateName');
-		let deleteName = el.getAttribute('deleteName');
-		let isCrud = el.getAttribute('crud');
-		let isCrdt = el.getAttribute('crdt');
-		let isRealtime = el.getAttribute('realtime');
-		let isSave = el.getAttribute('save');
-		let isUpdate = el.getAttribute('udpdate');
-		let isUpsert = el.getAttribute('upsert');
-		let isRead = el.getAttribute('read');
-		let isListen = el.getAttribute('listen');
-		let room = el.getAttribute('room');
-		let namespace = el.getAttribute('namespace');
-		let broadcast = el.getAttribute('broadcast');
-		let broadcastSender = el.getAttribute('broadcast-sender');
+		let host = el.getAttribute(attributes.host || 'host');
+		let organization_id = el.getAttribute(attributes.organization_id ||  'organization_id');
+		let apikey = el.getAttribute(attributes.apikey || 'apikey');
+		let database = el.getAttribute(attributes.database || 'database');
+		let collection = el.getAttribute(attributes.collection || 'collection');
+		let document_id = el.getAttribute(attributes.document_id || 'document_id');
+		let name = el.getAttribute(attributes.name || 'name');
+		let updateName = el.getAttribute(attributes.updateName || 'updateName');
+		let deleteName = el.getAttribute(attributes.deleteName || 'deleteName');
+		let isCrud = el.getAttribute(attributes.crud || 'crud');
+		let isCrdt = el.getAttribute(attributes.crdt || 'crdt');
+		let isRealtime = el.getAttribute(attributes.realtime || 'realtime');
+		let isSave = el.getAttribute(attributes.save || 'save');
+		let isUpdate = el.getAttribute(attributes.udpdate || 'udpdate');
+		let isUpsert = el.getAttribute(attributes.upsert || 'upsert');
+		let isRead = el.getAttribute(attributes.read || 'read');
+		let isListen = el.getAttribute(attributes.listen || 'listen');
+		let room = el.getAttribute(attributes.room || 'room');
+		let namespace = el.getAttribute(attributes.namespace || 'namespace');
+		let broadcast = el.getAttribute(attributes.broadcast || 'broadcast');
+		let broadcastSender = el.getAttribute(attributes['broadcast-sender'] || 'broadcast-sender');
 
 		return {
+			host,
+			organization_id,
+			apikey,
+			database,
 			collection,
 			document_id,
 			name,
