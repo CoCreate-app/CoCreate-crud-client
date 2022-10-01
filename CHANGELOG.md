@@ -1,3 +1,12 @@
+## [1.12.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.5...v1.12.6) (2022-10-01)
+
+
+### Bug Fixes
+
+* bump @cocreate/socket-client ([8ad1ce9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8ad1ce9a0d9476afcdf1184ce897dd68421775b1))
+* isObjectEmpty ([9e789d1](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9e789d15ca3a0abc6086181517b5a97099b51871))
+* root factory returns default. if default return default keys and values ([42aa270](https://github.com/CoCreate-app/CoCreate-crud-client/commit/42aa270eb1ac4541a505b08415fbc6bc29a73923))
+
 ## [1.12.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.4...v1.12.5) (2022-09-30)
 
 
