@@ -113,7 +113,7 @@
                 if (isBrowser)
                     response = await indexeddb[action](data)
 
-                if (!response || !response.data || response.data.length == 0)
+                if (!response || this.isObjectEmpty(response.data) || !response.data || response.data.length == 0)
                     response = await this.socket.send(action, data);
                 else {
                     this.socket.send(action, data);
@@ -373,8 +373,13 @@
                 return 'synced'
         },
         
+        isObjectEmpty(obj) { 
+            for (var x in obj) { return false }
+            return true;
+         },
 
         ...utilsCrud
+
     };
     
     CoCreateCRUD.setSocket();
