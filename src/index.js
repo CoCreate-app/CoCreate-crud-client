@@ -15,7 +15,10 @@
         root.returnExports = factory(true, root["@cocreate/socket-client"], root["./utils.crud.js"], root["@cocreate/indexeddb"]);
     }
 }(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, utilsCrud, indexeddb) {
-   
+    
+    if(indexeddb && indexeddb.default)
+        indexeddb = indexeddb.default
+
     const CoCreateCRUD = {
         socket: null,
         
