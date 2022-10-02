@@ -1,3 +1,10 @@
+## [1.12.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.9...v1.12.10) (2022-10-02)
+
+
+### Bug Fixes
+
+* bump @cocreate/hosting and @cocreate/socket-client ([d921b3e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d921b3e2e19e01d4d5b96529484bf4c253dfd456))
+
 ## [1.12.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.8...v1.12.9) (2022-10-01)
 
 
