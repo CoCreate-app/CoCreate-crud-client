@@ -98,7 +98,7 @@
 			return false;
 		}
 
-		// ToDo temporary... Once we update crdt to not use document_id Null will no longer need
+		// ToDo: temporary... Once we update crdt to not use document_id Null will no longer need
 		if(attr.toLowerCase() === "null") return false;
 		return true;
 	}
