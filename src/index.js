@@ -387,7 +387,7 @@
         },
 
         sync: async function(action, data) {   
-                let db = await indexeddb.database(data)
+                let db = await indexeddb.getDatabase(data)
                 if (action == 'readDocument') {
                     if (this.socket.clientId == data.clientId) {
                         let transaction = db.transaction([data.collection], "readwrite");
