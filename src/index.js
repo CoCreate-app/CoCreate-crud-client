@@ -3,7 +3,7 @@
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(["@cocreate/socket-client", "./utils.crud.js", "@cocreate/indexeddb"], function(CoCreateSocket, utilsCrud, indexeddb) {
-            return factory(true, CoCreateSocket, utilsCrud, indexeddb);
+            return {default: factory(true, CoCreateSocket, utilsCrud, indexeddb)};
         });
     }
     else if (typeof module === 'object' && module.exports) {
