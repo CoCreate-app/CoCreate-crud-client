@@ -30,8 +30,17 @@
             }
         },
 
-
-        createDocument: async function(data) {
+        /**
+         * Creates a document in a specified database and collection .
+         *
+         * @see https://cocreate.app/docs/objects.html#read-crud
+         * @param database string or array of database names.
+         * @param collection string or array of collection names.
+         * @param  data object or array of objects to store
+         * @return array API output.
+         * @throws \CreateDocument failed
+         */
+         createDocument: async function(data) {
             if(!data) 
                 return false;
             data.data['created'] = {on: new Date().toISOString(), by: 'current user'}
@@ -293,7 +302,6 @@
             }
         },
 
-
         setDocumentId: function(element, collection, document_id) {
             if (!element) return;
             element.setAttribute('document_id', document_id);
@@ -308,16 +316,64 @@
 
         indexedDbListener: function() {
             const self = this
+            this.listen('createDatabase', function(data) {
+                self.sync('createDatabase', data)
+            });
+            
+            this.listen('readDatabase', function(data) {
+                self.sync('readDatabase', data)
+            });
+            
+            this.listen('updateDatabase', function(data) {
+                self.sync('updateDatabase', data)
+            });
+            
+            this.listen('deleteCollection', function(data) {
+                self.sync('deleteDatabase', data)
+            });
+
+            this.listen('createCollection', function(data) {
+                self.sync('createCollection', data)
+            });
+            
+            this.listen('readCollection', function(data) {
+                self.sync('readCollection', data)
+            });
+            
+            this.listen('updateCollection', function(data) {
+                self.sync('updateCollection', data)
+            });
+            
+            this.listen('deleteCollection', function(data) {
+                self.sync('deleteCollection', data)
+            });
+
+            this.listen('createIndex', function(data) {
+                self.sync('createIndex', data)
+            });
+            
+            this.listen('readIndex', function(data) {
+                self.sync('readIndex', data)
+            });
+            
+            this.listen('updateIndex', function(data) {
+                self.sync('updateIndex', data)
+            });
+            
+            this.listen('deleteIndex', function(data) {
+                self.sync('deleteIndex', data)
+            });
+            
+            this.listen('createDocument', function(data) {
+                self.sync('createDocument', data)
+            });
+
             this.listen('readDocument', function(data) {
                 self.sync('readDocument', data)
             });
     
             this.listen('readDocuments', async function(data) {
                 self.sync('readDocuments', data)
-            });
-            
-            this.listen('createDocument', function(data) {
-                self.sync('createDocument', data)
             });
             
             this.listen('updateDocument', function(data) {
@@ -328,45 +384,35 @@
                 self.sync('deleteDocument', data)
             });
     
-            this.listen('createCollection', function(data) {
-                self.sync('createCollection', data)
-            });
-            
-            this.listen('updateCollection', function(data) {
-                self.sync('updateCollection', data)
-            });
-            
-            this.listen('deleteCollection', function(data) {
-                self.sync('deleteCollection', data)
-            });
         },
 
         sync: async function(action, data) {   
                 let db = await indexeddb.database(data)
-                if (['deleteDocument', 'createCollection', 'updateCollection', 'deleteCollection'].includes(action)) {
-                    if (this.socket.clientId !== data.clientId)           
-                        indexeddb[action](data)
-                } else {
-                    let transaction = db.transaction([data.collection], "readwrite");
-                    let collection = transaction.objectStore(data.collection);
-                    
-                    if (Array.isArray(data.data)) {
-                        for (let item of data.data) {
-                            indexeddb.readDocument({data: item}, db, collection).then((doc) => {
-                                if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
-                                    collection.put(item)
+                if (action == 'readDocument') {
+                    if (this.socket.clientId == data.clientId) {
+                        let transaction = db.transaction([data.collection], "readwrite");
+                        let collection = transaction.objectStore(data.collection);
+                        
+                        if (Array.isArray(data.data)) {
+                            for (let item of data.data) {
+                                indexeddb.readDocument({data: item}, db, collection).then((doc) => {
+                                    if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
+                                        collection.put(item)
+                                    }
+                                })
+                            }
+                        } else {
+                            indexeddb.readDocument(data, db, collection).then((doc) => {
+                                if (!doc.data || doc.data.modified && (doc.data.modified.on < data.data.modified.on)) {
+                                    collection.put(data)
                                 }
-        
+            
                             })
                         }
-                    } else {
-                        indexeddb.readDocument(data, db, collection).then((doc) => {
-                            if (!doc.data || doc.data.modified && (doc.data.modified.on < data.data.modified.on)) {
-                                collection.put(data)
-                            }
-        
-                        })
                     }
+                } else {
+                    if (this.socket.clientId !== data.clientId)           
+                        indexeddb[action](data)
                 }
 
                 db.close()
@@ -388,3 +434,4 @@
     
     return CoCreateCRUD;
 }));
+
