@@ -47,7 +47,9 @@
 			attributes = {
 				host: 'host',
 				organization_id: 'organization_id',
+				organization: 'organization_id',
 				apikey: 'apikey',
+				db: 'db',
 				database: 'database',
 				collection: 'collection',
 				table: 'collection',

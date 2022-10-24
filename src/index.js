@@ -16,6 +16,8 @@
     }
 }(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, utilsCrud, indexeddb) {
     
+    if(CoCreateSocket && CoCreateSocket.default)
+        CoCreateSocket = CoCreateSocket.default
     if(indexeddb && indexeddb.default)
         indexeddb = indexeddb.default
 
@@ -41,146 +43,145 @@
          * @throws \CreateDocument failed
          */
          createDocument: async function(data) {
-            if(!data) 
-                return false;
-            data.data['created'] = {on: new Date().toISOString(), by: 'current user'}
-    
-            data = await this.sendRequest('createDocument', data)
+            data = await this.send('createDocument', data)
             return data
         },
         
         readDocument: async function(data) {
-            if(!data || !utilsCrud.checkAttrValue(data['document_id']))
-                return null;
-    
-            data = await this.sendRequest('readDocument', data)
+            data = await this.send('readDocument', data)
             return data
         },
 
-        updateDocument: async function(data) {
-            if(data['document_id'] && !utilsCrud.checkAttrValue(data['document_id']))
-                return null;
-            
-            data.data['modified'] = {on: new Date().toISOString(), by: 'current user'}
-           
-            if (data.upsert != false)
-                data.upsert = true
-                    
-            data = await this.sendRequest('updateDocument', data)
-            
+        updateDocument: async function(data) {      
+            data = await this.send('updateDocument', data)
             return data
         },
 
         deleteDocument: async function(data) {
-            if(!info || !utilsCrud.checkAttrValue(data['document_id']))
-                return null;
-            
-            let response = await this.sendRequest('deleteDocument', data)
+            let response = await this.send('deleteDocument', data)
             return response
         },
 
         readDocuments: async function(data) {
-            if(!data && !data.collection) 
-                return null;
-
-            let response = await this.sendRequest('readDocuments', data)
+            let response = await this.send('readDocuments', data)
             return response
         },
 
         createCollection: async function(data) {
-            let response = await this.sendRequest('createCollection', data)
-            return response
+            data = await this.send('createCollection', data)
+            return data
         },
 
+        readCollection: async function(data) {
+            data = await this.send('readCollection', data)
+            return data
+        },
+        
         readCollections: async function(data) {
-            let response = await this.sendRequest('readCollections', data)
-            return response
+            data = await this.send('readCollections', data)
+            return data
         },
 
         updateCollection: async function(data) {
-            let response = await this.sendRequest('updateCollection', data)
-            return response
+            data = await this.send('updateCollection', data)
+            return data
         },
 
         deleteCollection: async function(data) {
-            let response = await this.sendRequest('deleteCollection', data)
-            return response
+            data = await this.send('deleteCollection', data)
+            return data
         },
 
-        sendRequest: async function(action, data) {
-            if (!data.database)
-                data['database'] = this.socket.config.organization_id
-            if (data.document_id) {
-                if (data.data)
-                    data.data['_id'] = data.document_id 
-                else 
-                    data.data = {_id: data.document_id }
-            }
+        deletedDocuments: [],
+        getDeletedDocuments: async  function() {
+            let data = await indexeddb.readDocument({
+                database: 'deletedDocuments',
+                collection: 'deletedDocuments',
+                data: { _id: 'deletedDocuments'}
+            }) 
+            
+            if (data && data.data && data.data.deletedDocuments)
+                this.deletedDocuments = data.data.deletedDocuments                  
+        },
 
-            try {
-                let response;
-                if (isBrowser)
-                    response = await indexeddb[action](data)
+        send: function(action, data) {
+            return new Promise((resolve, reject) => {
+                if(!data) 
+                    resolve(null);
+                
+                // ToDo: created and modified handeled by db
+                data['timeStamp'] = new Date().toISOString()
 
-                if (!response || this.isObjectEmpty(response.data) || !response.data || response.data.length == 0)
-                    response = await this.socket.send(action, data);
-                else {
-                    this.socket.send(action, data);
+                if (action == 'updateDocument' && data.upsert != false)
+                    data.upsert = true
 
-                    if (!this.socket.connected || window && !window.navigator.onLine) {
-                        const listeners = this.socket.listeners.get(action);
-                        if (listeners) 
-                            listeners.forEach(listener => {
-                                listener(response, action);
-                            });
-                    }
+                if (data.collection) {
+                    if (!data.db)
+                        data['db'] = ['indexeddb', 'mongodb']
+                    if (!data.database)
+                        data['database'] = this.socket.config.organization_id
+                    if (!data.organization_id)
+                        data['organization_id'] = this.socket.config.organization_id
                 }
-                return response;
 
-            }
-            catch(e) {
-                console.log(e);
-                return null;
-            }
-        },
+                if (isBrowser && indexeddb) {
+                    let Data
+                    if (action == 'updateDocument' || action == 'deleteDocument')
+                        Data = JSON.parse(JSON.stringify(data.data || {}))
 
-        importCollection: function(info) {
-            const { file } = info;
-            const reader = new FileReader();
-            reader.addEventListener('load', (event) => {
-                let fileContent = event.target.result;
+                    indexeddb[action](data).then((response) => {
+                        if (!response || this.isObjectEmpty(response.data) || !response.data || response.data.length == 0) {
+                            if (Data || data.request) {
+                                data.data = Data || data.request
+                                // delete data.request
+                            }
+                            this.socket.send(action, data).then((response) => {
+                                resolve({...response});
+                            })
+                        } else {
+                            if (data.returnLog){
+                                if (!data.log)
+                                    data.log = []
+                                data.log.push(...data.data)
+                            }
 
-                try {
-                    let parsed = JSON.parse(fileContent);
-                    //assuming the json is an array a validation required
-                    parsed.forEach(item => {
-                        if(item.hasOwnProperty('_id')) {
-                            delete item['_id'];
+                            if (action == 'deleteDocument') {
+                                this.deletedDocuments.push(...data.data)
+                                indexeddb.updateDocument({
+                                    database: 'deletedDocuments',
+                                    collection: 'deletedDocuments',
+                                    data: { _id: 'deletedDocuments', deletedDocuments: this.deletedDocuments }
+                                })                    
+                            }
+
+                            resolve({...response});
+                            if (Data || data.request) {
+                                data.data = Data || data.request
+                                // delete data.request
+                            }
+                            // console.log('send to server', action, data)
+
+                            this.socket.send(action, data);
+
+                            if (!this.socket.connected || window && !window.navigator.onLine) {
+                                const listeners = this.socket.listeners.get(action);
+                                if (listeners) 
+                                    listeners.forEach(listener => {
+                                        listener(response, action);
+                                    });
+                            }
                         }
-                        let collection = info['collection'];
-                        this.createDocument({
-                            collection,
-                            data: item
-                        });
-                    });
-                    document.dispatchEvent(new CustomEvent('imported', {
-                        detail: {}
-                    }));
+                    })
+                } else {
+                    this.socket.send(action, data).then((response) => {
+                        resolve(response);
+                    })
                 }
-                catch(err) {
-                    console.error('json failed');
-                }
-            });
-            reader.readAsText(file);
-        },
-
-        send: async function(message, data) {
-            let response = await this.socket.send(message, data);
-            return response;
+            })
         },
         
-        listen: function(message, fun) {
-            this.socket.listen(message, fun);
+        listen: function(action, callback) {
+            this.socket.listen(action, callback);
         },
 
         read: async function(element) {
@@ -263,7 +264,7 @@
                 }
             }
             else {
-                let  nameValue = {};
+                let nameValue = {};
                 if (name)
                     nameValue = {[name]: value}
                 if (updateName)
@@ -386,37 +387,110 @@
     
         },
 
-        sync: async function(action, data) {   
-                let db = await indexeddb.getDatabase(data)
-                if (action == 'readDocument') {
-                    if (this.socket.clientId == data.clientId) {
-                        let transaction = db.transaction([data.collection], "readwrite");
-                        let collection = transaction.objectStore(data.collection);
-                        
-                        if (Array.isArray(data.data)) {
-                            for (let item of data.data) {
-                                indexeddb.readDocument({data: item}, db, collection).then((doc) => {
-                                    if (!doc.data || doc.modified && (doc.modified.on < item.modifed.on)) {
-                                        collection.put(item)
-                                    }
-                                })
-                            }
-                        } else {
-                            indexeddb.readDocument(data, db, collection).then((doc) => {
-                                if (!doc.data || doc.data.modified && (doc.data.modified.on < data.data.modified.on)) {
-                                    collection.put(data)
-                                }
+        sync: async function(action, data) {  
+            // if (this.socket.clientId !== data.clientId)
+            // if (data.status == 'received')
+            //     console.log('response from server', action, data)
+
+            if (data.status == 'received' && action == 'readDocument') {
+                console.log('syncing', data)
+
+                if (this.socket.clientId == data.clientId) {         
+                    let docs = data.data;
+                    if (!Array.isArray(docs) && docs != undefined)
+                        docs = [docs]
             
-                            })
+                   
+                    let docsLength = docs.length
+                    for (let doc of docs) {
+                        docsLength -= 1
+                        const result = this.deletedDocuments.filter(
+                            deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
+                        );
+                        
+                        if (result) {
+                            // ToDo: delete result from array
+                        } else {
+                            let db = await indexeddb.getDatabase(doc)
+                            let transaction = db.transaction([doc.collection], "readwrite");
+                            let collection = transaction.objectStore(doc.collection);
+        
+                            let request = collection.get(doc._id);
+                                
+                            request.onsuccess = function() {
+                                let storedDoc = request.result
+                                let storedDocCompare, docCompare
+                                if (storedDoc) {
+                                    storedDocCompare = storedDoc.modified || storedDoc.created
+                                    docCompare = doc.modified || doc.created
+                                    
+                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on))
+                                        collection.put(doc)
+    
+                                } else {
+                                    const result = this.deletedDocuments.filter(
+                                        deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
+                                    );
+                                    if (result) {
+                                        // ToDo: delete result from array
+                                    } else {
+                                        collection.put(doc)
+                                    }
+                                }
+                                
+                                if (!docsLength)                     
+                                    db.close()
+                            }
+    
+                            request.onerror = function() {
+                                if (!docsLength) {                        
+                                    db.close()
+                                }
+                                console.log('sync failed', doc)
+                            }
+    
                         }
                     }
-                } else {
-                    if (this.socket.clientId !== data.clientId)           
-                        indexeddb[action](data)
                 }
+            } else {
+                if (this.socket.clientId !== data.clientId) {
+                    if (data.request)
+                        data.data = data.request
+                    indexeddb[action](data)
+                }          
+            }
 
-                db.close()
-                return 'synced'
+            return 'synced'
+        },
+
+        importCollection: function(info) {
+            const { file } = info;
+            const reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+                let fileContent = event.target.result;
+
+                try {
+                    let parsed = JSON.parse(fileContent);
+                    //assuming the json is an array a validation required
+                    parsed.forEach(item => {
+                        if(item.hasOwnProperty('_id')) {
+                            delete item['_id'];
+                        }
+                        let collection = info['collection'];
+                        this.createDocument({
+                            collection,
+                            data: item
+                        });
+                    });
+                    document.dispatchEvent(new CustomEvent('imported', {
+                        detail: {}
+                    }));
+                }
+                catch(err) {
+                    console.error('json failed');
+                }
+            });
+            reader.readAsText(file);
         },
         
         isObjectEmpty(obj) { 
@@ -429,6 +503,7 @@
     };
     
     CoCreateCRUD.setSocket();
+    CoCreateCRUD.getDeletedDocuments();
     CoCreateCRUD.indexedDbListener();
 
     
