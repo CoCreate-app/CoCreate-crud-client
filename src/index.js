@@ -100,8 +100,8 @@
                 data: { _id: 'deletedDocuments'}
             }) 
             
-            if (data && data.data && data.data.deletedDocuments)
-                this.deletedDocuments = data.data.deletedDocuments                  
+            if (data && data.data && data.data[0])
+                this.deletedDocuments = data.data[0].deletedDocuments                  
         },
 
         send: function(action, data) {
@@ -154,13 +154,13 @@
                                 })                    
                             }
 
+                            data.status = 'received locally'
                             resolve({...response});
                             if (Data || data.request) {
                                 data.data = Data || data.request
                                 // delete data.request
                             }
                             // console.log('send to server', action, data)
-
                             this.socket.send(action, data);
 
                             if (!this.socket.connected || window && !window.navigator.onLine) {
@@ -209,8 +209,10 @@
                     room,
                     database,
                     collection,
-                    document_id,
-                    name
+                    data: {
+                        _id: document_id,
+                        name
+                    }
                 });
                 return responseData;
             }
@@ -388,9 +390,7 @@
         },
 
         sync: async function(action, data) {  
-            // if (this.socket.clientId !== data.clientId)
-            // if (data.status == 'received')
-            //     console.log('response from server', action, data)
+            const self = this
 
             if (data.status == 'received' && action == 'readDocument') {
                 console.log('syncing', data)
@@ -404,11 +404,11 @@
                     let docsLength = docs.length
                     for (let doc of docs) {
                         docsLength -= 1
-                        const result = this.deletedDocuments.filter(
+                        const result = self.deletedDocuments.filter(
                             deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
                         );
                         
-                        if (result) {
+                        if (result && result.length > 0) {
                             // ToDo: delete result from array
                         } else {
                             let db = await indexeddb.getDatabase(doc)
@@ -428,14 +428,7 @@
                                         collection.put(doc)
     
                                 } else {
-                                    const result = this.deletedDocuments.filter(
-                                        deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
-                                    );
-                                    if (result) {
-                                        // ToDo: delete result from array
-                                    } else {
-                                        collection.put(doc)
-                                    }
+                                    collection.put(doc)
                                 }
                                 
                                 if (!docsLength)                     
