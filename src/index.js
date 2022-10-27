@@ -125,18 +125,10 @@
                 }
 
                 if (isBrowser && indexeddb) {
-                    let Data
-                    if (action == 'updateDocument' || action == 'deleteDocument')
-                        Data = JSON.parse(JSON.stringify(data.data || {}))
-
                     indexeddb[action](data).then((response) => {
                         if (!response || this.isObjectEmpty(response.data) || !response.data || response.data.length == 0) {
-                            if (Data || data.request) {
-                                data.data = Data || data.request
-                                // delete data.request
-                            }
-                            this.socket.send(action, data).then((response) => {
-                                resolve({...response});
+                            this.socket.send(action, response).then((response) => {
+                                resolve(response);
                             })
                         } else {
                             if (data.returnLog){
@@ -155,13 +147,9 @@
                             }
 
                             data.status = 'received locally'
-                            resolve({...response});
-                            if (Data || data.request) {
-                                data.data = Data || data.request
-                                // delete data.request
-                            }
-                            // console.log('send to server', action, data)
-                            this.socket.send(action, data);
+                            resolve(response);
+                            
+                            this.socket.send(action, response);
 
                             if (!this.socket.connected || window && !window.navigator.onLine) {
                                 const listeners = this.socket.listeners.get(action);
