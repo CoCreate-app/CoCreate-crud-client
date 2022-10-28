@@ -126,17 +126,13 @@
 
                 if (isBrowser && indexeddb) {
                     indexeddb[action](data).then((response) => {
-                        if (!response || this.isObjectEmpty(response.data) || !response.data || response.data.length == 0) {
+                        let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
+                        
+                        if (!response || this.isObjectEmpty(response[type]) || !response[type] || response[type].length == 0) {
                             this.socket.send(action, response).then((response) => {
                                 resolve(response);
                             })
                         } else {
-                            if (data.returnLog){
-                                if (!data.log)
-                                    data.log = []
-                                data.log.push(...data.data)
-                            }
-
                             if (action == 'deleteDocument') {
                                 this.deletedDocuments.push(...data.data)
                                 indexeddb.updateDocument({
@@ -379,6 +375,8 @@
 
         sync: async function(action, data) {  
             const self = this
+            if (data.status == 'received' || data.status == 'sync')
+                console.log('server response', action, data)
 
             if (data.status == 'received' && action == 'readDocument') {
                 console.log('syncing', data)
@@ -397,6 +395,7 @@
                         );
                         
                         if (result && result.length > 0) {
+                            console.log('sync failed doc recently deleted')
                             // ToDo: delete result from array
                         } else {
                             let db = await indexeddb.getDatabase(doc)
@@ -435,6 +434,7 @@
                 }
             } else {
                 if (this.socket.clientId !== data.clientId) {
+                    console.log('syncing', data)
                     if (data.request)
                         data.data = data.request
                     indexeddb[action](data)
