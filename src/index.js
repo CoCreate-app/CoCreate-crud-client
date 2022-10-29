@@ -97,11 +97,11 @@
             let data = await indexeddb.readDocument({
                 database: 'deletedDocuments',
                 collection: 'deletedDocuments',
-                data: { _id: 'deletedDocuments'}
+                document: { _id: 'deletedDocuments'}
             }) 
             
-            if (data && data.data && data.data[0])
-                this.deletedDocuments = data.data[0].deletedDocuments                  
+            if (data && data.document && data.document[0])
+                this.deletedDocuments = data.document[0].deletedDocuments                  
         },
 
         send: function(action, data) {
@@ -138,7 +138,7 @@
                                 indexeddb.updateDocument({
                                     database: 'deletedDocuments',
                                     collection: 'deletedDocuments',
-                                    data: { _id: 'deletedDocuments', deletedDocuments: this.deletedDocuments }
+                                    document: { _id: 'deletedDocuments', deletedDocuments: this.deletedDocuments }
                                 })                    
                             }
 
@@ -193,7 +193,7 @@
                     room,
                     database,
                     collection,
-                    data: {
+                    document: {
                         _id: document_id,
                         name
                     }
@@ -243,7 +243,7 @@
                         collection,
                         broadcast,
                         broadcastSender,
-                        data: {
+                        document: {
                             [name]: value
                         },
                     });
@@ -278,7 +278,7 @@
                         upsert: true,
                         broadcast,
                         broadcastSender,
-                        data: nameValue,
+                        document: nameValue,
                         updateName,
                         deleteName
                     });
@@ -375,8 +375,8 @@
 
         sync: async function(action, data) {  
             const self = this
-            if (data.status == 'received' || data.status == 'sync')
-                console.log('server response', action, data)
+            // if (data.status == 'received' || data.status == 'sync')
+            //     console.log('server response', action, data)
 
             if (data.status == 'received' && action == 'readDocument') {
                 console.log('syncing', data)
@@ -460,7 +460,7 @@
                         let collection = info['collection'];
                         this.createDocument({
                             collection,
-                            data: item
+                            document: item
                         });
                     });
                     document.dispatchEvent(new CustomEvent('imported', {
