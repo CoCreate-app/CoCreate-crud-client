@@ -45,6 +45,7 @@
 		let attributes = window.CoCreateConfig.attributes;
 		if (!attributes) {
 			attributes = {
+				// attribute | variable
 				host: 'host',
 				organization_id: 'organization_id',
 				organization: 'organization_id',
@@ -60,14 +61,14 @@
 				key: 'name',
 				updateName: 'updateName',
 				deleteName: 'deleteName',
-				isCrud: 'isCrud',
-				isCrdt: 'isCrdt',
-				isRealtime: 'isRealtime',
-				isSave: 'isSave',
-				isUpdate: 'isUpdate',
-				isUpsert: 'isUpsert',
-				isRead: 'isRead',
-				isListen: 'isListen',
+				crud: 'isCrud',
+				crdt: 'isCrdt',
+				realtime: 'isRealtime',
+				save: 'isSave',
+				update: 'isUpdate',
+				upsert: 'isUpsert',
+				read: 'isRead',
+				listen: 'isListen',
 				broadcast: 'broadcast',
 				broadcastSender: 'broadcastSender',
 				room: 'room'
