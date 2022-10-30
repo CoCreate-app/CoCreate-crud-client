@@ -12,6 +12,75 @@
 		root.returnExports = factory();
 	}
 }(typeof self !== 'undefined' ? self : this, function() {
+	
+	let attributes = {
+		// attribute | variable
+		host: 'host',
+		organization_id: 'organization_id',
+		organization: 'organization_id',
+		apikey: 'apikey',
+		db: 'db',
+		database: 'database',
+		collection: 'collection',
+		table: 'collection',
+		document: 'document_id',
+		document_id: 'document_id',
+		row: 'document_id',
+		name: 'name',
+		key: 'name',
+		updateName: 'updateName',
+		deleteName: 'deleteName',
+		crud: 'isCrud',
+		crdt: 'isCrdt',
+		realtime: 'isRealtime',
+		save: 'isSave',
+		update: 'isUpdate',
+		upsert: 'isUpsert',
+		read: 'isRead',
+		listen: 'isListen',
+		broadcast: 'broadcast',
+		broadcastSender: 'broadcastSender',
+		room: 'room',
+		pass_id: 'pass_id'
+	}
+
+	if (!window.CoCreateConfig) 
+		window.CoCreateConfig = {}
+	if (!window.CoCreateConfig.attributes) { 
+		window.CoCreateConfig.attributes = attributes
+	} else {
+		window.CoCreateConfig.attributes = {...window.CoCreateConfig.attributes, ...attributes}
+	}
+
+	function getAttr(el) {
+		if(!el) return;
+
+		let attributes = window.CoCreateConfig.attributes;
+		let object = {};
+
+		for (let attribute of el.attributes) {
+			let variable = attributes[attribute.name]
+			if (variable) {
+				object[variable] = attribute.value
+			} 
+		}
+
+		return object
+	}
+
+
+	// if value empty, null  or document_id="{{data.value}}" return false
+	function checkAttrValue(attr) {
+		if(!attr) return false;
+		if(/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
+			return false;
+		}
+
+		// ToDo: temporary... Once we update crdt to not use document_id Null will no longer need
+		if(attr.toLowerCase() === "null") return false;
+		return true;
+	}
+	
 
 	function getObjectValueByPath(json, path) {
 		try {
@@ -39,70 +108,10 @@
 		}
 	}
 
-	function getAttr(el) {
-		if(!el) return;
-
-		let attributes = window.CoCreateConfig.attributes;
-		if (!attributes) {
-			attributes = {
-				// attribute | variable
-				host: 'host',
-				organization_id: 'organization_id',
-				organization: 'organization_id',
-				apikey: 'apikey',
-				db: 'db',
-				database: 'database',
-				collection: 'collection',
-				table: 'collection',
-				document: 'document_id',
-				document_id: 'document_id',
-				row: 'document_id',
-				name: 'name',
-				key: 'name',
-				updateName: 'updateName',
-				deleteName: 'deleteName',
-				crud: 'isCrud',
-				crdt: 'isCrdt',
-				realtime: 'isRealtime',
-				save: 'isSave',
-				update: 'isUpdate',
-				upsert: 'isUpsert',
-				read: 'isRead',
-				listen: 'isListen',
-				broadcast: 'broadcast',
-				broadcastSender: 'broadcastSender',
-				room: 'room'
-			}
-		}
-		let object = {};
-
-		for (let attribute of el.attributes) {
-			let attr = attributes[attribute.name]
-			if (attr) {
-				object[attr] = attribute.value
-			} 
-		}
-
-		return object
-	}
-
-
-	// if value empty, null  or document_id="{{data.value}}" return false
-	function checkAttrValue(attr) {
-		if(!attr) return false;
-		if(/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
-			return false;
-		}
-
-		// ToDo: temporary... Once we update crdt to not use document_id Null will no longer need
-		if(attr.toLowerCase() === "null") return false;
-		return true;
-	}
-
 	return {
-		getObjectValueByPath,
 		getAttr,
-		checkAttrValue
+		checkAttrValue,
+		getObjectValueByPath
 	};
 
 }));
