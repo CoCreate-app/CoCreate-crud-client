@@ -62,11 +62,6 @@
             return response
         },
 
-        readDocuments: async function(data) {
-            let response = await this.send('readDocuments', data)
-            return response
-        },
-
         createCollection: async function(data) {
             data = await this.send('createCollection', data)
             return data
@@ -359,10 +354,6 @@
                 self.sync('readDocument', data)
             });
     
-            this.listen('readDocuments', async function(data) {
-                self.sync('readDocuments', data)
-            });
-            
             this.listen('updateDocument', function(data) {
                 self.sync('updateDocument', data)
             });
