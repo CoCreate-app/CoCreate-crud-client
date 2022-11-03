@@ -123,13 +123,17 @@
                     indexeddb[action](data).then((response) => {
                         let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
                         
-                        if (!response || this.isObjectEmpty(response[type]) || !response[type] || response[type].length == 0) {
+                        if (this.socket.connected && !response || this.socket.connected && this.isObjectEmpty(response[type]) || this.socket.connected && !response[type] || this.socket.connected && response[type].length == 0) {
                             this.socket.send(action, response).then((response) => {
+                                console.log('response server', action, response)
                                 resolve(response);
                             })
                         } else {
+                            data.status = 'received locally'
+                            resolve(response);
+
                             if (action == 'deleteDocument') {
-                                this.deletedDocuments.push(...data.data)
+                                this.deletedDocuments.push(...response.document)
                                 indexeddb.updateDocument({
                                     database: 'deletedDocuments',
                                     collection: 'deletedDocuments',
@@ -137,9 +141,6 @@
                                 })                    
                             }
 
-                            data.status = 'received locally'
-                            resolve(response);
-                            
                             this.socket.send(action, response);
 
                             if (!this.socket.connected || window && !window.navigator.onLine) {
@@ -370,10 +371,10 @@
             //     console.log('server response', action, data)
 
             if (data.status == 'received' && action == 'readDocument') {
-                console.log('syncing', data)
+                console.log('syncing', action, data)
 
                 if (this.socket.clientId == data.clientId) {         
-                    let docs = data.data;
+                    let docs = data.document;
                     if (!Array.isArray(docs) && docs != undefined)
                         docs = [docs]
             
@@ -424,11 +425,9 @@
                     }
                 }
             } else {
-                if (this.socket.clientId !== data.clientId) {
-                    console.log('syncing', data)
-                    if (data.request)
-                        data.data = data.request
-                    indexeddb[action](data)
+                if (action !== 'readDocument' && this.socket.clientId !== data.clientId) {
+                    console.log('syncing', action, data)
+                    indexeddb[action]({...data})
                 }          
             }
 

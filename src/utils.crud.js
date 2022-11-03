@@ -69,7 +69,7 @@
 	}
 
 
-	// if value empty, null  or document_id="{{data.value}}" return false
+	// if value empty, null  or document_id="{{value}}" return false
 	function checkAttrValue(attr) {
 		if(!attr) return false;
 		if(/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
