@@ -270,11 +270,10 @@
                         room,
                         database,
                         collection,
-                        document_id,
                         upsert: true,
                         broadcast,
                         broadcastSender,
-                        document: nameValue,
+                        document: {_id: document_id,...nameValue},
                         updateName,
                         deleteName
                     });
