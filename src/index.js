@@ -198,7 +198,7 @@
             }
             return null;
         },
-
+        
         save: async function(element, value) {
             if(!element || value === null) return;
             let {
@@ -218,19 +218,22 @@
                 isSave
             } = utilsCrud.getAttr(element);
             let valueType = element.getAttribute('value-type');
-            if(valueType == 'object' || valueType == 'json'){
+            if (valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
             }
-            if(isSave == "false" || !collection || (!name && !deleteName && !updateName ) || document_id == 'pending' || name == '_id') return;
+
+            if (isSave == "false" || !collection || (!name && !deleteName && !updateName) || name == '_id') return;
+            
+            if (document_id == 'pending')
+                return
 
             let data;
-            if(!document_id) {
+            if (!document_id) {
                 element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
                 if(form) {
                     CoCreate.form.save(form);
-                }
-                else {
+                } else {
                     data = await this.createDocument({
                         host,
                         organization_id,
@@ -244,8 +247,7 @@
                         },
                     });
                 }
-            }
-            else {
+            } else {
                 let nameValue = {};
                 if (name)
                     nameValue = {[name]: value}
@@ -253,15 +255,14 @@
                     updateName = {[updateName]: value}
                 if (deleteName)
                     deleteName = {[deleteName]: ''}
-                if(typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName ) {
+                if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName ) {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
                         document_id: data ? data.document_id : document_id,
                         value
                     });
-                }
-                else {
+                } else {
                     data = await this.updateDocument({
                         host,
                         organization_id,
@@ -273,22 +274,23 @@
                         upsert: true,
                         broadcast,
                         broadcastSender,
-                        document: {_id: document_id,...nameValue},
+                        document: { _id: document_id, ...nameValue },
                         updateName,
                         deleteName
                     });
                 }
             }
-            if(data && (!document_id || document_id !== data.document_id)) {
-                this.setDocumentId(element, collection, data.document_id);
+            if (data && (!document_id || document_id !== data.document[0]._id)) {
+                this.setDocumentId(element, collection, data.document[0]._id);
             }
         },
 
         setDocumentId: function(element, collection, document_id) {
             if (!element) return;
+
             element.setAttribute('document_id', document_id);
             let form = element.closest('form');
-            if(form) {
+            if (form) {
                 CoCreate.form.setDocumentId(form, {
                     collection,
                     document_id
@@ -366,9 +368,7 @@
 
         sync: async function(action, data) {  
             const self = this
-            // if (data.status == 'received' || data.status == 'sync')
-            //     console.log('server response', action, data)
-
+            
             if (data.status == 'received' && action == 'readDocument') {
                 console.log('syncing', action, data)
 
@@ -398,6 +398,9 @@
                             request.onsuccess = function() {
                                 let storedDoc = request.result
                                 let storedDocCompare, docCompare
+                                delete doc.db
+                                delete doc.database
+                                delete doc.collection
                                 if (storedDoc) {
                                     storedDocCompare = storedDoc.modified || storedDoc.created
                                     docCompare = doc.modified || doc.created
