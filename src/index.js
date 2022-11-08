@@ -122,7 +122,7 @@
                 if (isBrowser && indexeddb) {
                     indexeddb[action](data).then((response) => {
                         let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
-                        
+
                         if (this.socket.connected && !response || this.socket.connected && this.isObjectEmpty(response[type]) || this.socket.connected && !response[type] || this.socket.connected && response[type].length == 0) {
                             this.socket.send(action, response).then((response) => {
                                 console.log('response server', action, response)
@@ -259,7 +259,7 @@
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
-                        document_id: data ? data.document_id : document_id,
+                        document_id,
                         value
                     });
                 } else {
@@ -298,6 +298,7 @@
             }
         },
 
+        // ToDo: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
         indexedDbListener: function() {
             const self = this
             this.listen('createDatabase', function(data) {
@@ -363,77 +364,99 @@
             this.listen('deleteDocument', function(data) {
                 self.sync('deleteDocument', data)
             });
-    
         },
 
         sync: async function(action, data) {  
             const self = this
-            
-            if (data.status == 'received' && action == 'readDocument') {
-                console.log('syncing', action, data)
 
-                if (this.socket.clientId == data.clientId) {         
-                    let docs = data.document;
-                    if (!Array.isArray(docs) && docs != undefined)
-                        docs = [docs]
-            
-                   
-                    let docsLength = docs.length
-                    for (let doc of docs) {
-                        docsLength -= 1
-                        const result = self.deletedDocuments.filter(
-                            deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
-                        );
+            if (data.uid) {
+                // console.log('checkSyncedDocuments', data.clientId)
+                indexeddb.readDocument({
+                    database: 'syncedDocuments',
+                    collection: 'syncedDocuments',
+                    document: {_id: data.uid}
+                }).then((response) =>{
+                    if (!response.document || !response.document[0]) {
+                        // console.log('add uid', data.uid, data.clientId)
+                        indexeddb.createDocument({
+                            database: 'syncedDocuments',
+                            collection: 'syncedDocuments',
+                            document: {_id: data.uid}
+                        })
                         
-                        if (result && result.length > 0) {
-                            console.log('sync failed doc recently deleted')
-                            // ToDo: delete result from array
-                        } else {
-                            let db = await indexeddb.getDatabase(doc)
-                            let transaction = db.transaction([doc.collection], "readwrite");
-                            let collection = transaction.objectStore(doc.collection);
-        
-                            let request = collection.get(doc._id);
-                                
-                            request.onsuccess = function() {
-                                let storedDoc = request.result
-                                let storedDocCompare, docCompare
-                                delete doc.db
-                                delete doc.database
-                                delete doc.collection
-                                if (storedDoc) {
-                                    storedDocCompare = storedDoc.modified || storedDoc.created
-                                    docCompare = doc.modified || doc.created
+                        // ToDo: if multiple tabs or windows are open on the same browser run once
+                        if (action == 'readDocument') {
+                            if (this.socket.clientId == data.clientId) {
+                                // console.log('syncing', action, data.clientId)    
+                                let docs = data.document;
+                                if (!Array.isArray(docs) && docs != undefined)
+                                    docs = [docs]
+                        
+                            
+                                let docsLength = docs.length
+                                for (let doc of docs) {
+                                    docsLength -= 1
+                                    const result = self.deletedDocuments.filter(
+                                        deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
+                                    );
                                     
-                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on))
-                                        collection.put(doc)
-    
-                                } else {
-                                    collection.put(doc)
+                                    if (result && result.length > 0) {
+                                        console.log('sync failed doc recently deleted')
+                                        // ToDo: delete result from array
+                                    } else {
+                                        indexeddb.getDatabase(doc).then((db) => {
+                                            let transaction = db.transaction([doc.collection], "readwrite");
+                                            let collection = transaction.objectStore(doc.collection);
+                        
+                                            let request = collection.get(doc._id);
+                                                
+                                            request.onsuccess = function() {
+                                                let storedDoc = request.result
+                                                let storedDocCompare, docCompare
+                                                delete doc.db
+                                                delete doc.database
+                                                delete doc.collection
+                                                if (storedDoc) {
+                                                    storedDocCompare = storedDoc.modified || storedDoc.created
+                                                    docCompare = doc.modified || doc.created
+                                                    
+                                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on))
+                                                        collection.put(doc)
+                    
+                                                } else {
+                                                    collection.put(doc)
+                                                }
+                                                
+                                                if (!docsLength)                     
+                                                    db.close()
+                                            }
+                    
+                                            request.onerror = function() {
+                                                if (!docsLength) {                        
+                                                    db.close()
+                                                }
+                                                console.log('sync failed', doc)
+                                            }
+                                        })
+                                    }
                                 }
-                                
-                                if (!docsLength)                     
-                                    db.close()
                             }
-    
-                            request.onerror = function() {
-                                if (!docsLength) {                        
-                                    db.close()
-                                }
-                                console.log('sync failed', doc)
-                            }
-    
+                        } else {
+                            // console.log('syncable check', action, data.clientId)
+                            if (action !== 'readDocument' && this.socket.clientId !== data.clientId) {
+                                // console.log('syncing', action, data.clientId)
+                                indexeddb[action]({...data})
+                            }          
                         }
-                    }
-                }
-            } else {
-                if (action !== 'readDocument' && this.socket.clientId !== data.clientId) {
-                    console.log('syncing', action, data)
-                    indexeddb[action]({...data})
-                }          
-            }
 
-            return 'synced'
+                        return 'synced'
+
+                    } 
+                    // else {
+                         // console.log('already exists', data.uid, data.clientId)
+                    // }    
+                })
+            }
         },
 
         importCollection: function(info) {

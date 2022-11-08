@@ -80,6 +80,13 @@
 		if(attr.toLowerCase() === "null") return false;
 		return true;
 	}
+
+	function checkValue(value) {
+		if(/{{\s*([\w\W]+)\s*}}/g.test(value))
+			return false;
+		else 
+			return true
+	}
 	
 
 	function getObjectValueByPath(json, path) {
@@ -111,6 +118,7 @@
 	return {
 		getAttr,
 		checkAttrValue,
+		checkValue,
 		getObjectValueByPath
 	};
 
