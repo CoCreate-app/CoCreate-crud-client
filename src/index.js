@@ -129,7 +129,6 @@
                                 resolve(response);
                             })
                         } else {
-                            data.status = 'received locally'
                             resolve(response);
 
                             if (action == 'deleteDocument') {
