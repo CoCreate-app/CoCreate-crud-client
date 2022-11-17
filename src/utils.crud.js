@@ -97,23 +97,6 @@
 		return object
 	}
 
-	function getAttr(el) {
-		if(!el) return;
-
-		let attributes = window.CoCreateConfig.attributes;
-		let object = {};
-
-		for (let attribute of el.attributes) {
-			let variable = attributes[attribute.name]
-			if (variable) {
-				object[variable] = attribute.value
-			} 
-		}
-
-		return object
-	}
-
-
 	// if value empty, null  or document_id="{{value}}" return false
 	function checkAttrValue(attr) {
 		if(!attr) return false;
@@ -127,7 +110,7 @@
 	}
 
 	function checkValue(value) {
-		if(/{{\s*([\w\W]+)\s*}}/g.test(value))
+		if(!value || /{{\s*([\w\W]+)\s*}}/g.test(value))
 			return false;
 		else 
 			return true
@@ -161,7 +144,6 @@
 	}
 
 	return {
-		getAttr,
 		getAttributes,
 		getAttributeNames,
 		setAttributeNames,

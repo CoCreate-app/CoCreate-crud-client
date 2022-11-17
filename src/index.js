@@ -175,7 +175,7 @@
                 namespace,
                 room,
                 isRead
-            } = utilsCrud.getAttr(element);
+            } = utilsCrud.getAttributes(element);
             if(!utilsCrud.checkAttrValue(document_id)) return;
 
             if(isRead == "false") return;
@@ -215,7 +215,7 @@
                 broadcast,
                 broadcastSender,
                 isSave
-            } = utilsCrud.getAttr(element);
+            } = utilsCrud.getAttributes(element);
             let valueType = element.getAttribute('value-type');
             if (valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
