@@ -114,7 +114,7 @@
                     if (!data.db)
                         data['db'] = ['indexeddb', 'mongodb']
                     if (!data.database)
-                        data['database'] = this.socket.config.organization_id
+                        data['database'] = data.organization_id || this.socket.config.organization_id
                     if (!data.organization_id)
                         data['organization_id'] = this.socket.config.organization_id
                 }

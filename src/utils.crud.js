@@ -13,21 +13,17 @@
 	}
 }(typeof self !== 'undefined' ? self : this, function() {
 	
+
 	let attributes = {
 		// attribute | variable
 		host: 'host',
 		organization_id: 'organization_id',
-		organization: 'organization_id',
 		apikey: 'apikey',
 		db: 'db',
 		database: 'database',
 		collection: 'collection',
-		table: 'collection',
-		document: 'document_id',
 		document_id: 'document_id',
-		row: 'document_id',
 		name: 'name',
-		key: 'name',
 		updateName: 'updateName',
 		deleteName: 'deleteName',
 		crud: 'isCrud',
@@ -45,11 +41,60 @@
 	}
 
 	if (!window.CoCreateConfig) 
-		window.CoCreateConfig = {}
-	if (!window.CoCreateConfig.attributes) { 
+		window.CoCreateConfig = {attributes}
+	else if (!window.CoCreateConfig.attributes)
 		window.CoCreateConfig.attributes = attributes
-	} else {
-		window.CoCreateConfig.attributes = {...window.CoCreateConfig.attributes, ...attributes}
+	else
+		setAttributeNames(attributes)
+
+	function setAttributeNames(attributes) {
+		let reversedObject = {}
+		for (const key of Object.keys(CoCreateConfig.attributes)) {
+			reversedObject[CoCreateConfig.attributes[key]] = key
+		}
+
+		for (const attribute of Object.keys(attributes)) {
+			const variable = attributes[attribute]
+			if (reversedObject[variable])
+				reversedObject[variable] = attribute
+		}
+
+		let revertObject = {}
+		for (const key of Object.keys(reversedObject)) {
+			revertObject[reversedObject[key]] = key
+		}
+		CoCreateConfig.attributes = revertObject
+	}
+
+	function getAttributeNames(variables) {
+		let reversedObject = {}
+		for (const key of Object.keys(CoCreateConfig.attributes)) {
+			reversedObject[CoCreateConfig.attributes[key]] = key
+		}
+
+		let attributes = [];
+		for (const variable of variables) {
+			let attribute = reversedObject[variable]
+			if (attribute)
+				attributes.push(attribute)
+		}
+		return attributes
+	}
+	
+	function getAttributes(el) {
+		if(!el) return;
+
+		let attributes = window.CoCreateConfig.attributes;
+		let object = {};
+
+		for (let attribute of el.attributes) {
+			let variable = attributes[attribute.name]
+			if (variable) {
+				object[variable] = attribute.value
+			} 
+		}
+
+		return object
 	}
 
 	function getAttr(el) {
@@ -117,6 +162,9 @@
 
 	return {
 		getAttr,
+		getAttributes,
+		getAttributeNames,
+		setAttributeNames,
 		checkAttrValue,
 		checkValue,
 		getObjectValueByPath
