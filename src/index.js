@@ -176,7 +176,7 @@
                 room,
                 isRead
             } = utilsCrud.getAttributes(element);
-            if(!utilsCrud.checkAttrValue(document_id)) return;
+            if(!utilsCrud.checkValue(document_id)) return;
 
             if(isRead == "false") return;
             if(document_id && collection) {

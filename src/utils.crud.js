@@ -97,20 +97,8 @@
 		return object
 	}
 
-	// if value empty, null  or document_id="{{value}}" return false
-	function checkAttrValue(attr) {
-		if(!attr) return false;
-		if(/{{\s*([\w\W]+)\s*}}/g.test(attr)) {
-			return false;
-		}
-
-		// ToDo: temporary... Once we update crdt to not use document_id Null will no longer need
-		if(attr.toLowerCase() === "null") return false;
-		return true;
-	}
-
 	function checkValue(value) {
-		if(!value || /{{\s*([\w\W]+)\s*}}/g.test(value))
+		if(/{{\s*([\w\W]+)\s*}}/g.test(value))
 			return false;
 		else 
 			return true
@@ -147,7 +135,6 @@
 		getAttributes,
 		getAttributeNames,
 		setAttributeNames,
-		checkAttrValue,
 		checkValue,
 		getObjectValueByPath
 	};
