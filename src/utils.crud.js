@@ -45,9 +45,9 @@
 	else if (!window.CoCreateConfig.attributes)
 		window.CoCreateConfig.attributes = attributes
 	else
-		setAttributeNames(attributes)
+		setAttributeNames(attributes, false)
 
-	function setAttributeNames(attributes) {
+	function setAttributeNames(attributes, overWrite) {
 		let reversedObject = {}
 		for (const key of Object.keys(CoCreateConfig.attributes)) {
 			reversedObject[CoCreateConfig.attributes[key]] = key
@@ -55,7 +55,7 @@
 
 		for (const attribute of Object.keys(attributes)) {
 			const variable = attributes[attribute]
-			if (reversedObject[variable])
+			if (!reversedObject[variable] || overWrite != false)
 				reversedObject[variable] = attribute
 		}
 
