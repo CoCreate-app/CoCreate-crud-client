@@ -42,7 +42,7 @@
          * @return array API output.
          * @throws \CreateDocument failed
          */
-         createDocument: async function(data) {
+        createDocument: async function(data) {
             data = await this.send('createDocument', data)
             return data
         },
