@@ -125,7 +125,6 @@
 
                         if (this.socket.connected && !response || this.socket.connected && this.isObjectEmpty(response[type]) || this.socket.connected && !response[type] || this.socket.connected && response[type].length == 0) {
                             this.socket.send(action, response).then((response) => {
-                                console.log('response server', action, response)
                                 resolve(response);
                             })
                         } else {
@@ -146,7 +145,7 @@
                                 const listeners = this.socket.listeners.get(action);
                                 if (listeners) 
                                     listeners.forEach(listener => {
-                                        listener(response, action);
+                                        listener(response);
                                     });
                             }
                         }
@@ -386,11 +385,13 @@
                         // ToDo: if multiple tabs or windows are open on the same browser run once
                         if (action == 'readDocument') {
                             if (this.socket.clientId == data.clientId) {
-                                // console.log('syncing', action, data.clientId)    
+                                // console.log('syncing', action, data.clientId)   
+                                let Data = {...data}
+                                delete Data.document
+
                                 let docs = data.document;
                                 if (!Array.isArray(docs) && docs != undefined)
                                     docs = [docs]
-                        
                             
                                 let docsLength = docs.length
                                 for (let doc of docs) {
@@ -415,15 +416,18 @@
                                                 delete doc.db
                                                 delete doc.database
                                                 delete doc.collection
+                                                Data.document = [doc]
                                                 if (storedDoc) {
                                                     storedDocCompare = storedDoc.modified || storedDoc.created
                                                     docCompare = doc.modified || doc.created
                                                     
-                                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on))
+                                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on)) {
                                                         collection.put(doc)
-                    
+                                                        self.broadcastSyncedDocument('updateDocument', Data)
+                                                    }                    
                                                 } else {
                                                     collection.put(doc)
+                                                    self.broadcastSyncedDocument('createDocument', Data)
                                                 }
                                                 
                                                 if (!docsLength)                     
@@ -456,6 +460,14 @@
                     // }    
                 })
             }
+        },
+
+        broadcastSyncedDocument: function(action, data) {
+            const listeners = this.socket.listeners.get(action);
+            if (listeners) 
+                listeners.forEach(listener => {
+                    listener(data);
+                });
         },
 
         importCollection: function(info) {
