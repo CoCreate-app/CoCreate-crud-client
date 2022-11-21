@@ -1,3 +1,10 @@
+## [1.13.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.3...v1.13.4) (2022-11-21)
+
+
+### Bug Fixes
+
+* isBrowser ([ba69e92](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ba69e92b47ab8d8b95ff7c07edade9a538a18331))
+
 ## [1.13.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.2...v1.13.3) (2022-11-21)
 
 
