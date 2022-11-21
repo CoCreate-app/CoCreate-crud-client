@@ -1,3 +1,34 @@
+# [1.13.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.13...v1.13.0) (2022-11-21)
+
+
+### Bug Fixes
+
+* attribute object typo. expected order is  attribute | variable ([6fb5a69](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6fb5a692cc49f2b4e323755e3e63c589312e321a))
+* crud.getAttr renamed to crud.getAttributes ([b4637ac](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b4637ac70c2c8e7bfefb8951383d7aaca5452e3e))
+* data.request contains original crud request ([e73f360](https://github.com/CoCreate-app/CoCreate-crud-client/commit/e73f360faa8bd65954fd885758f5f8841d680b24))
+* delete db, database and collection before sending to indexeddb ([810707f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/810707f9af56ae1cd91964f8d14e28e60af2a240))
+* depreciate receiveLocally status ([2cec226](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2cec226d131809437d30564a4e1859c938f95770))
+* removed readDocuments ([5cb31f9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5cb31f9d52d61bf49f85ac57aebb770f937aa14c))
+* renamed crud.checkAttrValue to crud.checkValue ([27fcd23](https://github.com/CoCreate-app/CoCreate-crud-client/commit/27fcd23798a0fa15344f4549110379af8e735576))
+* renamed data.data to data.document ([7bf2d2a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7bf2d2a9182250ad59f848a219286ed1dd26ffa8))
+* renamed remaning data to document ([f61f6ed](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f61f6edb050c6466cecbe54b33a9c284590fcd8d))
+* root factory returns default object ([906711d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/906711d7aa0cbfc21f06b8a1044cbdb9ff73182e))
+* root factory returns default object ([4db9711](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4db9711030b761afb2ecd75b749d2b76b9874e71))
+* setAttributeNames overWrite true or false to prevent overwriting custom attributes with default on intialization ([f3a1557](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f3a1557f1ef9fdb01e78cc9681802ba8ee0ee0a3))
+* sync sends a shallow copy of data to indexeddb ([a98ab32](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a98ab32ae110b6d4398b3836d0902a6cca31f0b5))
+
+
+### Features
+
+* CRUD multiple databases, collections and documents with a single request. sync and distribute data across multiple clients. CRUD works offline ([ac77be5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ac77be5061f6d7b2abb9ab0c6b080d962e2d4e88))
+* data response also available as data.document, improved handeling of data[type]. improved handling of syncing ([33e0602](https://github.com/CoCreate-app/CoCreate-crud-client/commit/33e0602a41da752f014c2ef19c7ba27f7fdf572c))
+* default crud attributes, if CoCreatConfig attribute defined merge default attributes with CoCreateConfig attributes ([1971fb9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1971fb95b41dd23d5ec206787dd4bca2301ca77b))
+* locally broadcast createDocument and updateDocument after syncing readDocument ([60d4551](https://github.com/CoCreate-app/CoCreate-crud-client/commit/60d45512cec18d973ab2ed46a36cc404f88cdcac))
+* map custom attributes, supports databse, collection, index and document crud ([da4dbcb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/da4dbcb7e4b26fab1fba57ff8e09dd97cd1b2b9c))
+* setAttributeName, getAttributeName and getAttribute. for handeling default and custom attribute variable pairs which is stored at CoCreateConfig.attributes ([cdb11fd](https://github.com/CoCreate-app/CoCreate-crud-client/commit/cdb11fda6e8ed654afe8de0ed11d850c816b3f8c))
+* store data.uid to prevent redundant syncs across multiple window, tabs and iframes ([1d33033](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1d33033e034ccb18c76a328b3642218979d46e29))
+* sync and update documents ([07604a9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/07604a96d051a1ffd5786c6e3205b97116adf7b9))
+
 ## [1.12.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.12.12...v1.12.13) (2022-10-02)
 
 
