@@ -1,17 +1,17 @@
 (function(root, factory) {
 	if(typeof define === 'function' && define.amd) {
 		define([], function() {
-			return factory();
+			return factory(true);
 		});
 	}
 	else if(typeof module === 'object' && module.exports) {
-		module.exports = factory();
+		module.exports = factory(false);
 	}
 	else {
 		// Browser globals (root is window)
-		root.returnExports = factory();
+		root.returnExports = factory(true);
 	}
-}(typeof self !== 'undefined' ? self : this, function() {
+}(typeof self !== 'undefined' ? self : this, function(isBrowser) {
 	
 
 	let attributes = {
@@ -40,12 +40,14 @@
 		pass_id: 'pass_id'
 	}
 
-	if (!window.CoCreateConfig) 
-		window.CoCreateConfig = {attributes}
-	else if (!window.CoCreateConfig.attributes)
-		window.CoCreateConfig.attributes = attributes
-	else
-		setAttributeNames(attributes, false)
+	if (isBrowser) {
+		if (!window.CoCreateConfig) 
+			window.CoCreateConfig = {attributes}
+		else if (!window.CoCreateConfig.attributes)
+			window.CoCreateConfig.attributes = attributes
+		else
+			setAttributeNames(attributes, false)
+	}
 
 	function setAttributeNames(attributes, overWrite) {
 		let reversedObject = {}

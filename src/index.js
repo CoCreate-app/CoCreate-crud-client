@@ -510,8 +510,10 @@
     };
     
     CoCreateCRUD.setSocket();
-    CoCreateCRUD.getDeletedDocuments();
-    CoCreateCRUD.indexedDbListener();
+    if (isBrowser) {
+        CoCreateCRUD.getDeletedDocuments();
+        CoCreateCRUD.indexedDbListener();
+    }
 
     
     return CoCreateCRUD;
