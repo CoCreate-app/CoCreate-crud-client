@@ -8,11 +8,11 @@ module.exports = {
         {
             "entry": "./docs/index.html",
             "collection": "files",
-            "document_id": "6143fc56829b690010a5f330",
-            "key": "src",
             "document": {
+                "_id": "6143fc56829b690010a5f330",
                 "name": "index.html",
                 "path": "/docs/crud-client/index.html",
+                "src": "{{source}}",
                 "domains": [
                     "*",
                     "general.cocreate.app"
