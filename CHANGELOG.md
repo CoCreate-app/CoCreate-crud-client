@@ -1,3 +1,10 @@
+## [1.13.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.5...v1.13.6) (2022-11-22)
+
+
+### Bug Fixes
+
+* apply src: {{source}} to CoCreate.config ([27f344d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/27f344de639d79157b36bad2e0ea8b250f49d194))
+
 ## [1.13.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.4...v1.13.5) (2022-11-21)
 
 
