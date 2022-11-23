@@ -121,34 +121,21 @@
 
                 if (isBrowser && indexeddb) {
                     indexeddb[action](data).then((response) => {
-                        let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
+                        // let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
 
-                        if (this.socket.connected && !response || this.socket.connected && this.isObjectEmpty(response[type]) || this.socket.connected && !response[type] || this.socket.connected && response[type].length == 0) {
-                            this.socket.send(action, response).then((response) => {
-                                resolve(response);
-                            })
-                        } else {
-                            resolve(response);
-
-                            if (action == 'deleteDocument') {
-                                this.deletedDocuments.push(...response.document)
-                                indexeddb.updateDocument({
-                                    database: 'deletedDocuments',
-                                    collection: 'deletedDocuments',
-                                    document: { _id: 'deletedDocuments', deletedDocuments: this.deletedDocuments }
-                                })                    
-                            }
-
-                            this.socket.send(action, response);
-
-                            if (!this.socket.connected || window && !window.navigator.onLine) {
-                                const listeners = this.socket.listeners.get(action);
-                                if (listeners) 
-                                    listeners.forEach(listener => {
-                                        listener(response);
-                                    });
-                            }
+                        if (action == 'deleteDocument' && response.document[0].db == 'indexeddb') {
+                            this.deletedDocuments.push(...response.document)
+                            indexeddb.updateDocument({
+                                database: 'deletedDocuments',
+                                collection: 'deletedDocuments',
+                                document: { _id: 'deletedDocuments', deletedDocuments: this.deletedDocuments }
+                            })                    
                         }
+
+                        this.socket.send(action, response).then((response) => {
+                            resolve(response);
+                        })
+
                     })
                 } else {
                     this.socket.send(action, data).then((response) => {
@@ -199,6 +186,8 @@
         
         save: async function(element, value) {
             if(!element || value === null) return;
+            if (element.tagName == 'LINK')
+                console.log('saving link')
             let {
                 host,
                 organization_id,
@@ -367,7 +356,7 @@
         sync: async function(action, data) {  
             const self = this
 
-            if (data.uid) {
+            if (data.uid && data.status == 'received') {
                 // console.log('checkSyncedDocuments', data.clientId)
                 indexeddb.readDocument({
                     database: 'syncedDocuments',
