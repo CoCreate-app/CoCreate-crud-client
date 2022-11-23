@@ -186,8 +186,6 @@
         
         save: async function(element, value) {
             if(!element || value === null) return;
-            if (element.tagName == 'LINK')
-                console.log('saving link')
             let {
                 host,
                 organization_id,
