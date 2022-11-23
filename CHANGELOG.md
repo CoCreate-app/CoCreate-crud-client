@@ -1,3 +1,15 @@
+# [1.14.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.7...v1.14.0) (2022-11-23)
+
+
+### Bug Fixes
+
+* removed console.log ([e9c693c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/e9c693ce19c79d17ae3debe83a882ac22be229f6))
+
+
+### Features
+
+* socket now handles online or offline messaging ([29b3ccf](https://github.com/CoCreate-app/CoCreate-crud-client/commit/29b3ccfabb1832b1b490c48560a537f47663cd94))
+
 ## [1.13.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.13.6...v1.13.7) (2022-11-22)
 
 
