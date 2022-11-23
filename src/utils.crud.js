@@ -1,10 +1,10 @@
 (function(root, factory) {
-	if(typeof define === 'function' && define.amd) {
+	if (typeof define === 'function' && define.amd) {
 		define([], function() {
 			return factory(true);
 		});
 	}
-	else if(typeof module === 'object' && module.exports) {
+	else if (typeof module === 'object' && module.exports) {
 		module.exports = factory(false);
 	}
 	else {
@@ -84,7 +84,7 @@
 	}
 	
 	function getAttributes(el) {
-		if(!el) return;
+		if (!el) return;
 
 		let attributes = window.CoCreateConfig.attributes;
 		let object = {};
@@ -100,7 +100,7 @@
 	}
 
 	function checkValue(value) {
-		if(/{{\s*([\w\W]+)\s*}}/g.test(value))
+		if (/{{\s*([\w\W]+)\s*}}/g.test(value))
 			return false;
 		else 
 			return true
@@ -109,7 +109,7 @@
 
 	function getObjectValueByPath(json, path) {
 		try {
-			if(typeof json == 'undefined' || !path)
+			if (typeof json == 'undefined' || !path)
 				return null;
 			// if (path.indexOf('.') == -1 && path.includes('collection'))
 			// 	json = this.dataOriginal

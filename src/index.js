@@ -16,9 +16,9 @@
     }
 }(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, utilsCrud, indexeddb) {
     
-    if(CoCreateSocket && CoCreateSocket.default)
+    if (CoCreateSocket && CoCreateSocket.default)
         CoCreateSocket = CoCreateSocket.default
-    if(indexeddb && indexeddb.default)
+    if (indexeddb && indexeddb.default)
         indexeddb = indexeddb.default
 
     const CoCreateCRUD = {
@@ -101,7 +101,7 @@
 
         send: function(action, data) {
             return new Promise((resolve, reject) => {
-                if(!data) 
+                if (!data) 
                     resolve(null);
                 
                 // ToDo: created and modified handeled by db
@@ -162,10 +162,10 @@
                 room,
                 isRead
             } = utilsCrud.getAttributes(element);
-            if(!utilsCrud.checkValue(document_id)) return;
+            if (!utilsCrud.checkValue(document_id)) return;
 
-            if(isRead == "false") return;
-            if(document_id && collection) {
+            if (isRead == "false") return;
+            if (document_id && collection) {
                 const responseData = await this.readDocument({
                     host,
                     organization_id,
@@ -185,7 +185,7 @@
         },
         
         save: async function(element, value) {
-            if(!element || value === null) return;
+            if (!element || value === null) return;
             let {
                 host,
                 organization_id,
@@ -216,7 +216,7 @@
             if (!document_id) {
                 element.setAttribute('document_id', 'pending');
                 let form = element.closest('form');
-                if(form) {
+                if (form) {
                     CoCreate.form.save(form);
                 } else {
                     data = await this.createDocument({
@@ -467,7 +467,7 @@
                     let parsed = JSON.parse(fileContent);
                     //assuming the json is an array a validation required
                     parsed.forEach(item => {
-                        if(item.hasOwnProperty('_id')) {
+                        if (item.hasOwnProperty('_id')) {
                             delete item['_id'];
                         }
                         let collection = info['collection'];
