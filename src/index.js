@@ -107,6 +107,8 @@
                 // ToDo: created and modified handeled by db
                 data['timeStamp'] = new Date().toISOString()
 
+                if (action == 'readDocument')
+                    data.broadcast = false
                 if (action == 'updateDocument' && data.upsert != false)
                     data.upsert = true
 
@@ -432,6 +434,8 @@
                                 }
                             }
                         } else {
+                            // ToDo: if another tab updates a document tha was previously deleted it will re add?
+                            // check deleted documents and remove from list or prevent re add?
                             // console.log('syncable check', action, data.clientId)
                             if (action !== 'readDocument' && this.socket.clientId !== data.clientId) {
                                 // console.log('syncing', action, data.clientId)
@@ -450,6 +454,7 @@
         },
 
         broadcastSyncedDocument: function(action, data) {
+            console.log('broadcastedSyncDocument', action, data)
             const listeners = this.socket.listeners.get(action);
             if (listeners) 
                 listeners.forEach(listener => {
