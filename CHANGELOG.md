@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.0...v1.15.1) (2022-11-25)
+
+
+### Bug Fixes
+
+* bump @cocreate/socket and @cocreate/indexeddb ([9d0e6df](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9d0e6df7e179afc64a0cdcecaee1734d347066e3))
+
 # [1.15.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.14.3...v1.15.0) (2022-11-25)
 
 
