@@ -1,3 +1,16 @@
+# [1.15.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.14.3...v1.15.0) (2022-11-25)
+
+
+### Bug Fixes
+
+* bump dependencies ([6331a13](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6331a13291f74484b52ed8e8bd237da8ceacd32f))
+* CoCreate.crud.default removed bug causing default object ([bc9333d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/bc9333d803ccb2846c788fa2a61caabe643a92c2))
+
+
+### Features
+
+* if readDocument broadcast set to false ([b95274a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b95274a871b0ee82f9d42eb72fa3385dda935920))
+
 ## [1.14.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.14.2...v1.14.3) (2022-11-24)
 
 
