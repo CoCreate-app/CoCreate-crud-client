@@ -1,3 +1,10 @@
+## [1.15.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.2...v1.15.3) (2022-11-26)
+
+
+### Bug Fixes
+
+* improved syncing ([f92e428](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f92e4280ce7e4fe7af50498aae6aca0467cbed4f))
+
 ## [1.15.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.1...v1.15.2) (2022-11-26)
 
 
