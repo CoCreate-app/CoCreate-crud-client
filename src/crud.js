@@ -352,104 +352,112 @@
             const self = this
 
             if (data.uid && data.status == 'received') {
-                // console.log('checkSyncedDocuments', data.clientId)
-                indexeddb.readDocument({
-                    database: 'syncedDocuments',
-                    collection: 'syncedDocuments',
-                    document: {_id: data.uid}
-                }).then((response) =>{
-                    if (!response.document || !response.document[0]) {
-                        // console.log('add uid', data.uid, data.clientId)
-                        indexeddb.createDocument({
+                        
+                if (action == 'readDocument') {
+                    if (this.socket.clientId == data.clientId)   
+                        self.syncDocument(data) 
+                    
+                } else {
+                    // ToDo: if another tab updates a document tha was previously deleted it will re add?
+                    // check deleted documents and remove from list or prevent re add?
+                    // console.log('syncable check', action, data.clientId)
+                    if (this.socket.clientId !== data.clientId) {
+                        indexeddb.readDocument({
                             database: 'syncedDocuments',
                             collection: 'syncedDocuments',
                             document: {_id: data.uid}
-                        })
-                        
-                        // ToDo: if multiple tabs or windows are open on the same browser run once
-                        if (action == 'readDocument') {
-                            if (this.socket.clientId == data.clientId) {
-                                // console.log('syncing', action, data.clientId)   
-                                let Data = {...data}
-                                delete Data.document
+                        }).then((response) => {
+                            if (!response.document || !response.document[0]) {
+                                indexeddb.createDocument({
+                                    database: 'syncedDocuments',
+                                    collection: 'syncedDocuments',
+                                    document: {_id: data.uid}
+                                })
 
-                                let docs = data.document;
-                                if (!Array.isArray(docs) && docs != undefined)
-                                    docs = [docs]
-                            
-                                let docsLength = docs.length
-                                for (let doc of docs) {
-                                    docsLength -= 1
-                                    const result = self.deletedDocuments.filter(
-                                        deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
-                                    );
-                                    
-                                    if (result && result.length > 0) {
-                                        console.log('sync failed doc recently deleted')
-                                        // ToDo: delete result from array
-                                    } else {
-                                        indexeddb.getDatabase(doc).then((db) => {
-                                            let transaction = db.transaction([doc.collection], "readwrite");
-                                            let collection = transaction.objectStore(doc.collection);
-                        
-                                            let request = collection.get(doc._id);
-                                                
-                                            request.onsuccess = function() {
-                                                let storedDoc = request.result
-                                                let storedDocCompare, docCompare
-                                                delete doc.db
-                                                delete doc.database
-                                                delete doc.collection
-                                                Data.document = [doc]
-                                                if (storedDoc) {
-                                                    storedDocCompare = storedDoc.modified || storedDoc.created
-                                                    docCompare = doc.modified || doc.created
-                                                    
-                                                    if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on)) {
-                                                        collection.put(doc)
-                                                        self.broadcastSyncedDocument('updateDocument', Data)
-                                                    }                    
-                                                } else {
-                                                    collection.put(doc)
-                                                    self.broadcastSyncedDocument('createDocument', Data)
-                                                }
-                                                
-                                                if (!docsLength)                     
-                                                    db.close()
-                                            }
-                    
-                                            request.onerror = function() {
-                                                if (!docsLength) {                        
-                                                    db.close()
-                                                }
-                                                console.log('sync failed', doc)
-                                            }
-                                        })
-                                    }
-                                }
-                            }
-                        } else {
-                            // ToDo: if another tab updates a document tha was previously deleted it will re add?
-                            // check deleted documents and remove from list or prevent re add?
-                            // console.log('syncable check', action, data.clientId)
-                            if (action !== 'readDocument' && this.socket.clientId !== data.clientId) {
                                 // console.log('syncing', action, data.clientId)
                                 indexeddb[action]({...data})
-                            }          
+                            }
+                        })
+                    }          
+                }
+            } 
+        },
+
+        syncDocument: async function(data) {
+            const self = this
+            let db 
+            let Data = {...data}
+            Data.document = []
+
+            let docs = data.document;
+            if (!Array.isArray(docs) && docs != undefined)
+                docs = [docs]
+        
+            let docsLength = docs.length
+            for (let doc of docs) {
+                const result = this.deletedDocuments.filter(
+                    deletedDoc => deletedDoc._id == doc._id && deletedDoc.database == doc.database && deletedDoc.collection == doc.collection
+                );
+                
+                if (result && result.length > 0) {
+                    console.log('sync failed doc recently deleted')
+                    // ToDo: delete result from array
+                } else {
+                    if (!db)
+                        db = await indexeddb.getDatabase(doc)
+                    else if (db.name != doc.database) {
+                        db.close()
+                        db = await indexeddb.getDatabase(doc)
+                    }
+
+                    let transaction = db.transaction([doc.collection], "readwrite");
+                    let collection = transaction.objectStore(doc.collection);
+
+                    let request = collection.get(doc._id);
+                        
+                    request.onsuccess = function() {
+                        docsLength -= 1
+
+                        let storedDoc = request.result
+                        let storedDocCompare, docCompare
+                        let Doc = {...doc}
+                        delete doc.db
+                        delete doc.database
+                        delete doc.collection
+                        
+                        if (storedDoc) {
+                            storedDocCompare = storedDoc.modified || storedDoc.created
+                            docCompare = doc.modified || doc.created
+                            
+                            if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on)) {
+                                Data.document.push(Doc)
+                                collection.put(doc)
+                            }                    
+                        } else {
+                            Data.document.push(Doc)
+                            collection.put(doc)
                         }
+                        
+                        if (!docsLength) {  
+                            db.close()
+                            if (Data.document.length)
+                                self.broadcastSyncedDocument('sync', Data)
+                        }                     
+                    }
 
-                        return 'synced'
-
-                    } 
-                    // else {
-                         // console.log('already exists', data.uid, data.clientId)
-                    // }    
-                })
+                    request.onerror = function() {
+                        docsLength -= 1
+                        if (!docsLength) {                        
+                            db.close()
+                        }
+                        console.log('sync failed', doc)
+                    }
+                }
             }
+        
         },
 
         broadcastSyncedDocument: function(action, data) {
-            console.log('broadcastedSyncDocument', action, data)
             const listeners = this.socket.listeners.get(action);
             if (listeners) 
                 listeners.forEach(listener => {
