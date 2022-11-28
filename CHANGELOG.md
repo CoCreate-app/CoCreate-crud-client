@@ -1,3 +1,10 @@
+## [1.15.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.5...v1.15.6) (2022-11-28)
+
+
+### Bug Fixes
+
+* bump @cocreate/socket-client ([7c47411](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7c47411c2ab85a77d6705d59faf70710827e5f14))
+
 ## [1.15.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.4...v1.15.5) (2022-11-27)
 
 
