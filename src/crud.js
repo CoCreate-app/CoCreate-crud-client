@@ -3,7 +3,7 @@
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(["@cocreate/socket-client", "./utils.crud.js", "@cocreate/indexeddb"], function(CoCreateSocket, utilsCrud, indexeddb) {
-            return factory(true, CoCreateSocket, utilsCrud, indexeddb);
+            return factory(true, CoCreateSocket, utilsCrud, indexeddb = indexeddb.default);
         })
     }
     else if (typeof module === 'object' && module.exports) {
@@ -440,8 +440,7 @@
                         
                         if (!docsLength) {  
                             db.close()
-                            if (Data.document.length)
-                                self.broadcastSyncedDocument('sync', Data)
+                            self.broadcastSyncedDocument('sync', Data)
                         }                     
                     }
 
