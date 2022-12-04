@@ -1,18 +1,17 @@
 (function(root, factory) {
-	if (typeof define === 'function' && define.amd) {
-		define([], function() {
-			return factory(true);
-		});
-	}
-	else if (typeof module === 'object' && module.exports) {
-		module.exports = factory(false);
-	}
-	else {
-		// Browser globals (root is window)
-		root.returnExports = factory(true);
-	}
-}(typeof self !== 'undefined' ? self : this, function(isBrowser) {
-	
+    if (typeof define === 'function' && define.amd) {
+        define(["@cocreate/utils"], function(utils) {
+            return factory(true, utils);
+        })
+    }
+    else if (typeof module === 'object' && module.exports) {
+        const utils = require("@cocreate/utils");
+        module.exports = factory(false, utils);
+    }
+    else {
+        root.returnExports = factory(true, root["@cocreate/utils"]);
+    }
+}(typeof self !== 'undefined' ? self : this, function(isBrowser, {ObjectId, getValueFromObject}) {
 
 	let attributes = {
 		// attribute | variable
@@ -37,7 +36,8 @@
 		broadcast: 'broadcast',
 		broadcastSender: 'broadcastSender',
 		room: 'room',
-		pass_id: 'pass_id'
+		pass_id: 'pass_id',
+		'pass-refresh': 'passRefresh'
 	}
 
 	if (isBrowser) {
@@ -106,39 +106,13 @@
 			return true
 	}
 	
-
-	function getObjectValueByPath(json, path) {
-		try {
-			if (typeof json == 'undefined' || !path)
-				return null;
-			// if (path.indexOf('.') == -1 && path.includes('collection'))
-			// 	json = this.dataOriginal
-			if (/\[([0-9]*)\]/g.test(path)) {
-				path = path.replace(/\[/g, '.');
-				if (path.endsWith(']'))
-					path = path.slice(0, -1)
-				path = path.replace(/\]./g, '.');
-				path = path.replace(/\]/g, '.');
-			}
-			let jsonData = json, subpath = path.split('.');
-			
-			for (let i = 0; i < subpath.length; i++) {
-				jsonData = jsonData[subpath[i]];
-				if (!jsonData) return null;
-			}
-			return jsonData;
-		}catch(error){
-			console.log("Error in getValueFromObject", error);
-			return null;
-		}
-	}
-
 	return {
 		getAttributes,
 		getAttributeNames,
 		setAttributeNames,
 		checkValue,
-		getObjectValueByPath
+		ObjectId,
+		getValueFromObject
 	};
 
 }));
