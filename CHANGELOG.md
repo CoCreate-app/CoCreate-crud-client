@@ -1,3 +1,11 @@
+## [1.15.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.11...v1.15.12) (2022-12-04)
+
+
+### Bug Fixes
+
+* bump @cocreate/indexeddb and @cocreate/socket-client ([0697758](https://github.com/CoCreate-app/CoCreate-crud-client/commit/0697758452a8f9529dd991eb23a82c54539eebe6))
+* getValueFromObject relocated to utils ([5fd71ff](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5fd71ff9d7c3b8aa10c0ac6cd9ac60da8bb9597d))
+
 ## [1.15.11](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.10...v1.15.11) (2022-12-02)
 
 
