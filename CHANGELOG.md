@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.13...v1.16.0) (2022-12-07)
+
+
+### Features
+
+* syncServer function to sync indexeddb with server ([fcb5ab3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/fcb5ab32cf5df77e86b15cd6ec3bea73d1675a59))
+
 ## [1.15.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.12...v1.15.13) (2022-12-04)
 
 
