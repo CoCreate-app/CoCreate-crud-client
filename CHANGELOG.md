@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.0...v1.16.1) (2022-12-07)
+
+
+### Bug Fixes
+
+* bump @cocreate/socket-cliet ([d797eb6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d797eb6d8edc14cbd59ded43cf6dbb06c99bed5f))
+
 # [1.16.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.15.13...v1.16.0) (2022-12-07)
 
 
