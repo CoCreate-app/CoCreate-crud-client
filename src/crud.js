@@ -67,11 +67,6 @@
             return data
         },
         
-        readCollections: async function(data) {
-            data = await this.send('readCollections', data)
-            return data
-        },
-
         updateCollection: async function(data) {
             data = await this.send('updateCollection', data)
             return data
@@ -118,7 +113,7 @@
                         data['user_id'] = this.socket.config.user_id
                 }
 
-                if (isBrowser && indexeddb) {
+                if (isBrowser && indexeddb && data['db'].includes('indexeddb')) {
                     indexeddb[action](data).then((response) => {
                         // let type = action.match(/[A-Z][a-z]+/g)[0].toLowerCase();
 
@@ -465,6 +460,59 @@
                     listener(data);
                 });
         },
+
+        syncServer: function () {
+            const self = this;
+            const promise = indexedDB.databases()
+            promise.then((databases) => {
+                for (let database of databases) {
+                    if (!['socketMessageQueue', 'syncedDocuments', 'deletedDocuments'].includes(database.name)) {
+                        let dbRequest = indexedDB.open(database.name);
+                        dbRequest.onsuccess = function() {
+                            let db = dbRequest.result
+                            let objectStoreNames = Array.from(db.objectStoreNames)
+
+                            let collectionLength = objectStoreNames.length
+                            for (let collection of objectStoreNames) {
+                                let transaction = db.transaction([collection], "readonly");
+                                let objectStore = transaction.objectStore(collection);
+        
+                                let documentRequest = objectStore.getAll()
+                                documentRequest.onsuccess = function() {
+                                    collectionLength -= 1
+                                    let data = {
+                                        database: database.name,
+                                        collection,
+                                        document: documentRequest.result
+                                    }
+                                    self.socket.send('syncServer', data)
+                                    console.log('sync success', {database: database.name, collection})
+                                    if (!collectionLength && db.close) {
+                                        db.close()
+                                        console.log('sync completed')
+                                    }
+                                }
+                                
+                                documentRequest.onerror = function() {
+                                    console.log('sync failed', {database: database.name, collection})
+                                    if (!collectionLength && db.close) {
+                                        db.close()
+                                        console.log('sync completed')
+                                    }
+                                };
+        
+                            }
+                        }
+        
+                        dbRequest.onerror = function() {
+                            console.log(openRequest.error, database)
+                        };    
+                    }
+                }
+            })
+        },
+        
+        
 
         importCollection: function(info) {
             const { file } = info;
