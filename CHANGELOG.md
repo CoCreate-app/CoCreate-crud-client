@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.2...v1.16.3) (2022-12-08)
+
+
+### Bug Fixes
+
+* relocateed checkValue to @cocrete/utils ([24f72a7](https://github.com/CoCreate-app/CoCreate-crud-client/commit/24f72a7334fe4cc7dbf8fee4b3b20c2b3237fc7e))
+
 ## [1.16.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.1...v1.16.2) (2022-12-07)
 
 
