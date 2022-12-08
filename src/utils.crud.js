@@ -11,7 +11,7 @@
     else {
         root.returnExports = factory(true, root["@cocreate/utils"]);
     }
-}(typeof self !== 'undefined' ? self : this, function(isBrowser, {ObjectId, getValueFromObject}) {
+}(typeof self !== 'undefined' ? self : this, function(isBrowser, {ObjectId, getValueFromObject, checkValue}) {
 
 	let attributes = {
 		// attribute | variable
@@ -97,13 +97,6 @@
 		}
 
 		return object
-	}
-
-	function checkValue(value) {
-		if (/{{\s*([\w\W]+)\s*}}/g.test(value))
-			return false;
-		else 
-			return true
 	}
 	
 	return {
