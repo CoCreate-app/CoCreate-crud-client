@@ -102,7 +102,7 @@
                 if (action == 'updateDocument' && data.upsert != false)
                     data.upsert = true
 
-                if (data.collection) {
+                if (data.database || data.collection) {
                     if (!data.db)
                         data['db'] = ['indexeddb', 'mongodb']
                     if (!data.database)
@@ -513,7 +513,6 @@
         },
         
         
-
         importCollection: function(info) {
             const { file } = info;
             const reader = new FileReader();
