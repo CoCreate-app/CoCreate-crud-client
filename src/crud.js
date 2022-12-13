@@ -2,21 +2,22 @@
 
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(["@cocreate/socket-client", "@cocreate/indexeddb", "./utils.crud.js"], 
-            function(CoCreateSocket, indexeddb, utilsCrud) {
-                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, utilsCrud);
+        define(["@cocreate/socket-client", "@cocreate/indexeddb", "@cocreate/utils", "./utils.crud.js"], 
+            function(CoCreateSocket, indexeddb, {ObjectId, getAttributes, checkValue}, utilsCrud) {
+                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, {ObjectId, getAttributes, checkValue}, utilsCrud);
             }
         )
     }
     else if (typeof module === 'object' && module.exports) {
         const utilsCrud = require("./utils.crud.js");
         const CoCreateSocket = require("@cocreate/socket-client");
-        module.exports = factory(false, CoCreateSocket, utilsCrud);
+        const {ObjectId, getAttributes, checkValue} = require("@cocreate/utils");
+        module.exports = factory(false, CoCreateSocket, {ObjectId, getAttributes, checkValue}, utilsCrud);
     }
     else {
-        root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/indexeddb"], root["./utils.crud.js"]);
+        root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/indexeddb"], root["@cocreate/utils"], root["./utils.crud.js"]);
     }
-}(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, indexeddb, utilsCrud) {
+}(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, indexeddb, {ObjectId, getAttributes, checkValue}, utilsCrud) {
 
     const CoCreateCRUD = {
         socket: null,
@@ -143,8 +144,8 @@
                 namespace,
                 room,
                 isRead
-            } = utilsCrud.getAttributes(element);
-            if (!utilsCrud.checkValue(document_id)) return;
+            } = getAttributes(element);
+            if (!checkValue(document_id)) return;
 
             if (isRead == "false") return;
             if (document_id && collection) {
@@ -183,7 +184,7 @@
                 broadcast,
                 broadcastSender,
                 isSave
-            } = utilsCrud.getAttributes(element);
+            } = getAttributes(element);
             let valueType = element.getAttribute('value-type');
             if (valueType == 'object' || valueType == 'json'){
                 value = JSON.parse(value)
