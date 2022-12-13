@@ -1,3 +1,11 @@
+## [1.16.11](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.10...v1.16.11) (2022-12-13)
+
+
+### Bug Fixes
+
+* bump dependencies ([605d8f6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/605d8f63215f4344b22a974b804caf227d631ec1))
+* relocated getAttributes to @cocreate/utils ([3a69862](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3a6986240b1d43aa69da674457edaafb973f50b8))
+
 ## [1.16.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.9...v1.16.10) (2022-12-12)
 
 
