@@ -1,3 +1,10 @@
+## [1.16.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.12...v1.16.13) (2022-12-13)
+
+
+### Bug Fixes
+
+* removed un used devDependencies ([28d6e2a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/28d6e2aa6accc30ac52f9086249b5fc4ea4cb7be))
+
 ## [1.16.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.11...v1.16.12) (2022-12-13)
 
 
