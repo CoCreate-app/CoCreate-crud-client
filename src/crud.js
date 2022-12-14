@@ -107,7 +107,7 @@
                 if (isBrowser && indexeddb && data['db'].includes('indexeddb')) {
                     indexeddb[action](data).then((response) => {
 
-                        if (action.includes("delete") && response.document[0].db == 'indexeddb') {
+                        if (action.includes("delete") && response.db == 'indexeddb') {
                             indexeddb.createDocument({
                                 database: 'crudSync',
                                 collection: 'deleted',
