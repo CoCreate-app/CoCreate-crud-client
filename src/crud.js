@@ -382,7 +382,7 @@
         
             let itemsLength = items.length
             for (let i = 0; i < items.length; i++) {
-                let isDeleted = this.isDeleted(items[i], deletedItems)
+                let isDeleted = this.isDeleted(type, items[i], deletedItems)
                 
                 if (isDeleted) {
                     console.log('sync failed item recently deleted')
@@ -481,26 +481,28 @@
             //     document: deleteItems
             // })
 
-            return deletedItems.document            
+            return deletedItems.document
         },
 
-        isDeleted: function(item, deletedItems) {
+        isDeleted: function(type, item, deletedItems) {
             for (let i = 0; i < deletedItems.length; i++) {
-
-                if (type == 'database' && deletedItems[i][type].name == item[type].name) {
-                    return true 
-                } else if (deletedItems[i][type].database == item[type].database) {
-                    if (type == 'collection' && deletedItems[i][type].name == item[type].name) {
+                let deletedItem = deletedItems[i].item[type]
+                for (let i = 0; i < deletedItem.length; i++) {
+                    if (type == 'database' && deletedItem[i].name == item.name) {
                         return true 
-                    } else if (deletedItems[i][type].collection == item[type].collection) {
-                        if (type == 'index' && deletedItems[i][type].name == item[type].name) {
+                    } else if (deletedItem[i].database == item.database) {
+                        if (type == 'collection' && deletedItem[i].name == item.name) {
                             return true 
+                        } else if (deletedItem[i].collection == item.collection) {
+                            if (type == 'index' && deletedItem[i].name == item.name) {
+                                return true 
+                            }
+                            if (type == 'document' && deletedItem[i]._id == item._id) {
+                                return true 
+                            }
                         }
-                        if (type == 'document' && deletedItems[i][type]._id == item[type]._id) {
-                            return true 
-                        }
-                    }
-                }  
+                    } 
+                }
             }
             return false        
         },
