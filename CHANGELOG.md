@@ -1,3 +1,10 @@
+## [1.16.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.14...v1.16.15) (2022-12-14)
+
+
+### Bug Fixes
+
+* typo when checkinng for deletedItem ([4e5523d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4e5523de534e21a3f7c2a7c551eada181bef1595))
+
 ## [1.16.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.13...v1.16.14) (2022-12-14)
 
 
