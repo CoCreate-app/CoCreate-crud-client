@@ -1,3 +1,10 @@
+## [1.16.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.13...v1.16.14) (2022-12-14)
+
+
+### Bug Fixes
+
+* isDleted syntax typo ([c072252](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c072252088c61cdb2d60e5a8e6193da104e562c9))
+
 ## [1.16.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.12...v1.16.13) (2022-12-13)
 
 
