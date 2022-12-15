@@ -1,3 +1,10 @@
+## [1.16.16](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.15...v1.16.16) (2022-12-15)
+
+
+### Bug Fixes
+
+* add missing dev dependency style-loader ([30fba40](https://github.com/CoCreate-app/CoCreate-crud-client/commit/30fba405643c42fe999b6ade1c481540574406e5))
+
 ## [1.16.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.14...v1.16.15) (2022-12-14)
 
 
