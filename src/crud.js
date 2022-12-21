@@ -106,13 +106,17 @@
 
                 if (isBrowser && indexeddb && data['db'].includes('indexeddb')) {
                     indexeddb[action](data).then((response) => {
-
-                        if (action.includes("delete") && response.db == 'indexeddb') {
-                            indexeddb.createDocument({
-                                database: 'crudSync',
-                                collection: 'deleted',
-                                document: { _id: ObjectId(), item: response }
-                            })                    
+                        if (!action.includes("read")) {
+                            if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
+                                response['broadcastBrowser'] = 'once'
+                            
+                            if (action.includes("delete")) {
+                                indexeddb.createDocument({
+                                    database: 'crudSync',
+                                    collection: 'deleted',
+                                    document: { _id: ObjectId(), item: response }
+                                })                    
+                            }
                         }
 
                         this.socket.send(action, response).then((response) => {
