@@ -1,3 +1,11 @@
+## [1.16.18](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.17...v1.16.18) (2022-12-21)
+
+
+### Bug Fixes
+
+* bump dependencies ([3638832](https://github.com/CoCreate-app/CoCreate-crud-client/commit/363883271d7f52011ee82ec3ae4333477df02977))
+* if action does not include read add broadcastBrowser once ([d96ad51](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d96ad51c24561a3c5aa7d0d1a16d56d6c906d63f))
+
 ## [1.16.17](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.16...v1.16.17) (2022-12-20)
 
 
