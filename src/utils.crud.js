@@ -35,7 +35,8 @@
 			read: 'isRead',
 			listen: 'isListen',
 			broadcast: 'broadcast',
-			broadcastSender: 'broadcastSender',
+			'broadcast-sender': 'broadcastSender',
+			'broadcast-browser': 'broadcastBrowser',
 			room: 'room',
 			pass_id: 'pass_id',
 			'pass-refresh': 'passRefresh'

@@ -187,6 +187,7 @@
                 room,
                 broadcast,
                 broadcastSender,
+                broadcastBrowser,
                 isSave
             } = getAttributes(element);
             let valueType = element.getAttribute('value-type');
@@ -214,6 +215,7 @@
                         collection,
                         broadcast,
                         broadcastSender,
+                        broadcastBrowser,
                         document: {
                             [name]: value
                         },
@@ -246,6 +248,7 @@
                         upsert: true,
                         broadcast,
                         broadcastSender,
+                        broadcastBrowser,
                         document: { _id: document_id, ...nameValue },
                         updateName,
                         deleteName
