@@ -85,7 +85,6 @@
                 if (!data) 
                     resolve(null);
                 
-                // ToDo: created and modified handeled by db
                 data['timeStamp'] = new Date().toISOString()
 
                 if (action == 'readDocument')
