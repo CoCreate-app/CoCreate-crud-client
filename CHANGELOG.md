@@ -1,3 +1,15 @@
+# [1.17.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.22...v1.17.0) (2022-12-25)
+
+
+### Bug Fixes
+
+* bump dependencies ([34f2476](https://github.com/CoCreate-app/CoCreate-crud-client/commit/34f2476bbbb008155112d4623ae4575437825c51))
+
+
+### Features
+
+* broadcast-browser attribute support ([ff65e81](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ff65e817b32fc58b74dbc5ef4532c9b7f1093e1d))
+
 ## [1.16.22](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.16.21...v1.16.22) (2022-12-23)
 
 
