@@ -1,3 +1,10 @@
+## [1.17.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.9...v1.17.10) (2023-01-01)
+
+
+### Bug Fixes
+
+* docs sanbox overflow ([b2a513d](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b2a513d4149540576ca69a769c8e2bbcd62dfd09))
+
 ## [1.17.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.8...v1.17.9) (2022-12-31)
 
 
