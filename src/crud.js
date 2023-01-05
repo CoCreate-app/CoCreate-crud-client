@@ -345,7 +345,7 @@
 
             if (data.uid && data.status == 'received') {
                 if (action == 'readCollection' || action == 'readDocument') {
-                    // ToDo on page refresh clientId is updated may require a browserId to group all clientIds
+                    // ToDo: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
                         self.syncDatabase(action, data)
                     
