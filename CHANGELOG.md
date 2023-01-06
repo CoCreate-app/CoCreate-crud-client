@@ -1,3 +1,11 @@
+## [1.17.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.12...v1.17.13) (2023-01-06)
+
+
+### Bug Fixes
+
+* bump dependencies, worklow [@v3](https://github.com/v3) ([bef7346](https://github.com/CoCreate-app/CoCreate-crud-client/commit/bef73460a7225962b9c0a8e318ffb83d747c0f65))
+* edit in github btn styles ([6f6a29e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6f6a29eed9819354d67997703b91fa1c275e914b))
+
 ## [1.17.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.11...v1.17.12) (2023-01-05)
 
 
