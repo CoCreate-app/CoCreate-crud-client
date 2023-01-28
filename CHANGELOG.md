@@ -1,3 +1,15 @@
+# [1.18.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.20...v1.18.0) (2023-01-28)
+
+
+### Bug Fixes
+
+* bump indexeddb and socket ([4fa2866](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4fa2866395eb82ad0a00e234c8c24872fc4c8c38))
+
+
+### Features
+
+* check indexeddb.status ([84a9c27](https://github.com/CoCreate-app/CoCreate-crud-client/commit/84a9c2710104bb7bf81cb4986de13384ed2c1a9b))
+
 ## [1.17.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.17.19...v1.17.20) (2023-01-27)
 
 
