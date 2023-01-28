@@ -20,8 +20,7 @@
 }(typeof self !== 'undefined' ? self : this, function(isBrowser, CoCreateSocket, indexeddb, {ObjectId, getAttributes, checkValue}, utilsCrud) {
 
     const CoCreateCRUD = {
-        socket: null,
-        
+        socket: null,        
         setSocket: function(socket) {
             this.socket = socket || CoCreateSocket;
    
@@ -103,7 +102,7 @@
                         data['user_id'] = this.socket.config.user_id
                 }
 
-                if (isBrowser && indexeddb && data['db'].includes('indexeddb')) {
+                if (isBrowser && indexeddb.status && data['db'].includes('indexeddb')) {
                     indexeddb[action](data).then((response) => {
                         if (!action.includes("read")) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
@@ -343,7 +342,7 @@
         sync: async function(action, data) {  
             const self = this
 
-            if (data.uid && data.status == 'received') {
+            if (indexeddb.status && data.uid && data.status == 'received') {
                 if (action == 'readCollection' || action == 'readDocument') {
                     // ToDo: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
