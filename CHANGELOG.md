@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.1...v1.18.2) (2023-01-29)
+
+
+### Bug Fixes
+
+* if form && CoCreate.form ([da32729](https://github.com/CoCreate-app/CoCreate-crud-client/commit/da3272977fd7586039324ca46a9a70c1113a59aa))
+
 ## [1.18.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.0...v1.18.1) (2023-01-28)
 
 
