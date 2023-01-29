@@ -263,7 +263,7 @@
 
             element.setAttribute('document_id', document_id);
             let form = element.closest('form');
-            if (form) {
+            if (form && CoCreate.form) {
                 CoCreate.form.setDocumentId(form, {
                     collection,
                     document_id
