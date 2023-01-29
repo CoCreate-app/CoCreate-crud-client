@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.2...v1.18.3) (2023-01-29)
+
+
+### Bug Fixes
+
+* bump dependencies ([6d22d68](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6d22d681d4ba6aa0ee249f4523508c0aa06a1626))
+
 ## [1.18.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.1...v1.18.2) (2023-01-29)
 
 
