@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.9...v1.19.0) (2023-03-16)
+
+
+### Features
+
+* replaced get-value and set-value with a super charged version of CoCreate-events ([cdba219](https://github.com/CoCreate-app/CoCreate-crud-client/commit/cdba219aa4b36550dc43fbcc1a56cd324aded13b))
+
 ## [1.18.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.18.8...v1.18.9) (2023-02-01)
 
 
