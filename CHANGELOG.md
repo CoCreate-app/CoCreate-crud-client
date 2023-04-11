@@ -1,3 +1,10 @@
+## [1.19.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.3...v1.19.4) (2023-04-11)
+
+
+### Bug Fixes
+
+* renamed domans to hosts ([066a04b](https://github.com/CoCreate-app/CoCreate-crud-client/commit/066a04bb475906f7f0d133902dd30176e73e4530))
+
 ## [1.19.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.2...v1.19.3) (2023-03-30)
 
 
