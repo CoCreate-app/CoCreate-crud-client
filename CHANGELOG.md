@@ -1,3 +1,10 @@
+## [1.19.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.6...v1.19.7) (2023-04-24)
+
+
+### Bug Fixes
+
+* removed uglify.js from dev dependencies ([11ed4ef](https://github.com/CoCreate-app/CoCreate-crud-client/commit/11ed4ef3c73105c6ee0979608250fbb4b5e229cc))
+
 ## [1.19.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.5...v1.19.6) (2023-04-11)
 
 
