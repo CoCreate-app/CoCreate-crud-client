@@ -1,3 +1,10 @@
+## [1.19.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.9...v1.19.10) (2023-04-24)
+
+
+### Bug Fixes
+
+* workflow node version updated  16 ([c7b440a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c7b440a4b638e8bb28069692e9192a24e0eb3916))
+
 ## [1.19.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.8...v1.19.9) (2023-04-24)
 
 
