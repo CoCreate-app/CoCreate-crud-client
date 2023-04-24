@@ -1,6 +1,6 @@
 {
   "name": "@cocreate/crud-client",
-  "version": "1.19.6",
+  "version": "1.19.7",
   "description": "An useful CRUD api operate Create, read, update, delete with built in database. Can be used as a firebase alternative. Easily configured using HTML5 attributes and/or JavaScript API.",
   "keywords": [
     "crud-client",
@@ -54,7 +54,6 @@
     "mini-css-extract-plugin": "^1.5.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.1.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "webpack-log": "^3.0.1"
