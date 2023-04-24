@@ -436,10 +436,18 @@
                                 storedDocCompare = storedDoc.modified || storedDoc.created
                                 docCompare = items[i].modified || items[i].created
                                 
-                                if (storedDocCompare && docCompare && (storedDocCompare.on < docCompare.on)) {
-                                    Data.document.push(Doc)
-                                    collection.put(items[i])
-                                }                    
+                                // ToDo: on page load documents can be updated resulting in a false compare. needs to sync
+                                if (storedDocCompare && docCompare) {
+                                    if (Doc.collection == 'crdt-transactions')
+                                        console.log('crdt-transactions', Doc)
+                                    console.log('isSyncable', storedDocCompare.on, storedDocCompare.on < docCompare.on, docCompare.on)
+                                    if (storedDocCompare.on < docCompare.on) {
+                                        Data.document.push(Doc)
+                                        collection.put(items[i])
+                                    } else {
+
+                                    }
+                                }                   
                             } else {
                                 Data.document.push(Doc)
                                 collection.put(items[i])
