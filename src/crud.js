@@ -80,7 +80,7 @@
         },
 
         send: function(action, data) {
-            return new Promise((resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
                 if (!data) 
                     resolve(null);
                 
@@ -90,14 +90,14 @@
                     data.broadcast = false
                 if (action == 'updateDocument' && data.upsert != false)
                     data.upsert = true
-
+                if (!data.organization_id)
+                    data.organization_id = await this.getOrganizationId()
+    
                 if (data.database || data.collection) {
                     if (!data.db)
                         data['db'] = ['indexeddb', 'mongodb']
                     if (!data.database)
                         data['database'] = data.organization_id || this.socket.config.organization_id
-                    if (!data.organization_id)
-                        data['organization_id'] = this.socket.config.organization_id
                     if (!data.user_id)
                         data['user_id'] = this.socket.config.user_id
                 }
@@ -130,6 +130,23 @@
             })
         },
         
+        getOrganizationId: function() {
+            return new Promise(async (resolve) => {
+               
+                let organization_id = this.socket.config.organization_id || localStorage.getItem('organization_id')
+                if (organization_id) 
+                    resolve(organization_id)
+                else {
+                    let test = setTimeout( ()=> {
+                        organization_id = this.socket.config.organization_id || localStorage.getItem('organization_id')
+                        if (organization_id)
+                            resolve(organization_id)
+
+                    }, 1000)
+                }
+            });
+    },
+
         listen: function(action, callback) {
             this.socket.listen(action, callback);
         },
