@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.11...v1.20.0) (2023-04-26)
+
+
+### Features
+
+* await getOrganizationId ([aeb297a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/aeb297aa079bf9ec45f1bb981105eb411ebc7c8c))
+
 ## [1.19.11](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.10...v1.19.11) (2023-04-24)
 
 
