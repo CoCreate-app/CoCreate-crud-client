@@ -1,3 +1,12 @@
+## [1.20.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.0...v1.20.1) (2023-04-30)
+
+
+### Bug Fixes
+
+* fullscreen target updated to fullscreen fullscreen-target ([66e9a12](https://github.com/CoCreate-app/CoCreate-crud-client/commit/66e9a121529b888e2e70d42b5647c39d1c3be35d))
+* package-lock.json and pnpm-lock.yaml added to .gitignore ([d4c8733](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d4c87334abb617019fe0f601787c45ace88902d4))
+* removed toogle fullscreen icons. now using css content ([780b8e2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/780b8e2bd161b22918681cdc608d99d8d858c2c1))
+
 # [1.20.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.19.11...v1.20.0) (2023-04-26)
 
 
