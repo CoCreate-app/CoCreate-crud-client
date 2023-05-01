@@ -1,3 +1,10 @@
+## [1.20.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.3...v1.20.4) (2023-05-01)
+
+
+### Bug Fixes
+
+* replaced icon toggles with new svg ([af3c2ce](https://github.com/CoCreate-app/CoCreate-crud-client/commit/af3c2ce40510a0881384480f780cd27e9066c2c8))
+
 ## [1.20.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.2...v1.20.3) (2023-05-01)
 
 
