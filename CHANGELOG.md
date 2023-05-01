@@ -1,3 +1,10 @@
+## [1.20.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.2...v1.20.3) (2023-05-01)
+
+
+### Bug Fixes
+
+* update manifest.json to manifest.webmanifest ([5ecea3e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5ecea3e63df56635ff1ec37e71602750ddad4871))
+
 ## [1.20.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.1...v1.20.2) (2023-05-01)
 
 
