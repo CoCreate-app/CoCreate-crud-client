@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.1...v1.20.2) (2023-05-01)
+
+
+### Bug Fixes
+
+* replace fontawesome with svg ([a49ea85](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a49ea852febb1d998fa12aa4954077deb9ffb27c))
+
 ## [1.20.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.0...v1.20.1) (2023-04-30)
 
 
