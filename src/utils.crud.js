@@ -18,7 +18,7 @@
 			// attribute | variable
 			host: 'host',
 			organization_id: 'organization_id',
-			apikey: 'apikey',
+			key: 'key',
 			db: 'db',
 			database: 'database',
 			collection: 'collection',
