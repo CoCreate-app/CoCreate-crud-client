@@ -102,7 +102,7 @@
                         data['user_id'] = this.socket.config.user_id
                 }
 
-                if (isBrowser && indexeddb.status && data['db'].includes('indexeddb')) {
+                if (isBrowser && indexeddb.status && data['db'].includes('indexeddb') && (this.socket.dbUrl == false || this.socket.organization == false)) {
                     indexeddb[action](data).then((response) => {
                         if (!action.includes("read")) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
@@ -116,7 +116,6 @@
                                 })                    
                             }
                         }
-
                         this.socket.send(action, response).then((response) => {
                             resolve(response);
                         })
