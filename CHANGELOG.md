@@ -1,3 +1,11 @@
+## [1.21.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.0...v1.21.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* apikey renamed to key ([5768694](https://github.com/CoCreate-app/CoCreate-crud-client/commit/576869488dec55441e48476480537b7e95020e15))
+* apikey renamed to key ([3136928](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3136928e086a2538c456e12161b5f8fe0d6b67ec))
+
 # [1.21.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.5...v1.21.0) (2023-05-10)
 
 
