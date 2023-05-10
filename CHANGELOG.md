@@ -1,3 +1,15 @@
+# [1.21.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.5...v1.21.0) (2023-05-10)
+
+
+### Bug Fixes
+
+* dbUrl ([b160637](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b1606379c05f53d6cfecccaa55801f333efcc380))
+
+
+### Features
+
+* if !dbUrl use indexeddb ([96a1ebe](https://github.com/CoCreate-app/CoCreate-crud-client/commit/96a1ebef33237a90ef708a43994cf31fbb8d58ce))
+
 ## [1.20.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.20.4...v1.20.5) (2023-05-06)
 
 
