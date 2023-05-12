@@ -287,7 +287,7 @@
             }
         },
 
-        // ToDo: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
+        // TODO: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
         indexedDbListener: function() {
             const self = this
             this.listen('createDatabase', function(data) {
@@ -360,7 +360,7 @@
 
             if (indexeddb.status && data.uid && data.status == 'received') {
                 if (action == 'readCollection' || action == 'readDocument') {
-                    // ToDo: on page refresh clientId is updated may require a browserId to group all clientIds
+                    // TODO: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
                         self.syncDatabase(action, data)
                     
@@ -452,7 +452,7 @@
                                 storedDocCompare = storedDoc.modified || storedDoc.created
                                 docCompare = items[i].modified || items[i].created
                                 
-                                // ToDo: on page load documents can be updated resulting in a false compare. needs to sync
+                                // TODO: on page load documents can be updated resulting in a false compare. needs to sync
                                 if (storedDocCompare && docCompare) {
                                     if (Doc.collection == 'crdt-transactions')
                                         console.log('crdt-transactions', Doc)
@@ -488,7 +488,7 @@
         },
 
         getDeletedItems: async  function() {
-            // ToDo: filter by timestamp and remove old deleteItems lastSocketConnection
+            // TODO: filter by timestamp and remove old deleteItems lastSocketConnection
             let deletedItems = await indexeddb.readDocument({
                 database: 'crudSync',
                 collection: 'deleted',
