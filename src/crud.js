@@ -35,8 +35,8 @@
          * @see https://cocreate.app/docs/objects.html#read-crud
          * @param database string or array of database names.
          * @param collection string or array of collection names.
-         * @param  data object or array of objects to store
-         * @return array API output.
+         * @param  data object to store
+         * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
          * @throws \CreateDocument failed
          */
         createDocument: async function (data) {
@@ -44,6 +44,13 @@
             return data
         },
 
+        /**
+        * Read a document from the server.
+        * 
+        * @param data - The data to read. Can be any type of object.
+        * 
+        * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
+        */
         readDocument: async function (data) {
             data = await this.send('readDocument', data)
             return data
