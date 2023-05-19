@@ -1,3 +1,10 @@
+## [1.21.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.1...v1.21.2) (2023-05-19)
+
+
+### Bug Fixes
+
+* update packages to latest version. This commit updates various packages in the dependencies section of the package.json file to their latest published versions, thereby fixing multiple bugs and improving overall performance. ([6ab0500](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6ab050072b0d37e2a680c3d97fb134698d02c275))
+
 ## [1.21.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.0...v1.21.1) (2023-05-10)
 
 
