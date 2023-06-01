@@ -439,7 +439,7 @@
                         }
                     }
 
-                    if (type == 'document') {
+                    if (type == 'document' && items[i].collection && items[i]._id) {
                         let transaction = db.transaction([items[i].collection], "readwrite");
                         let collection = transaction.objectStore(items[i].collection);
 
