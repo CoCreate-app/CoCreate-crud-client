@@ -1,3 +1,10 @@
+## [1.21.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.6...v1.21.7) (2023-06-04)
+
+
+### Bug Fixes
+
+* **semantic-release:** worklow error solved by running node version 14 ([81a70e0](https://github.com/CoCreate-app/CoCreate-crud-client/commit/81a70e017969f66b7f300ad8cd01ee022a52a76b))
+
 ## [1.21.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.5...v1.21.6) (2023-06-02)
 
 
