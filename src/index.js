@@ -10,8 +10,8 @@
     }
     else if (typeof module === 'object' && module.exports) {
         const CoCreateSocket = require("@cocreate/socket-client");
-        const { ObjectId, getAttributes, checkValue } = require("@cocreate/utils");
-        module.exports = factory(false, CoCreateSocket, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames });
+        const { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames } = require("@cocreate/utils");
+        module.exports = factory(false, CoCreateSocket, null, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames });
     }
     else {
         root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/indexeddb"], root["@cocreate/utils"]);
