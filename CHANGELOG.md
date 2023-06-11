@@ -1,3 +1,10 @@
+## [1.21.16](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.15...v1.21.16) (2023-06-11)
+
+
+### Bug Fixes
+
+* postintall error ([2172eca](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2172ecacfa15bc947460f8f7f8c5e2d6d3428654))
+
 ## [1.21.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.14...v1.21.15) (2023-06-11)
 
 
