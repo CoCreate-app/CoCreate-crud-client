@@ -100,15 +100,15 @@
                     data.organization_id = await this.getOrganizationId()
 
                 if (data.database || data.collection) {
-                    if (!data.db)
-                        data['db'] = ['indexeddb', 'mongodb']
+                    if (!data.storage)
+                        data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
                         data['database'] = data.organization_id || this.socket.config.organization_id
                     if (!data.user_id)
                         data['user_id'] = this.socket.config.user_id
                 }
 
-                if (isBrowser && indexeddb.status && data['db'].includes('indexeddb')) {
+                if (isBrowser && indexeddb.status && data['storage'].includes('indexeddb')) {
                     indexeddb[action](data).then((response) => {
                         if (!action.includes("read")) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
@@ -450,7 +450,7 @@
                             let storedDoc = request.result
                             let storedDocCompare, docCompare
                             let Doc = { ...items[i] }
-                            delete items[i].db
+                            delete items[i].storage
                             delete items[i].database
                             delete items[i].collection
 
@@ -654,7 +654,7 @@
             host: 'host',
             organization_id: 'organization_id',
             key: 'key',
-            db: 'db',
+            db: 'storage',
             database: 'database',
             collection: 'collection',
             document_id: 'document_id',
