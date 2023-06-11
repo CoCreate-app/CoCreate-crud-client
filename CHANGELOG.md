@@ -1,3 +1,10 @@
+## [1.21.15](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.14...v1.21.15) (2023-06-11)
+
+
+### Bug Fixes
+
+* @cocreate/cli moved to dependencies ([3bfdb16](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3bfdb16b83d1976f8483648ad6f8b44b52c4e98b))
+
 ## [1.21.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.13...v1.21.14) (2023-06-11)
 
 
