@@ -1,3 +1,10 @@
+## [1.21.20](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.19...v1.21.20) (2023-06-11)
+
+
+### Bug Fixes
+
+* testing workflow ([62955de](https://github.com/CoCreate-app/CoCreate-crud-client/commit/62955de0bc946f236fe5b8288b5bf6aad191729e))
+
 ## [1.21.19](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.18...v1.21.19) (2023-06-11)
 
 
