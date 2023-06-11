@@ -1,3 +1,11 @@
+## [1.21.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.12...v1.21.13) (2023-06-11)
+
+
+### Bug Fixes
+
+* renamed db to storage ([a8114de](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a8114ded2a38fd7b5d5ed66fd3d5d106537ac5fa))
+* renamed hosts to host. the value can be a string or an array of strings ([b748914](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b7489143566cc7200ce79cc0b1c116d722f01529))
+
 ## [1.21.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.11...v1.21.12) (2023-06-10)
 
 
