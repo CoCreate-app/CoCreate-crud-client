@@ -601,6 +601,58 @@
             })
         },
 
+        getObject: function (element) {
+            const data = { element }
+            const attributes = this.getAttributes(element);
+
+            for (let key of Object.keys(attributes)) {
+                if (attributes[key]) {
+                    if (!checkValue(attributes[key]))
+                        return
+                    if (attributes[key].includes(",") && ['storage', 'database', 'collection', 'index', 'document'].includes(key)) {
+                        if (key === 'document')
+                            data[key] = []
+
+                        const array = attributes[key].split(',');
+                        for (let i = 0; i < array.length; i++) {
+                            array[i].trim()
+                            if (key === 'document') {
+                                data[key].push({ _id: array[i] })
+                            } else {
+                                data[key] = array
+                            }
+                        }
+
+                    } else {
+                        data[key] = attributes[key]
+                    }
+                }
+            }
+
+            if (data.database)
+                data.type = 'database'
+            if (data.collection) {
+                if (data.collection.length > 0) {
+                    data.type = 'document'
+                    data.document = []
+                }
+                else
+                    data.filter.type = 'collection'
+            }
+            if (data.index)
+                data.type = 'index'
+            if (data.document)
+                data.type = 'document'
+            if (data.name)
+                data.type = 'name'
+            if (data.data)
+                data.type = 'data'
+
+            if (['index', 'document'].includes(data.type) && !data.collection.length)
+                return
+
+            return data
+        },
 
         importCollection: function (info) {
             const { file } = info;
@@ -654,9 +706,11 @@
             host: 'host',
             organization_id: 'organization_id',
             key: 'key',
-            db: 'storage',
+            storage: 'storage',
             database: 'database',
             collection: 'collection',
+            index: 'index',
+            document: 'document_id',
             document_id: 'document_id',
             name: 'name',
             updateName: 'updateName',
