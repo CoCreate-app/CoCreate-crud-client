@@ -602,7 +602,7 @@
         },
 
         getObject: function (element) {
-            const data = { element }
+            const data = {}
             const attributes = this.getAttributes(element);
 
             for (let key of Object.keys(attributes)) {
@@ -652,36 +652,6 @@
                 return
 
             return data
-        },
-
-        importCollection: function (info) {
-            const { file } = info;
-            const reader = new FileReader();
-            reader.addEventListener('load', (event) => {
-                let fileContent = event.target.result;
-
-                try {
-                    let parsed = JSON.parse(fileContent);
-                    //assuming the json is an array a validation required
-                    parsed.forEach(item => {
-                        if (item.hasOwnProperty('_id')) {
-                            delete item['_id'];
-                        }
-                        let collection = info['collection'];
-                        this.createDocument({
-                            collection,
-                            document: item
-                        });
-                    });
-                    document.dispatchEvent(new CustomEvent('imported', {
-                        detail: {}
-                    }));
-                }
-                catch (err) {
-                    console.error('json failed');
-                }
-            });
-            reader.readAsText(file);
         },
 
         isObjectEmpty(obj) {
