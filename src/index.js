@@ -249,7 +249,7 @@
                     updateName = { [updateName]: value }
                 if (deleteName)
                     deleteName = { [deleteName]: '' }
-                if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName) {
+                if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName && !'crdt') {
                     window.CoCreate.crdt.replaceText({
                         collection,
                         name,
