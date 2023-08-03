@@ -1,3 +1,26 @@
+/********************************************************************************
+ * Copyright (C) 2023 CoCreate and Contributors.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ ********************************************************************************/
+
+// Commercial Licensing Information:
+// For commercial use of this software without the copyleft provisions of the AGPLv3,
+// you must obtain a commercial license from CoCreate LLC.
+// For details, visit <https://cocreate.app/licenses/> or contact us at sales@cocreate.app.
+
+
 /* global CoCreate, CustomEvent */
 
 (function (root, factory) {
@@ -29,77 +52,35 @@
         },
 
         /**
-         * Creates a document in a specified database and collection .
+         * Performs a crud action using the define method .
          *
-         * @see https://cocreate.app/docs/objects.html#read-crud
+         * @see https://cocreate.app/docs/objects.html#send
+         * @param method string or array of database names.
+         * @param storage string or array of storage names.
          * @param database string or array of database names.
-         * @param collection string or array of collection names.
-         * @param  data object to store
+         * @param array string or array of array names.
+         * @param object object or array of objects to store
          * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
-         * @throws \CreateDocument failed
+         * @throws \method failed
          */
-        createDocument: async function (data) {
-            data = await this.send('createDocument', data)
-            return data
-        },
 
-        /**
-        * Read a document from the server.
-        * 
-        * @param data - The data to read. Can be any type of object.
-        * 
-        * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
-        */
-        readDocument: async function (data) {
-            data = await this.send('readDocument', data)
-            return data
-        },
-
-        updateDocument: async function (data) {
-            data = await this.send('updateDocument', data)
-            return data
-        },
-
-        deleteDocument: async function (data) {
-            let response = await this.send('deleteDocument', data)
-            return response
-        },
-
-        createCollection: async function (data) {
-            data = await this.send('createCollection', data)
-            return data
-        },
-
-        readCollection: async function (data) {
-            data = await this.send('readCollection', data)
-            return data
-        },
-
-        updateCollection: async function (data) {
-            data = await this.send('updateCollection', data)
-            return data
-        },
-
-        deleteCollection: async function (data) {
-            data = await this.send('deleteCollection', data)
-            return data
-        },
-
-        send: function (action, data) {
+        send: function (data) {
             return new Promise(async (resolve, reject) => {
                 if (!data)
-                    resolve(null);
+                    return resolve(null);
+                if (!data.method)
+                    return resolve(data);
 
                 data['timeStamp'] = new Date().toISOString()
 
-                if (action == 'readDocument')
+                if (data.method.startsWith('read'))
                     data.broadcast = false
-                if (action == 'updateDocument' && data.upsert != false)
+                if (data.method.startsWith('update') && data.upsert != false)
                     data.upsert = true
                 if (!data.organization_id)
                     data.organization_id = await this.getOrganizationId()
 
-                if (data.database || data.collection) {
+                if (data.database || data.array) {
                     if (!data.storage)
                         data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
@@ -109,26 +90,30 @@
                 }
 
                 if (isBrowser && indexeddb.status && data['storage'].includes('indexeddb')) {
-                    indexeddb[action](data).then((response) => {
-                        if (!action.includes("read")) {
+                    let action = data.method.replace(/\.([a-z])/g, (_, match) => match.toUpperCase());
+
+                    indexeddb.process(data).then((response) => {
+                        if (!data.method.startsWith('read')) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
                                 response['broadcastBrowser'] = 'once'
 
-                            if (action.includes("delete")) {
-                                indexeddb.createDocument({
+                            if (data.method.startsWith('delete')) {
+                                indexeddb.process({
+                                    method: 'create.object',
                                     database: 'crudSync',
-                                    collection: 'deleted',
-                                    document: { _id: ObjectId(), item: response }
+                                    array: 'deleted',
+                                    object: { _id: ObjectId(), item: response }
                                 })
                             }
                         }
-                        this.socket.send(action, response).then((response) => {
+
+                        this.socket.send(response).then((response) => {
                             resolve(response);
                         })
 
                     })
                 } else {
-                    this.socket.send(action, data).then((response) => {
+                    this.socket.send(data).then((response) => {
                         resolve(response);
                     })
                 }
@@ -152,37 +137,39 @@
             });
         },
 
-        listen: function (action, callback) {
-            this.socket.listen(action, callback);
+        listen: function (method, callback) {
+            // TODO: this.socket.listen('crud.' + method, callback);
+            this.socket.listen(method, callback);
         },
 
         read: async function (element) {
             const {
                 host,
                 organization_id,
-                apkey,
+                key,
                 database,
-                collection,
-                document_id,
+                array,
+                object,
                 name,
                 namespace,
                 room,
                 isRead
             } = getAttributes(element);
-            if (!checkValue(document_id)) return;
+            if (!checkValue(object)) return;
 
             if (isRead == "false") return;
-            if (document_id && collection) {
-                const responseData = await this.readDocument({
+            if (object && array) {
+                const responseData = await this.send({
+                    method: 'read.object',
                     host,
                     organization_id,
-                    apkey,
+                    key,
                     namespace,
                     room,
                     database,
-                    collection,
-                    document: {
-                        _id: document_id,
+                    array,
+                    object: {
+                        _id: object,
                         name
                     }
                 });
@@ -196,10 +183,10 @@
             let {
                 host,
                 organization_id,
-                apkey,
+                key,
                 database,
-                collection,
-                document_id,
+                array,
+                object,
                 name,
                 updateName,
                 deleteName,
@@ -215,28 +202,29 @@
                 value = JSON.parse(value)
             }
 
-            if (isSave == "false" || !collection || (!name && !deleteName && !updateName) || name == '_id') return;
+            if (isSave == "false" || !array || (!name && !deleteName && !updateName) || name == '_id') return;
 
-            if (document_id == 'pending')
+            if (object == 'pending')
                 return
 
             let data;
-            if (!document_id) {
-                element.setAttribute('document_id', 'pending');
+            if (!object) {
+                element.setAttribute('object', 'pending');
                 let form = element.closest('form');
                 if (form) {
                     CoCreate.form.save(form);
                 } else {
-                    data = await this.createDocument({
+                    data = await this.send({
+                        method: 'create.object',
                         host,
                         organization_id,
-                        apkey,
+                        key,
                         database,
-                        collection,
+                        array,
                         broadcast,
                         broadcastSender,
                         broadcastBrowser,
-                        document: {
+                        object: {
                             [name]: value
                         },
                     });
@@ -251,140 +239,91 @@
                     deleteName = { [deleteName]: '' }
                 if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName && !'crdt') {
                     window.CoCreate.crdt.replaceText({
-                        collection,
+                        array,
                         name,
-                        document_id,
+                        object,
                         value
                     });
                 } else {
-                    data = await this.updateDocument({
+                    data = await this.send({
+                        method: 'update.object',
                         host,
                         organization_id,
-                        apkey,
+                        key,
                         namespace,
                         room,
                         database,
-                        collection,
+                        array,
                         upsert: true,
                         broadcast,
                         broadcastSender,
                         broadcastBrowser,
-                        document: { _id: document_id, ...nameValue },
+                        object: { _id: object, ...nameValue },
                         updateName,
                         deleteName
                     });
                 }
             }
-            if (data && (!document_id || document_id !== data.document[0]._id)) {
-                this.setDocumentId(element, collection, data.document[0]._id);
+            if (data && (!object || object !== data.object[0]._id)) {
+                this.setobjectId(element, array, data.object[0]._id);
             }
         },
 
-        setDocumentId: function (element, collection, document_id) {
+        setobjectId: function (element, array, object) {
             if (!element) return;
 
-            element.setAttribute('document_id', document_id);
+            element.setAttribute('object', object);
             let form = element.closest('form');
             if (form && CoCreate.form) {
-                CoCreate.form.setDocumentId(form, {
-                    collection,
-                    document_id
+                CoCreate.form.setobjectId(form, {
+                    array,
+                    object
                 });
             }
         },
 
         // TODO: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
-        indexedDbListener: function () {
-            const self = this
-            this.listen('createDatabase', function (data) {
-                self.sync('createDatabase', data)
-            });
+        syncListeners: function () {
+            const method = ['create', 'read', 'update', 'delete'];
+            const type = ['storage', 'database', 'array', 'index', 'object'];
 
-            this.listen('readDatabase', function (data) {
-                self.sync('readDatabase', data)
-            });
-
-            this.listen('updateDatabase', function (data) {
-                self.sync('updateDatabase', data)
-            });
-
-            this.listen('deleteCollection', function (data) {
-                self.sync('deleteDatabase', data)
-            });
-
-            this.listen('createCollection', function (data) {
-                self.sync('createCollection', data)
-            });
-
-            this.listen('readCollection', function (data) {
-                self.sync('readCollection', data)
-            });
-
-            this.listen('updateCollection', function (data) {
-                self.sync('updateCollection', data)
-            });
-
-            this.listen('deleteCollection', function (data) {
-                self.sync('deleteCollection', data)
-            });
-
-            this.listen('createIndex', function (data) {
-                self.sync('createIndex', data)
-            });
-
-            this.listen('readIndex', function (data) {
-                self.sync('readIndex', data)
-            });
-
-            this.listen('updateIndex', function (data) {
-                self.sync('updateIndex', data)
-            });
-
-            this.listen('deleteIndex', function (data) {
-                self.sync('deleteIndex', data)
-            });
-
-            this.listen('createDocument', function (data) {
-                self.sync('createDocument', data)
-            });
-
-            this.listen('readDocument', function (data) {
-                self.sync('readDocument', data)
-            });
-
-            this.listen('updateDocument', function (data) {
-                self.sync('updateDocument', data)
-            });
-
-            this.listen('deleteDocument', function (data) {
-                self.sync('deleteDocument', data)
-            });
+            for (let i = 0; i < method.length; i++) {
+                for (let j = 0; j < type.length; j++) {
+                    const action = method[i] + '.' + type[j];
+                    const self = this
+                    this.listen(action, function (data) {
+                        self.sync(data)
+                    });
+                }
+            }
         },
 
-        sync: async function (action, data) {
+        sync: async function (data) {
             const self = this
 
             if (indexeddb.status && data.uid && data.status == 'received') {
-                if (action == 'readCollection' || action == 'readDocument') {
+                if (data.method == 'read.array' || data.method == 'read.object') {
                     // TODO: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
                         self.syncDatabase(action, data)
 
                 } else {
                     if (this.socket.clientId != data.clientId) {
-                        indexeddb.readDocument({
+                        indexeddb.process({
+                            method: "read.object",
                             database: 'crudSync',
-                            collection: 'synced',
-                            document: { _id: data.uid }
+                            array: 'synced',
+                            object: { _id: data.uid }
                         }).then((response) => {
-                            if (!response.document || !response.document[0]) {
-                                indexeddb.createDocument({
+                            if (!response.object || !response.object[0]) {
+                                indexeddb.process({
+                                    method: "create.object",
                                     database: 'crudSync',
-                                    collection: 'synced',
-                                    document: { _id: data.uid }
+                                    array: 'synced',
+                                    object: { _id: data.uid }
                                 })
 
-                                indexeddb[action]({ ...data })
+                                indexeddb.process({ ...data })
                             }
                         })
                     }
@@ -415,13 +354,13 @@
                     console.log('sync failed item recently deleted')
                 } else {
                     if (!db)
-                        db = await indexeddb.getDatabase(items[i])
+                        db = await indexeddb.process(items[i])
                     else if (db.name != items[i].database) {
                         db.close()
-                        db = await indexeddb.getDatabase(items[i])
+                        db = await indexeddb.process(items[i])
                     }
 
-                    if (type == 'collection') {
+                    if (type == 'array') {
                         itemsLength -= 1
                         let objectStoreNames = Array.from(db.objectStoreNames)
                         if (!objectStoreNames.includes(items[i].name)) {
@@ -431,18 +370,18 @@
                         if (!itemsLength) {
                             db.close()
 
-                            if (Data.collection.length) {
-                                indexeddb.createCollection({ ...Data })
+                            if (Data.array.length) {
+                                indexeddb.process({ ...Data })
                                 self.broadcastSynced('sync', Data)
                             }
                         }
                     }
 
-                    if (type == 'document' && items[i].collection && items[i]._id) {
-                        let transaction = db.transaction([items[i].collection], "readwrite");
-                        let collection = transaction.objectStore(items[i].collection);
+                    if (type == 'object' && items[i].array && items[i]._id) {
+                        let transaction = db.transaction([items[i].array], "readwrite");
+                        let array = transaction.objectStore(items[i].array);
 
-                        let request = collection.get(items[i]._id);
+                        let request = array.get(items[i]._id);
 
                         request.onsuccess = function () {
                             itemsLength -= 1
@@ -452,27 +391,27 @@
                             let Doc = { ...items[i] }
                             delete items[i].storage
                             delete items[i].database
-                            delete items[i].collection
+                            delete items[i].array
 
                             if (storedDoc) {
                                 storedDocCompare = storedDoc.modified || storedDoc.created
                                 docCompare = items[i].modified || items[i].created
 
-                                // TODO: on page load documents can be updated resulting in a false compare. needs to sync
+                                // TODO: on page load objects can be updated resulting in a false compare. needs to sync
                                 if (storedDocCompare && docCompare) {
-                                    if (Doc.collection == 'crdt-transactions')
+                                    if (Doc.array == 'crdt-transactions')
                                         console.log('crdt-transactions', Doc)
                                     console.log('isSyncable', storedDocCompare.on, storedDocCompare.on < docCompare.on, docCompare.on)
                                     if (storedDocCompare.on < docCompare.on) {
-                                        Data.document.push(Doc)
-                                        collection.put(items[i])
+                                        Data.object.push(Doc)
+                                        array.put(items[i])
                                     } else {
 
                                     }
                                 }
                             } else {
-                                Data.document.push(Doc)
-                                collection.put(items[i])
+                                Data.object.push(Doc)
+                                array.put(items[i])
                             }
 
                             if (!itemsLength) {
@@ -495,9 +434,10 @@
 
         getDeletedItems: async function () {
             // TODO: filter by timestamp and remove old deleteItems lastSocketConnection
-            let deletedItems = await indexeddb.readDocument({
+            let deletedItems = await indexeddb.process({
+                method: 'read.object',
                 database: 'crudSync',
-                collection: 'deleted',
+                array: 'deleted',
             })
 
             // let filteredItems = []
@@ -510,13 +450,14 @@
             //         deleteItems.push(deletedItems[i])
             // }
 
-            // indexeddb.deleteDocument({
+            // indexeddb.process({
+            //     method: 'delete.objects',
             //     database: 'crudSync',
-            //     collection: 'deleted',
-            //     document: deleteItems
+            //     array: 'deleted',
+            //     object: deleteItems
             // })
 
-            return deletedItems.document
+            return deletedItems.object
         },
 
         isDeleted: function (type, item, deletedItems) {
@@ -526,13 +467,13 @@
                     if (type == 'database' && deletedItem[i].name == item.name) {
                         return true
                     } else if (deletedItem[i].database == item.database) {
-                        if (type == 'collection' && deletedItem[i].name == item.name) {
+                        if (type == 'array' && deletedItem[i].name == item.name) {
                             return true
-                        } else if (deletedItem[i].collection == item.collection) {
+                        } else if (deletedItem[i].array == item.array) {
                             if (type == 'index' && deletedItem[i].name == item.name) {
                                 return true
                             }
-                            if (type == 'document' && deletedItem[i]._id == item._id) {
+                            if (type == 'object' && deletedItem[i]._id == item._id) {
                                 return true
                             }
                         }
@@ -561,30 +502,31 @@
                             let db = dbRequest.result
                             let objectStoreNames = Array.from(db.objectStoreNames)
 
-                            let collectionLength = objectStoreNames.length
-                            for (let collection of objectStoreNames) {
-                                let transaction = db.transaction([collection], "readonly");
-                                let objectStore = transaction.objectStore(collection);
+                            let arrayLength = objectStoreNames.length
+                            for (let array of objectStoreNames) {
+                                let transaction = db.transaction([array], "readonly");
+                                let objectStore = transaction.objectStore(array);
 
-                                let documentRequest = objectStore.getAll()
-                                documentRequest.onsuccess = function () {
-                                    collectionLength -= 1
+                                let objectRequest = objectStore.getAll()
+                                objectRequest.onsuccess = function () {
+                                    arrayLength -= 1
                                     let data = {
+                                        method: "syncServer",
                                         database: database.name,
-                                        collection,
-                                        document: documentRequest.result
+                                        array,
+                                        object: objectRequest.result
                                     }
-                                    self.socket.send('syncServer', data)
-                                    console.log('sync success', { database: database.name, collection })
-                                    if (!collectionLength && db.close) {
+                                    self.socket.send(data)
+                                    console.log('sync success', { database: database.name, array })
+                                    if (!arrayLength && db.close) {
                                         db.close()
                                         console.log('sync completed')
                                     }
                                 }
 
-                                documentRequest.onerror = function () {
-                                    console.log('sync failed', { database: database.name, collection })
-                                    if (!collectionLength && db.close) {
+                                objectRequest.onerror = function () {
+                                    console.log('sync failed', { database: database.name, array })
+                                    if (!arrayLength && db.close) {
                                         db.close()
                                         console.log('sync completed')
                                     }
@@ -609,14 +551,14 @@
                 if (attributes[key]) {
                     if (!checkValue(attributes[key]))
                         return
-                    if (attributes[key].includes(",") && ['storage', 'database', 'collection', 'index', 'document'].includes(key)) {
-                        if (key === 'document')
+                    if (attributes[key].includes(",") && ['storage', 'database', 'array', 'index', 'object'].includes(key)) {
+                        if (key === 'object')
                             data[key] = []
 
                         const array = attributes[key].split(',');
                         for (let i = 0; i < array.length; i++) {
                             array[i].trim()
-                            if (key === 'document') {
+                            if (key === 'object') {
                                 data[key].push({ _id: array[i] })
                             } else {
                                 data[key] = array
@@ -631,24 +573,24 @@
 
             if (data.database)
                 data.type = 'database'
-            if (data.collection) {
-                if (data.collection.length > 0) {
-                    data.type = 'document'
-                    data.document = []
+            if (data.array) {
+                if (data.array.length > 0) {
+                    data.type = 'object'
+                    data.object = []
                 }
                 else
-                    data.filter.type = 'collection'
+                    data.filter.type = 'array'
             }
             if (data.index)
                 data.type = 'index'
-            if (data.document)
-                data.type = 'document'
+            if (data.object)
+                data.type = 'object'
             if (data.name)
                 data.type = 'name'
             if (data.data)
                 data.type = 'data'
 
-            if (['index', 'document'].includes(data.type) && !data.collection.length)
+            if (['index', 'object'].includes(data.type) && !data.array.length)
                 return
 
             return data
@@ -670,18 +612,23 @@
 
     CoCreateCRUD.setSocket();
     if (isBrowser) {
-        CoCreateCRUD.indexedDbListener();
+        CoCreateCRUD.syncListeners();
         let attributes = {
             // attribute | variable
             host: 'host',
             organization_id: 'organization_id',
-            key: 'key',
+            apikey: 'key',
             storage: 'storage',
             database: 'database',
-            collection: 'collection',
+            array: 'array',
+            // array: 'array',
+            // table: 'array',
             index: 'index',
-            document: 'document_id',
-            document_id: 'document_id',
+            object: 'object',
+            // document: 'object',
+            // row: 'object',
+            property: 'name',
+            // key: 'name',
             name: 'name',
             updateName: 'updateName',
             deleteName: 'deleteName',
