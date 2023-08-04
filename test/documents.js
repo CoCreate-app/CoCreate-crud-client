@@ -34,7 +34,7 @@ async function testObjects() {
         },
         filter: {
             query: [
-                { name: 'organization_id', value: "5ff747727005da1c272740ab" }
+                { key: 'organization_id', value: "5ff747727005da1c272740ab" }
             ]
         },
         // async: true 
@@ -51,7 +51,7 @@ async function testObjects() {
 
         filter: {
             query: [
-                { name: 'organization_id', value: "5ff747727005da1c272740ab" }
+                { key: 'organization_id', value: "5ff747727005da1c272740ab" }
             ]
         }
     })

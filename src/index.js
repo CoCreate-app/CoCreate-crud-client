@@ -55,11 +55,12 @@
          * Performs a crud action using the define method .
          *
          * @see https://cocreate.app/docs/objects.html#send
-         * @param method string or array of database names.
-         * @param storage string or array of storage names.
-         * @param database string or array of database names.
-         * @param array string or array of array names.
-         * @param object object or array of objects to store
+         * @param method crud operation.
+         * @param storage string or array of strings representing the storage name(s).
+         * @param database string or array of strings representing the database name(s).
+         * @param array string or array of strings representing the array name(s).
+         * @param object object or array of objects
+         * @param key key with in an object, supports dotNotation.
          * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
          * @throws \method failed
          */
@@ -146,11 +147,11 @@
             const {
                 host,
                 organization_id,
-                key,
+                apikey,
                 database,
                 array,
                 object,
-                name,
+                key,
                 namespace,
                 room,
                 isRead
@@ -163,14 +164,14 @@
                     method: 'read.object',
                     host,
                     organization_id,
-                    key,
+                    apikey,
                     namespace,
                     room,
                     database,
                     array,
                     object: {
                         _id: object,
-                        name
+                        key
                     }
                 });
                 return responseData;
@@ -183,11 +184,11 @@
             let {
                 host,
                 organization_id,
-                key,
+                apikey,
                 database,
                 array,
                 object,
-                name,
+                key,
                 updateName,
                 deleteName,
                 namespace,
@@ -202,7 +203,7 @@
                 value = JSON.parse(value)
             }
 
-            if (isSave == "false" || !array || (!name && !deleteName && !updateName) || name == '_id') return;
+            if (isSave == "false" || !array || (!key && !deleteName && !updateName) || key == '_id') return;
 
             if (object == 'pending')
                 return
@@ -225,14 +226,14 @@
                         broadcastSender,
                         broadcastBrowser,
                         object: {
-                            [name]: value
+                            [key]: value
                         },
                     });
                 }
             } else {
                 let nameValue = {};
-                if (name)
-                    nameValue = { [name]: value }
+                if (key)
+                    nameValue = { [key]: value }
                 if (updateName)
                     updateName = { [updateName]: value }
                 if (deleteName)
@@ -240,7 +241,7 @@
                 if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName && !'crdt') {
                     window.CoCreate.crdt.replaceText({
                         array,
-                        name,
+                        key,
                         object,
                         value
                     });
@@ -585,8 +586,8 @@
                 data.type = 'index'
             if (data.object)
                 data.type = 'object'
-            if (data.name)
-                data.type = 'name'
+            if (data.key)
+                data.type = 'key'
             if (data.data)
                 data.type = 'data'
 
@@ -627,9 +628,9 @@
             object: 'object',
             // document: 'object',
             // row: 'object',
-            property: 'name',
-            // key: 'name',
-            name: 'name',
+            key: 'key',
+            // property: 'key',
+            name: 'key',
             updateName: 'updateName',
             deleteName: 'deleteName',
             crud: 'isCrud',
