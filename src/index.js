@@ -90,16 +90,16 @@
                         data['user_id'] = this.socket.config.user_id
                 }
 
-                if (isBrowser && indexeddb.status && data['storage'].includes('indexeddb')) {
+                if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     let action = data.method.replace(/\.([a-z])/g, (_, match) => match.toUpperCase());
 
-                    indexeddb.process(data).then((response) => {
+                    indexeddb(data).then((response) => {
                         if (!data.method.startsWith('read')) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
                                 response['broadcastBrowser'] = 'once'
 
                             if (data.method.startsWith('delete')) {
-                                indexeddb.process({
+                                indexeddb({
                                     method: 'create.object',
                                     database: 'crudSync',
                                     array: 'deleted',
@@ -302,7 +302,7 @@
         sync: async function (data) {
             const self = this
 
-            if (indexeddb.status && data.uid && data.status == 'received') {
+            if (indexeddb && data.uid && data.status == 'received') {
                 if (data.method == 'read.array' || data.method == 'read.object') {
                     // TODO: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
@@ -310,21 +310,21 @@
 
                 } else {
                     if (this.socket.clientId != data.clientId) {
-                        indexeddb.process({
+                        indexeddb({
                             method: "read.object",
                             database: 'crudSync',
                             array: 'synced',
                             object: { _id: data.uid }
                         }).then((response) => {
                             if (!response.object || !response.object[0]) {
-                                indexeddb.process({
+                                indexeddb({
                                     method: "create.object",
                                     database: 'crudSync',
                                     array: 'synced',
                                     object: { _id: data.uid }
                                 })
 
-                                indexeddb.process({ ...data })
+                                indexeddb({ ...data })
                             }
                         })
                     }
@@ -355,10 +355,10 @@
                     console.log('sync failed item recently deleted')
                 } else {
                     if (!db)
-                        db = await indexeddb.process(items[i])
+                        db = await indexeddb(items[i])
                     else if (db.name != items[i].database) {
                         db.close()
-                        db = await indexeddb.process(items[i])
+                        db = await indexeddb(items[i])
                     }
 
                     if (type == 'array') {
@@ -372,7 +372,7 @@
                             db.close()
 
                             if (Data.array.length) {
-                                indexeddb.process({ ...Data })
+                                indexeddb({ ...Data })
                                 self.broadcastSynced('sync', Data)
                             }
                         }
@@ -435,7 +435,7 @@
 
         getDeletedItems: async function () {
             // TODO: filter by timestamp and remove old deleteItems lastSocketConnection
-            let deletedItems = await indexeddb.process({
+            let deletedItems = await indexeddb({
                 method: 'read.object',
                 database: 'crudSync',
                 array: 'deleted',
@@ -451,7 +451,7 @@
             //         deleteItems.push(deletedItems[i])
             // }
 
-            // indexeddb.process({
+            // indexeddb({
             //     method: 'delete.objects',
             //     database: 'crudSync',
             //     array: 'deleted',
