@@ -591,7 +591,7 @@
             if (data.data)
                 data.type = 'data'
 
-            if (['index', 'object'].includes(data.type) && !data.array.length)
+            if (['index', 'object'].includes(data.type) && data.array && !data.array.length)
                 return
 
             return data
