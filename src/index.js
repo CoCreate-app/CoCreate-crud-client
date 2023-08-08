@@ -143,146 +143,6 @@
             this.socket.listen(method, callback);
         },
 
-        read: async function (element) {
-            const {
-                host,
-                organization_id,
-                apikey,
-                database,
-                array,
-                object,
-                key,
-                namespace,
-                room,
-                isRead
-            } = getAttributes(element);
-            if (!checkValue(object)) return;
-
-            if (isRead == "false") return;
-            if (object && array) {
-                const responseData = await this.send({
-                    method: 'read.object',
-                    host,
-                    organization_id,
-                    apikey,
-                    namespace,
-                    room,
-                    database,
-                    array,
-                    object: {
-                        _id: object,
-                        key
-                    }
-                });
-                return responseData;
-            }
-            return null;
-        },
-
-        save: async function (element, value) {
-            if (!element || value === null) return;
-            let {
-                host,
-                organization_id,
-                apikey,
-                database,
-                array,
-                object,
-                key,
-                updateName,
-                deleteName,
-                namespace,
-                room,
-                broadcast,
-                broadcastSender,
-                broadcastBrowser,
-                isSave
-            } = getAttributes(element);
-            let valueType = element.getAttribute('value-type');
-            if (valueType == 'object' || valueType == 'json') {
-                value = JSON.parse(value)
-            }
-
-            if (isSave == "false" || !array || (!key && !deleteName && !updateName) || key == '_id') return;
-
-            if (object == 'pending')
-                return
-
-            let data;
-            if (!object) {
-                element.setAttribute('object', 'pending');
-                let form = element.closest('form');
-                if (form) {
-                    CoCreate.form.save(form);
-                } else {
-                    data = await this.send({
-                        method: 'create.object',
-                        host,
-                        organization_id,
-                        key,
-                        database,
-                        array,
-                        broadcast,
-                        broadcastSender,
-                        broadcastBrowser,
-                        object: {
-                            [key]: value
-                        },
-                    });
-                }
-            } else {
-                let nameValue = {};
-                if (key)
-                    nameValue = { [key]: value }
-                if (updateName)
-                    updateName = { [updateName]: value }
-                if (deleteName)
-                    deleteName = { [deleteName]: '' }
-                if (typeof value == 'string' && window.CoCreate.crdt && !updateName && !deleteName && !'crdt') {
-                    window.CoCreate.crdt.replaceText({
-                        array,
-                        key,
-                        object,
-                        value
-                    });
-                } else {
-                    data = await this.send({
-                        method: 'update.object',
-                        host,
-                        organization_id,
-                        key,
-                        namespace,
-                        room,
-                        database,
-                        array,
-                        upsert: true,
-                        broadcast,
-                        broadcastSender,
-                        broadcastBrowser,
-                        object: { _id: object, ...nameValue },
-                        updateName,
-                        deleteName
-                    });
-                }
-            }
-            if (data && (!object || object !== data.object[0]._id)) {
-                this.setobjectId(element, array, data.object[0]._id);
-            }
-        },
-
-        setobjectId: function (element, array, object) {
-            if (!element) return;
-
-            element.setAttribute('object', object);
-            let form = element.closest('form');
-            if (form && CoCreate.form) {
-                CoCreate.form.setobjectId(form, {
-                    array,
-                    object
-                });
-            }
-        },
-
         // TODO: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
         syncListeners: function () {
             const method = ['create', 'read', 'update', 'delete'];
@@ -438,7 +298,7 @@
             let deletedItems = await indexeddb({
                 method: 'read.object',
                 database: 'crudSync',
-                array: 'deleted',
+                array: 'deleted'
             })
 
             // let filteredItems = []
@@ -545,54 +405,71 @@
         },
 
         getObject: function (element) {
-            const data = {}
-            const attributes = this.getAttributes(element);
+            const data = getAttributes(element);
+            const crudType = ['storage', 'database', 'array', 'index', 'object']
 
-            for (let key of Object.keys(attributes)) {
-                if (attributes[key]) {
-                    if (!checkValue(attributes[key]))
-                        return
-                    if (attributes[key].includes(",") && ['storage', 'database', 'array', 'index', 'object'].includes(key)) {
-                        if (key === 'object')
-                            data[key] = []
+            for (let i = 0; i < crudType.length; i++) {
+                if (!checkValue(data[crudType[i]]))
+                    return
 
-                        const array = attributes[key].split(',');
-                        for (let i = 0; i < array.length; i++) {
-                            array[i].trim()
-                            if (key === 'object') {
-                                data[key].push({ _id: array[i] })
-                            } else {
-                                data[key] = array
-                            }
+                if (data[crudType[i]] && data[crudType[i]].includes(",")) {
+                    const array = data[crudType[i]].split(',');
+                    data[crudType[i]] = []
+
+                    for (let j = 0; j < array.length; j++) {
+                        array[i].trim()
+                        if (crudType[i] === 'object') {
+                            data[crudType[i]].push({ _id: array[j] })
+                        } else {
+                            data[crudType[i]].push(array[j])
                         }
-
-                    } else {
-                        data[key] = attributes[key]
                     }
                 }
             }
 
-            if (data.database)
-                data.type = 'database'
-            if (data.array) {
-                if (data.array.length > 0) {
-                    data.type = 'object'
-                    data.object = []
-                }
-                else
-                    data.filter.type = 'array'
-            }
-            if (data.index)
-                data.type = 'index'
-            if (data.object)
+            if (data.object || data.object === '') {
+                if (!data.array || data.array && !data.array.length) return
                 data.type = 'object'
-            if (data.key)
-                data.type = 'key'
-            if (data.data)
+            } else if (data.index || data.index === '') {
+                if (!data.array || data.array && !data.array.length) return
+                data.type = 'index'
+            } else if (data.array || data.array === '')
+                data.type = 'array'
+            else if (data.database || data.database === '')
+                data.type = 'database'
+            else if (data.storage || data.storage === '')
+                data.type = 'storage'
+            else if (data.data)
                 data.type = 'data'
 
-            if (['index', 'object'].includes(data.type) && data.array && !data.array.length)
-                return
+            if (data.isUpdate || data.isUpdate === '') {
+                if (!data.key) return
+                delete data.isUpdate
+                data.updateKey = { [data.key]: element.getValue() }
+                data.method = 'update.' + data.type
+            } else if (data.isDelete || data.isDelete === '') {
+                delete data.isDelete
+                if (data.type == 'object' && data.key) {
+                    data.method = 'update.' + data.type
+                    // TODO: data.type can be a string _id or an array for string _id needs to be converted to object
+                    if (typeof data[data.type] === 'string')
+                        data[data.type] = { _id: data[data.type], [data.key]: undefined }
+                    else if (Array.isArray(data[data.type])) {
+                        console.log('data.type is an array function incomplete')
+                    } else if (typeof data[data.type] === 'object')
+                        data[data.type][data.key] = undefined
+                } else {
+                    data.method = 'delete.' + data.type
+                }
+            } else if (data.type !== 'object' && data[data.type] === '') {
+                if (!data.key)
+                    data.method = 'read.' + data.type
+                else if (data.key === 'name')
+                    data.method = 'create.' + data.type
+            } else if (data.type !== 'object' && data[data.type]) {
+                // if (data.key)
+                //     data.method = 'update.' + data.type
+            }
 
             return data
         },
@@ -624,20 +501,20 @@
             array: 'array',
             // array: 'array',
             // table: 'array',
-            index: 'index',
             object: 'object',
             // document: 'object',
             // row: 'object',
             key: 'key',
             // property: 'key',
-            name: 'key',
+            // name: 'key',
             updateName: 'updateName',
-            deleteName: 'deleteName',
+            index: 'index',
             crud: 'isCrud',
             crdt: 'isCrdt',
             realtime: 'isRealtime',
             save: 'isSave',
             update: 'isUpdate',
+            delete: 'isDelete',
             upsert: 'isUpsert',
             read: 'isRead',
             listen: 'isListen',
@@ -657,7 +534,6 @@
             setAttributeNames(attributes, false)
 
     }
-
 
     return CoCreateCRUD;
 }));
