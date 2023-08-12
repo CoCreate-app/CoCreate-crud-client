@@ -26,20 +26,20 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(["@cocreate/socket-client", "@cocreate/indexeddb", "@cocreate/utils"],
-            function (CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames }) {
-                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames });
+            function (CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames }) {
+                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames });
             }
         )
     }
     else if (typeof module === 'object' && module.exports) {
         const CoCreateSocket = require("@cocreate/socket-client");
-        const { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames } = require("@cocreate/utils");
-        module.exports = factory(false, CoCreateSocket, null, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames });
+        const { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames } = require("@cocreate/utils");
+        module.exports = factory(false, CoCreateSocket, null, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames });
     }
     else {
         root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/indexeddb"], root["@cocreate/utils"]);
     }
-}(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, checkValue, getAttributes, getAttributeNames, setAttributeNames }) {
+}(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames }) {
 
     const CoCreateCRUD = {
         socket: null,
@@ -81,7 +81,7 @@
                 if (!data.organization_id)
                     data.organization_id = await this.getOrganizationId()
 
-                if (data.database || data.array) {
+                if (data.database || data.array || data.type) {
                     if (!data.storage)
                         data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
@@ -404,85 +404,8 @@
             })
         },
 
-        getObject: function (element) {
-            const data = getAttributes(element);
-            const crudType = ['storage', 'database', 'array', 'index', 'object']
-
-            for (let i = 0; i < crudType.length; i++) {
-                if (!checkValue(data[crudType[i]]))
-                    return
-
-                if (data[crudType[i]] && data[crudType[i]].includes(",")) {
-                    const array = data[crudType[i]].split(',');
-                    data[crudType[i]] = []
-
-                    for (let j = 0; j < array.length; j++) {
-                        array[i].trim()
-                        if (crudType[i] === 'object') {
-                            data[crudType[i]].push({ _id: array[j] })
-                        } else {
-                            data[crudType[i]].push(array[j])
-                        }
-                    }
-                }
-            }
-
-            if (data.object || data.object === '') {
-                if (!data.array || data.array && !data.array.length) return
-                data.type = 'object'
-            } else if (data.index || data.index === '') {
-                if (!data.array || data.array && !data.array.length) return
-                data.type = 'index'
-            } else if (data.array || data.array === '')
-                data.type = 'array'
-            else if (data.database || data.database === '')
-                data.type = 'database'
-            else if (data.storage || data.storage === '')
-                data.type = 'storage'
-            else if (data.data)
-                data.type = 'data'
-
-            if (data.isUpdate || data.isUpdate === '') {
-                if (!data.key) return
-                delete data.isUpdate
-                data.updateKey = { [data.key]: element.getValue() }
-                data.method = 'update.' + data.type
-            } else if (data.isDelete || data.isDelete === '') {
-                delete data.isDelete
-                if (data.type == 'object' && data.key) {
-                    data.method = 'update.' + data.type
-                    // TODO: data.type can be a string _id or an array for string _id needs to be converted to object
-                    if (typeof data[data.type] === 'string')
-                        data[data.type] = { _id: data[data.type], [data.key]: undefined }
-                    else if (Array.isArray(data[data.type])) {
-                        console.log('data.type is an array function incomplete')
-                    } else if (typeof data[data.type] === 'object')
-                        data[data.type][data.key] = undefined
-                } else {
-                    data.method = 'delete.' + data.type
-                }
-            } else if (data.type !== 'object' && data[data.type] === '') {
-                if (!data.key)
-                    data.method = 'read.' + data.type
-                else if (data.key === 'name')
-                    data.method = 'create.' + data.type
-            } else if (data.type !== 'object' && data[data.type]) {
-                // if (data.key)
-                //     data.method = 'update.' + data.type
-            }
-
-            return data
-        },
-
-        isObjectEmpty(obj) {
-            for (var x in obj) { return false }
-            return true;
-        },
-
         ObjectId,
         getValueFromObject,
-        checkValue,
-        getAttributes,
         getAttributeNames,
         setAttributeNames
 
@@ -495,7 +418,7 @@
             // attribute | variable
             host: 'host',
             organization_id: 'organization_id',
-            apikey: 'key',
+            apikey: 'apikey',
             storage: 'storage',
             database: 'database',
             array: 'array',
