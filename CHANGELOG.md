@@ -1,3 +1,25 @@
+# [1.22.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.24...v1.22.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* crud attributes renamed ([1a4945e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1a4945eb2ee3845fd0b89fda13fe8eb5da5e01aa))
+* data array length check for object and index types ([d6715a2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d6715a2c1f8e64530fb046576c1eaa12705e8263))
+* indexeddb function calls, replace "indexeddb.process" with just "indexeddb". ([9f1b320](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9f1b32088987bcb81060f4db563302d85a0be410))
+* Refactor conditional statement for string value replacement ([9332007](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9332007eac5e206f8034648ea0b9756156f64672))
+* Refactor function to remove unnecessary parameter in getObject. ([7cb32e2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7cb32e2bc5a415a4ee53a1e47f5ede37a6f669ea))
+* replace -target -selector ([28bed5a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/28bed5a4c4f0a5d642f9f2b223fd820b87984a06))
+* update the name of test files to better represent the methods they are testing. ([7be707e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7be707e8d2b9119b646d3eff4b56d54213a5c671))
+* webpack.config and package.json make use of mode=production instead of process.env ([72e29b3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/72e29b3d52f3e1d9c413b48184a6f9eb38f66a4f))
+
+
+### Features
+
+* Add getObject function to retrieve element attributes and construct a crud object ([1ebeb40](https://github.com/CoCreate-app/CoCreate-crud-client/commit/1ebeb40347064d4a26e8846749bbe719442db2c1))
+* Improve CRUD functionality ([25cffd3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/25cffd37bc597faa2a5e578b0e5793d27b83c2e2))
+* name attribute and variable renamed to key ([3e53c0f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3e53c0f42a812f473775602c53f3eab2847b7433))
+* relocated element related functions to CoCreate-element ([51fc1df](https://github.com/CoCreate-app/CoCreate-crud-client/commit/51fc1dfa189ec946bc6141ce1e0dc676bf64e7f2))
+
 ## [1.21.24](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.21.23...v1.21.24) (2023-06-14)
 
 
