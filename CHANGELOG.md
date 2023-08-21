@@ -1,3 +1,12 @@
+## [1.23.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.23.0...v1.23.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* /dist/CoCreate.js updated to https://CoCreate.app/dist/CoCreate.js ([8270ca4](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8270ca42e4be86ddc9efef7e0104c06f50b846bf))
+* replace cdn with /dist ([7d7bee7](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7d7bee78d5c4de44586761d60d4c7cc4d23fe8ae))
+* update file uploader ([4762856](https://github.com/CoCreate-app/CoCreate-crud-client/commit/476285638b52173a84061e2099f3cbbb0099c54f))
+
 # [1.23.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.22.0...v1.23.0) (2023-08-17)
 
 
