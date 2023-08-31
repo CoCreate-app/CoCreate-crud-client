@@ -314,9 +314,8 @@
             //     array: 'deleted',
             //     object: deleteItems
             // })
-            if (deletedItems)
-                return deletedItems.object
-            else return []
+
+            return deletedItems.object
         },
 
         isDeleted: function (type, item, deletedItems) {
