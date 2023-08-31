@@ -91,8 +91,6 @@
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
-                    let action = data.method.replace(/\.([a-z])/g, (_, match) => match.toUpperCase());
-
                     indexeddb(data).then((response) => {
                         if (!data.method.startsWith('read')) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
@@ -166,7 +164,7 @@
                 if (data.method == 'read.array' || data.method == 'read.object') {
                     // TODO: on page refresh clientId is updated may require a browserId to group all clientIds
                     if (this.socket.clientId == data.clientId)
-                        self.syncDatabase(action, data)
+                        self.syncDatabase(data)
 
                 } else {
                     if (this.socket.clientId != data.clientId) {
@@ -192,10 +190,9 @@
             }
         },
 
-        syncDatabase: async function (action, data) {
+        syncDatabase: async function (data) {
             const self = this
-            let type = action.match(/[A-Z][a-z]+/g);
-            type = type[0].toLowerCase()
+            let type = data.method.split(".")[1]
             let db
             let Data = { ...data }
             Data.type = type
@@ -214,11 +211,11 @@
                 if (isDeleted) {
                     console.log('sync failed item recently deleted')
                 } else {
-                    if (!db)
-                        db = await indexeddb(items[i])
-                    else if (db.name != items[i].database) {
+                    if (!db) {
+                        db = await indexeddb({ method: 'get.database', database: items[i].database })
+                    } else if (db.name != items[i].database) {
                         db.close()
-                        db = await indexeddb(items[i])
+                        db = await indexeddb({ method: 'get.database', database: items[i].database })
                     }
 
                     if (type == 'array') {
@@ -317,8 +314,9 @@
             //     array: 'deleted',
             //     object: deleteItems
             // })
-
-            return deletedItems.object
+            if (deletedItems)
+                return deletedItems.object
+            else return []
         },
 
         isDeleted: function (type, item, deletedItems) {
