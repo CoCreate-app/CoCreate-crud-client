@@ -1,3 +1,11 @@
+## [1.24.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.24.1...v1.24.2) (2023-09-07)
+
+
+### Bug Fixes
+
+* Refactor code: Simplify getting deleted object from array ([42ea84a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/42ea84ac46d1f505153823079e7b8617a34f12fe))
+* remove action and get type from data.method ([07c8590](https://github.com/CoCreate-app/CoCreate-crud-client/commit/07c8590fc44dbb6e17c1bb7cc086666f999f971f))
+
 ## [1.24.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.24.0...v1.24.1) (2023-08-21)
 
 
