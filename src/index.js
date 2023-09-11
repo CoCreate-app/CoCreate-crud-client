@@ -212,10 +212,10 @@
                     console.log('sync failed item recently deleted')
                 } else {
                     if (!db) {
-                        db = await indexeddb({ method: 'get.database', database: items[i].database })
+                        db = await indexeddb({ method: 'get.database', database: items[i].$database })
                     } else if (db.name != items[i].database) {
                         db.close()
-                        db = await indexeddb({ method: 'get.database', database: items[i].database })
+                        db = await indexeddb({ method: 'get.database', database: items[i].$database })
                     }
 
                     if (type == 'array') {
@@ -236,8 +236,8 @@
                     }
 
                     if (type == 'object' && items[i].array && items[i]._id) {
-                        let transaction = db.transaction([items[i].array], "readwrite");
-                        let array = transaction.objectStore(items[i].array);
+                        let transaction = db.transaction([items[i].$array], "readwrite");
+                        let array = transaction.objectStore(items[i].$array);
 
                         let request = array.get(items[i]._id);
 
@@ -247,9 +247,9 @@
                             let storedDoc = request.result
                             let storedDocCompare, docCompare
                             let Doc = { ...items[i] }
-                            delete items[i].storage
-                            delete items[i].database
-                            delete items[i].array
+                            delete items[i].$storage
+                            delete items[i].$database
+                            delete items[i].$array
 
                             if (storedDoc) {
                                 storedDocCompare = storedDoc.modified || storedDoc.created
@@ -324,10 +324,10 @@
                 for (let i = 0; i < deletedItem.length; i++) {
                     if (type == 'database' && deletedItem[i].name == item.name) {
                         return true
-                    } else if (deletedItem[i].database == item.database) {
+                    } else if (deletedItem[i].$database == item.database) {
                         if (type == 'array' && deletedItem[i].name == item.name) {
                             return true
-                        } else if (deletedItem[i].array == item.array) {
+                        } else if (deletedItem[i].$array == item.array) {
                             if (type == 'index' && deletedItem[i].name == item.name) {
                                 return true
                             }
