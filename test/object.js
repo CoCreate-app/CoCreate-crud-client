@@ -30,14 +30,13 @@ async function testObjects() {
             'books.action.title': 'matry',
             test: 'yep1',
             top: 'qwerty',
-            sports: { basketball: { teams: ['lakers'] } }
-        },
-        filter: {
-            query: [
-                { key: 'organization_id', value: "5ff747727005da1c272740ab" }
-            ]
-        },
-        // async: true 
+            sports: { basketball: { teams: ['lakers'] } },
+            $filter: {
+                query: [
+                    { key: 'organization_id', value: "5ff747727005da1c272740ab" }
+                ]
+            }
+        }
     })
     console.log('updateObject', updateObject)
 
@@ -45,14 +44,12 @@ async function testObjects() {
         method: 'delete.object',
         database: ['testDB', 'testDB1', 'testDB2'],
         array: ['testCollection', 'testCollection1', 'testCollection2'],
-        // object: {
-        //     _id
-        // },
-
-        filter: {
-            query: [
-                { key: 'organization_id', value: "5ff747727005da1c272740ab" }
-            ]
+        object: {
+            $filter: {
+                query: [
+                    { key: 'organization_id', value: "5ff747727005da1c272740ab" }
+                ]
+            }
         }
     })
     console.log('deleteObject', deleteObject)
