@@ -15,10 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  ********************************************************************************/
 
-// Commercial Licensing Information:
-// For commercial use of this software without the copyleft provisions of the AGPLv3,
-// you must obtain a commercial license from CoCreate LLC.
-// For details, visit <https://cocreate.app/licenses/> or contact us at sales@cocreate.app.
+/**
+ * Commercial Licensing Information:
+ * For commercial use of this software without the copyleft provisions of the AGPLv3,
+ * you must obtain a commercial license from CoCreate LLC.
+ * For details, visit <https://cocreate.app/licenses/> or contact us at sales@cocreate.app.
+ */
 
 
 /* global CoCreate, CustomEvent */
@@ -91,13 +93,13 @@
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
-                    indexeddb(data).then((response) => {
+                    indexeddb.send(data).then((response) => {
                         if (!data.method.startsWith('read')) {
                             if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
                                 response['broadcastBrowser'] = 'once'
 
                             if (data.method.startsWith('delete')) {
-                                indexeddb({
+                                indexeddb.send({
                                     method: 'create.object',
                                     database: 'crudSync',
                                     array: 'deleted',
@@ -168,21 +170,21 @@
 
                 } else {
                     if (this.socket.clientId != data.clientId) {
-                        indexeddb({
+                        indexeddb.send({
                             method: "read.object",
                             database: 'crudSync',
                             array: 'synced',
                             object: { _id: data.uid }
                         }).then((response) => {
                             if (!response.object || !response.object[0]) {
-                                indexeddb({
+                                indexeddb.send({
                                     method: "create.object",
                                     database: 'crudSync',
                                     array: 'synced',
                                     object: { _id: data.uid }
                                 })
 
-                                indexeddb({ ...data })
+                                indexeddb.send({ ...data })
                             }
                         })
                     }
@@ -212,10 +214,10 @@
                     console.log('sync failed item recently deleted')
                 } else {
                     if (!db) {
-                        db = await indexeddb({ method: 'get.database', database: items[i].$database })
+                        db = await indexeddb.send({ method: 'get.database', database: items[i].$database })
                     } else if (db.name != items[i].database) {
                         db.close()
-                        db = await indexeddb({ method: 'get.database', database: items[i].$database })
+                        db = await indexeddb.send({ method: 'get.database', database: items[i].$database })
                     }
 
                     if (type == 'array') {
@@ -229,7 +231,7 @@
                             db.close()
 
                             if (Data.array.length) {
-                                indexeddb({ ...Data })
+                                indexeddb.send({ ...Data })
                                 self.broadcastSynced('sync', Data)
                             }
                         }
@@ -292,7 +294,7 @@
 
         getDeletedItems: async function () {
             // TODO: filter by timestamp and remove old deleteItems lastSocketConnection
-            let deletedItems = await indexeddb({
+            let deletedItems = await indexeddb.send({
                 method: 'read.object',
                 database: 'crudSync',
                 array: 'deleted'
@@ -308,7 +310,7 @@
             //         deleteItems.push(deletedItems[i])
             // }
 
-            // indexeddb({
+            // indexeddb.send({
             //     method: 'delete.objects',
             //     database: 'crudSync',
             //     array: 'deleted',
