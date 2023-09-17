@@ -44,14 +44,7 @@
 }(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames }) {
 
     const CoCreateCRUD = {
-        socket: null,
-        setSocket: function (socket) {
-            this.socket = socket || CoCreateSocket;
-
-            if (isBrowser) {
-                this.socket.create(); // {prefix: 'crud'}
-            }
-        },
+        socket: CoCreateSocket,
 
         /**
          * Performs a crud action using the define method .
@@ -410,7 +403,6 @@
 
     };
 
-    CoCreateCRUD.setSocket();
     if (isBrowser) {
         CoCreateCRUD.syncListeners();
         let attributes = {
