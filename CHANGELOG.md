@@ -1,3 +1,15 @@
+# [1.25.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.24.2...v1.25.0) (2023-09-17)
+
+
+### Bug Fixes
+
+* update indexeddb() to indexeddb.send() ([dbad466](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dbad466d28218b128bbd1c06c5a4da6732bfb5c4))
+
+
+### Features
+
+* Update storage, database, array to $storage, $database, $array ([c735ef9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c735ef904c0141573c63ba2f4078e533ac2cebcb))
+
 ## [1.24.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.24.1...v1.24.2) (2023-09-07)
 
 
