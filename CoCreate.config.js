@@ -8,17 +8,16 @@ module.exports = {
             "object": {
                 "_id": "6143fc56829b690010a5f330",
                 "name": "index.html",
-                "path": "/docs/crud-client/index.html",
+                "path": "/docs/crud-client",
+                "pathname": "/docs/crud-client/index.html",
                 "src": "{{./docs/index.html}}",
                 "host": [
                     "*",
                     "general.cocreate.app"
                 ],
-                "directory": "/docs/crud-client",
-                "parentDirectory": "{{parentDirectory}}",
+                "directory": "crud-client",
                 "content-type": "{{content-type}}",
-                "public": "true",
-                "website_id": "644d4bff8036fb9d1d1fd69c"
+                "public": "true"
             }
         }
     ]
