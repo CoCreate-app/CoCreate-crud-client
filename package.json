@@ -58,8 +58,8 @@
     "webpack-log": "^3.0.1"
   },
   "dependencies": {
-    "@cocreate/indexeddb": "^1.13.0",
-    "@cocreate/socket-client": "^1.26.0",
-    "@cocreate/uuid": "^1.7.0"
+    "@cocreate/indexeddb": "^1.13.4",
+    "@cocreate/socket-client": "^1.26.2",
+    "@cocreate/uuid": "^1.7.1"
   }
 }
