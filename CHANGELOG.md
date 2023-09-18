@@ -1,3 +1,12 @@
+## [1.25.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.25.0...v1.25.1) (2023-09-18)
+
+
+### Bug Fixes
+
+*  Add path and pathname ([ee5d7c6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ee5d7c639d3a22da2cacf9e62977f2c2dc1017c3))
+* setSocket() as it is not required ([2f50765](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2f50765c9775697fe60f63e51c33b9155c7a1501))
+* Update dCoCreate dpendencies to latest versions ([820e8f9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/820e8f958a1d2b2d1ebca44a8845d84ada7ff230))
+
 # [1.25.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.24.2...v1.25.0) (2023-09-17)
 
 
