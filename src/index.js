@@ -157,8 +157,7 @@
 
             if (indexeddb && data.uid && data.status == 'received') {
                 if (data.method == 'read.array' || data.method == 'read.object') {
-                    // TODO: on page refresh clientId is updated may require a browserId to group all clientIds
-                    if (this.socket.clientId == data.clientId)
+                    if (this.socket.id == data.socketId)
                         self.syncDatabase(data)
 
                 } else {
