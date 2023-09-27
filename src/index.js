@@ -67,7 +67,7 @@
                 if (!data.method)
                     return resolve(data);
 
-                data['timeStamp'] = new Date().toISOString()
+                data['timeStamp'] = new Date()
 
                 if (data.method.startsWith('read'))
                     data.broadcast = false
