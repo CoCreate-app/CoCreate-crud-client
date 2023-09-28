@@ -157,7 +157,7 @@
 
             if (indexeddb && data.uid && data.status == 'received') {
                 if (data.method == 'read.array' || data.method == 'read.object') {
-                    if (this.socket.id == data.socketId)
+                    if (this.socket.has(data.socketId))
                         self.syncDatabase(data)
 
                 } else {
