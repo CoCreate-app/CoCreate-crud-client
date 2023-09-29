@@ -83,13 +83,16 @@
                         data['database'] = data.organization_id || this.socket.config.organization_id
                     if (!data.user_id)
                         data['user_id'] = this.socket.config.user_id
+                    if (data.broadcastClient !== false && data.broadcastClient !== 'false')
+                        data['broadcastClient'] = true
+
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     indexeddb.send(data).then((response) => {
                         if (!data.method.startsWith('read')) {
-                            if (!data.broadcastBrowser && data.broadcastBrowser != 'false')
-                                response['broadcastBrowser'] = 'once'
+                            if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
+                                response['broadcastBrowser'] = true
 
                             if (data.method.startsWith('delete')) {
                                 indexeddb.send({
