@@ -80,9 +80,9 @@
                     if (!data.storage)
                         data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
-                        data['database'] = data.organization_id || this.socket.config.organization_id
+                        data['database'] = data.organization_id || this.socket.organization_id
                     if (!data.user_id)
-                        data['user_id'] = this.socket.config.user_id
+                        data['user_id'] = this.socket.user_id
                     if (data.broadcastClient !== false && data.broadcastClient !== 'false')
                         data['broadcastClient'] = true
 
@@ -120,12 +120,12 @@
         getOrganizationId: function () {
             return new Promise(async (resolve) => {
 
-                let organization_id = this.socket.config.organization_id || localStorage.getItem('organization_id')
+                let organization_id = this.socket.organization_id || localStorage.getItem('organization_id')
                 if (organization_id)
                     resolve(organization_id)
                 else {
                     let test = setTimeout(() => {
-                        organization_id = this.socket.config.organization_id || localStorage.getItem('organization_id')
+                        organization_id = this.socket.organization_id || localStorage.getItem('organization_id')
                         if (organization_id)
                             resolve(organization_id)
 
@@ -139,7 +139,6 @@
             this.socket.listen(method, callback);
         },
 
-        // TODO: could be handeled by sharedworker once support is more widespread https://caniuse.com/sharedworkers
         syncListeners: function () {
             const method = ['create', 'read', 'update', 'delete'];
             const type = ['storage', 'database', 'array', 'index', 'object'];
@@ -156,36 +155,13 @@
         },
 
         sync: async function (data) {
-            const self = this
-
             if (indexeddb && data.uid && data.status == 'received') {
                 if (data.method == 'read.array' || data.method == 'read.object') {
                     if (this.socket.has(data.socketId))
-                        self.syncDatabase(data)
+                        this.syncDatabase(data)
 
-                } else {
-                    if (this.socket.clientId != data.clientId) {
-                        // TODO: socket will handle sending to client
-                        indexeddb.send({ ...data })
-
-                        //     indexeddb.send({
-                        //         method: "read.object",
-                        //         database: 'crudSync',
-                        //         array: 'synced',
-                        //         object: { _id: data.uid }
-                        //     }).then((response) => {
-                        //         if (!response.object || !response.object[0]) {
-                        //             indexeddb.send({
-                        //                 method: "create.object",
-                        //                 database: 'crudSync',
-                        //                 array: 'synced',
-                        //                 object: { _id: data.uid }
-                        //             })
-
-                        //             indexeddb.send({ ...data })
-                        //         }
-                        //     })
-                    }
+                } else if (this.socket.clientId != data.clientId) {
+                    indexeddb.send({ ...data })
                 }
             }
         },
