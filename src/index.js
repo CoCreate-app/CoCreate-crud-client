@@ -165,23 +165,26 @@
 
                 } else {
                     if (this.socket.clientId != data.clientId) {
-                        indexeddb.send({
-                            method: "read.object",
-                            database: 'crudSync',
-                            array: 'synced',
-                            object: { _id: data.uid }
-                        }).then((response) => {
-                            if (!response.object || !response.object[0]) {
-                                indexeddb.send({
-                                    method: "create.object",
-                                    database: 'crudSync',
-                                    array: 'synced',
-                                    object: { _id: data.uid }
-                                })
+                        // TODO: socket will handle sending to client
+                        indexeddb.send({ ...data })
 
-                                indexeddb.send({ ...data })
-                            }
-                        })
+                        //     indexeddb.send({
+                        //         method: "read.object",
+                        //         database: 'crudSync',
+                        //         array: 'synced',
+                        //         object: { _id: data.uid }
+                        //     }).then((response) => {
+                        //         if (!response.object || !response.object[0]) {
+                        //             indexeddb.send({
+                        //                 method: "create.object",
+                        //                 database: 'crudSync',
+                        //                 array: 'synced',
+                        //                 object: { _id: data.uid }
+                        //             })
+
+                        //             indexeddb.send({ ...data })
+                        //         }
+                        //     })
                     }
                 }
             }
@@ -204,7 +207,8 @@
             let itemsLength = items.length
             for (let i = 0; i < items.length; i++) {
                 let isDeleted = this.isDeleted(type, items[i], deletedItems)
-
+                // TODO: could be handled by the sending client using sync logic to prevent confliucs
+                // client could wait for the sync update before 
                 if (isDeleted) {
                     console.log('sync failed item recently deleted')
                 } else {
