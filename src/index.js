@@ -74,13 +74,13 @@
                 if (data.method.startsWith('update') && data.upsert != false)
                     data.upsert = true
                 if (!data.organization_id)
-                    data.organization_id = await this.getOrganizationId()
+                    data.organization_id = await this.socket.organization_id()
 
                 if (data.database || data.array || data.type) {
                     if (!data.storage)
                         data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
-                        data['database'] = data.organization_id || this.socket.organization_id
+                        data['database'] = data.organization_id
                     if (!data.user_id)
                         data['user_id'] = this.socket.user_id
                     if (data.broadcastClient !== false && data.broadcastClient !== 'false')
@@ -115,23 +115,6 @@
                     })
                 }
             })
-        },
-
-        getOrganizationId: function () {
-            return new Promise(async (resolve) => {
-
-                let organization_id = this.socket.organization_id || localStorage.getItem('organization_id')
-                if (organization_id)
-                    resolve(organization_id)
-                else {
-                    let test = setTimeout(() => {
-                        organization_id = this.socket.organization_id || localStorage.getItem('organization_id')
-                        if (organization_id)
-                            resolve(organization_id)
-
-                    }, 1000)
-                }
-            });
         },
 
         listen: function (method, callback) {
