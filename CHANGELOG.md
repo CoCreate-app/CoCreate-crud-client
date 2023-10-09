@@ -1,3 +1,20 @@
+# [1.28.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.27.0...v1.28.0) (2023-10-09)
+
+
+### Bug Fixes
+
+* removed timeStamp.toISOString ([1673514](https://github.com/CoCreate-app/CoCreate-crud-client/commit/16735148df2571aa4afd8f0cf2cf9edbd04bb2e4))
+* socket.config items moved to socket ([3843b6c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3843b6c0350435413f71cf5c48b1b2b7a75f0560))
+* this.socket.has(data.socketId) ([7014077](https://github.com/CoCreate-app/CoCreate-crud-client/commit/70140773ad9e3ed67eea19774f3474f7f8bd0547))
+* update to use data.socketId and data.clientId ([6ac6640](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6ac6640f87b7c8abe5fb077c30b66c055003439b))
+
+
+### Features
+
+* broadcastBrowser and broadcastClient defualt ([f61abda](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f61abda42136cb3b6827817faa51f79e64e0ad37))
+* sawait ocket.organization_id() ([29d8731](https://github.com/CoCreate-app/CoCreate-crud-client/commit/29d8731d309cb2ec37fa4f986a64b8e840bad375))
+* sync data leveraging filters and queries ([5c0b1b4](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5c0b1b4fa01172b5d0aa93ec09a0c21e10fb828e))
+
 # [1.27.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.26.0...v1.27.0) (2023-09-19)
 
 
