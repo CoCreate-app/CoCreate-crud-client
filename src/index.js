@@ -85,29 +85,35 @@
                         data['user_id'] = this.socket.user_id
                     if (data.broadcastClient !== false && data.broadcastClient !== 'false')
                         data['broadcastClient'] = true
-
+                    if (data.method.startsWith('read'))
+                        data.broadcastBrowser = false
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     indexeddb.send(data).then((response) => {
-                        if (!data.method.startsWith('read')) {
-                            if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
-                                response['broadcastBrowser'] = true
 
-                            if (data.method.startsWith('delete')) {
-                                indexeddb.send({
-                                    method: 'create.object',
-                                    database: 'crudSync',
-                                    array: 'deleted',
-                                    object: { _id: ObjectId(), item: response }
-                                })
-                            }
+                        if (data.method.startsWith('delete')) {
+                            indexeddb.send({
+                                method: 'create.object',
+                                database: 'crudSync',
+                                array: 'deleted',
+                                object: { _id: ObjectId(), item: response }
+                            })
                         }
 
-                        this.socket.send(response).then((response) => {
+                        let type = data.method.split('.');
+                        type = type[type.length - 1];
+                        if (type && response[type] && response[type].length) {
+                            if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
+                                response['broadcastBrowser'] = true
                             resolve(response);
-                        })
-
+                            response.status = 'resolved'
+                            this.socket.send(response)
+                        } else {
+                            this.socket.send(response).then((response) => {
+                                resolve(response);
+                            })
+                        }
                     })
                 } else {
                     this.socket.send(data).then((response) => {
@@ -139,113 +145,33 @@
 
         sync: async function (data) {
             if (indexeddb && data.uid && data.status == 'received') {
-                if (data.method == 'read.array' || data.method == 'read.object') {
-                    if (this.socket.has(data.socketId))
-                        this.syncDatabase(data)
+                if (data.method.startsWith('read.') && this.socket.has(data.socketId)) {
+                    const self = this
+                    let type = data.method.split(".")[1]
+                    let deletedItems = await this.getDeletedItems()
+                    let isDeleted = '' // this.isDeleted(type, items[i], deletedItems)
+
+                    if (isDeleted) {
+                        console.log('sync failed item recently deleted')
+                    } else {
+                        let response = await indexeddb.send({
+                            method: 'update.' + type,
+                            [type]: data[type],
+                            $filter: {
+                                query: [
+                                    // { key: 'modified.on', value: data.modified.on, operator: '$gt' },
+                                    { key: 'modified.on', value: data.timeStamp, operator: '$lt' }
+                                ]
+                            },
+                            organization_id: data.organization_id
+                        })
+
+                        if (response)
+                            self.socket.sendLocalMessage(response)
+                    }
 
                 } else if (this.socket.clientId != data.clientId) {
                     indexeddb.send({ ...data })
-                }
-            }
-        },
-
-        syncDatabase: async function (data) {
-            const self = this
-            let type = data.method.split(".")[1]
-            let db
-            let Data = { ...data }
-            Data.type = type
-            Data[type] = []
-
-            let deletedItems = await this.getDeletedItems()
-
-            let items = data[type];
-            if (!Array.isArray(items) && items != undefined)
-                items = [items]
-
-            let itemsLength = items.length
-            for (let i = 0; i < items.length; i++) {
-                let isDeleted = this.isDeleted(type, items[i], deletedItems)
-                // TODO: could be handled by the sending client using sync logic to prevent confliucs
-                // client could wait for the sync update before 
-                if (isDeleted) {
-                    console.log('sync failed item recently deleted')
-                } else {
-                    if (!db) {
-                        db = await indexeddb.send({ method: 'get.database', database: items[i].$database })
-                    } else if (db.name != items[i].database) {
-                        db.close()
-                        db = await indexeddb.send({ method: 'get.database', database: items[i].$database })
-                    }
-
-                    if (type == 'array') {
-                        itemsLength -= 1
-                        let objectStoreNames = Array.from(db.objectStoreNames)
-                        if (!objectStoreNames.includes(items[i].name)) {
-                            Data.request.push(items[i].name)
-                            Data[type].push(items[i])
-                        }
-                        if (!itemsLength) {
-                            db.close()
-
-                            if (Data.array.length) {
-                                indexeddb.send({ ...Data })
-                                self.broadcastSynced('sync', Data)
-                            }
-                        }
-                    }
-
-                    if (type == 'object' && items[i].array && items[i]._id) {
-                        let transaction = db.transaction([items[i].$array], "readwrite");
-                        let array = transaction.objectStore(items[i].$array);
-
-                        let request = array.get(items[i]._id);
-
-                        request.onsuccess = function () {
-                            itemsLength -= 1
-
-                            let storedDoc = request.result
-                            let storedDocCompare, docCompare
-                            let Doc = { ...items[i] }
-                            delete items[i].$storage
-                            delete items[i].$database
-                            delete items[i].$array
-
-                            if (storedDoc) {
-                                storedDocCompare = storedDoc.modified || storedDoc.created
-                                docCompare = items[i].modified || items[i].created
-
-                                // TODO: on page load objects can be updated resulting in a false compare. needs to sync
-                                if (storedDocCompare && docCompare) {
-                                    if (Doc.array == 'crdt-transactions')
-                                        console.log('crdt-transactions', Doc)
-                                    console.log('isSyncable', storedDocCompare.on, storedDocCompare.on < docCompare.on, docCompare.on)
-                                    if (storedDocCompare.on < docCompare.on) {
-                                        Data.object.push(Doc)
-                                        array.put(items[i])
-                                    } else {
-
-                                    }
-                                }
-                            } else {
-                                Data.object.push(Doc)
-                                array.put(items[i])
-                            }
-
-                            if (!itemsLength) {
-                                db.close()
-                                self.broadcastSynced('sync', Data)
-                            }
-                        }
-
-                        request.onerror = function () {
-                            itemsLength -= 1
-                            if (!itemsLength) {
-                                db.close()
-                            }
-                            console.log('sync failed', items[i])
-                        }
-                    }
                 }
             }
         },
@@ -299,14 +225,6 @@
                 }
             }
             return false
-        },
-
-        broadcastSynced: function (action, data) {
-            const listeners = this.socket.listeners.get(action);
-            if (listeners)
-                listeners.forEach(listener => {
-                    listener(data);
-                });
         },
 
         syncServer: function () {
