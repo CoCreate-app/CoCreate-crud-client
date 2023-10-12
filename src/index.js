@@ -90,31 +90,30 @@
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
-                    indexeddb.send(data).then((response) => {
+                    let response = await indexeddb.send(data)
 
-                        if (data.method.startsWith('delete')) {
-                            indexeddb.send({
-                                method: 'create.object',
-                                database: 'crudSync',
-                                array: 'deleted',
-                                object: { _id: ObjectId(), item: response }
-                            })
-                        }
+                    if (data.method.startsWith('delete')) {
+                        indexeddb.send({
+                            method: 'create.object',
+                            database: 'crudSync',
+                            array: 'deleted',
+                            object: { _id: ObjectId(), item: response }
+                        })
+                    }
 
-                        let type = data.method.split('.');
-                        type = type[type.length - 1];
-                        if (type && response[type] && response[type].length) {
-                            if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
-                                response['broadcastBrowser'] = true
+                    let type = data.method.split('.');
+                    type = type[type.length - 1];
+                    if (type && response[type] && response[type].length) {
+                        if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
+                            response['broadcastBrowser'] = true
+                        resolve(response);
+                        response.status = 'resolved'
+                        this.socket.send(response)
+                    } else {
+                        this.socket.send(response).then((response) => {
                             resolve(response);
-                            response.status = 'resolved'
-                            this.socket.send(response)
-                        } else {
-                            this.socket.send(response).then((response) => {
-                                resolve(response);
-                            })
-                        }
-                    })
+                        })
+                    }
                 } else {
                     this.socket.send(data).then((response) => {
                         resolve(response);
