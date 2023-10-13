@@ -319,7 +319,7 @@
             'broadcast-browser': 'broadcastBrowser',
             room: 'room',
             pass_id: 'pass_id',
-            'pass-refresh': 'passRefresh'
+            'pass-overwrite': 'passOverwrite'
         }
 
         if (!window.CoCreateConfig)
