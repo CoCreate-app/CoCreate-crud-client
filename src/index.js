@@ -103,7 +103,7 @@
 
                     let type = data.method.split('.');
                     type = type[type.length - 1];
-                    if (type && response[type] && response[type].length) {
+                    if (response && type && response[type] && response[type].length) {
                         if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
                             response['broadcastBrowser'] = true
                         resolve(response);
