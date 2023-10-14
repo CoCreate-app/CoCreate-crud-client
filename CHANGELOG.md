@@ -1,3 +1,13 @@
+## [1.28.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.4...v1.28.5) (2023-10-14)
+
+
+### Bug Fixes
+
+* bump dependencies ([7f6ac8c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7f6ac8c4903d908c0efb4eb36936b37b0c05aa78))
+* send error ([47956af](https://github.com/CoCreate-app/CoCreate-crud-client/commit/47956afaad5fcc212ef04b4cca1d30c1e7ed3ec0))
+* update pass-refresh to pass-overwrite ([120bf77](https://github.com/CoCreate-app/CoCreate-crud-client/commit/120bf77deb28adedbb324b786b0b54c7f18bae9b))
+* update to await indexeddb ([2f8ed62](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2f8ed62d7124d321ac911e420a680083e0ba38d0))
+
 ## [1.28.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.3...v1.28.4) (2023-10-09)
 
 
