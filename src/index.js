@@ -107,7 +107,7 @@
                         if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
                             response['broadcastBrowser'] = true
                         resolve(response);
-                        response.status = 'resolved'
+                        response.status = 'resolve'
                         this.socket.send(response)
                     } else {
                         this.socket.send(response).then((response) => {
