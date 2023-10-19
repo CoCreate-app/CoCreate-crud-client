@@ -1,3 +1,10 @@
+## [1.28.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.6...v1.28.7) (2023-10-19)
+
+
+### Bug Fixes
+
+* broadcast client handled by socket ([81cc956](https://github.com/CoCreate-app/CoCreate-crud-client/commit/81cc956633423eb7ce255de146b3bebba1d07513))
+
 ## [1.28.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.5...v1.28.6) (2023-10-17)
 
 
