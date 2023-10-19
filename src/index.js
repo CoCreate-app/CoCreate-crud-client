@@ -83,9 +83,7 @@
                         data['database'] = data.organization_id
                     if (!data.user_id)
                         data['user_id'] = this.socket.user_id
-                    if (data.broadcastClient !== false && data.broadcastClient !== 'false')
-                        data['broadcastClient'] = true
-                    if (data.method.startsWith('read'))
+                    if (data.method.startsWith('read.'))
                         data.broadcastBrowser = false
                 }
 
@@ -103,9 +101,7 @@
 
                     let type = data.method.split('.');
                     type = type[type.length - 1];
-                    if (response && type && response[type] && response[type].length) {
-                        if (data.broadcastBrowser !== false && data.broadcastBrowser !== 'false')
-                            response['broadcastBrowser'] = true
+                    if (data.status !== 'await' && type && response && response[type] && response[type].length) {
                         resolve(response);
                         response.status = 'resolve'
                         this.socket.send(response)
