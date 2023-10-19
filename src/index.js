@@ -69,9 +69,9 @@
 
                 data['timeStamp'] = new Date()
 
-                if (data.method.startsWith('read'))
+                if (data.method.startsWith('read.'))
                     data.broadcast = false
-                if (data.method.startsWith('update') && data.upsert != false)
+                if (data.method.startsWith('update.') && data.upsert != false)
                     data.upsert = true
                 if (!data.organization_id)
                     data.organization_id = await this.socket.organization_id()
@@ -90,7 +90,7 @@
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     let response = await indexeddb.send(data)
 
-                    if (data.method.startsWith('delete')) {
+                    if (data.method.startsWith('delete.')) {
                         indexeddb.send({
                             method: 'create.object',
                             database: 'crudSync',
