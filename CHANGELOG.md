@@ -1,3 +1,10 @@
+## [1.28.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.7...v1.28.8) (2023-10-20)
+
+
+### Bug Fixes
+
+* update startwith for crud types ([8656d92](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8656d92e62ef9cb40a0deb21248795cb34c20df4))
+
 ## [1.28.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.6...v1.28.7) (2023-10-19)
 
 
