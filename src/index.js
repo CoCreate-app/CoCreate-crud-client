@@ -90,14 +90,14 @@
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     let response = await indexeddb.send(data)
 
-                    if (data.method.startsWith('delete.')) {
-                        indexeddb.send({
-                            method: 'create.object',
-                            database: 'crudSync',
-                            array: 'deleted',
-                            object: { _id: ObjectId(), item: response }
-                        })
-                    }
+                    // if (data.method.startsWith('delete.')) {
+                    //     indexeddb.send({
+                    //         method: 'create.object',
+                    //         database: 'crudSync',
+                    //         array: 'deleted',
+                    //         object: { _id: ObjectId(), item: response }
+                    //     })
+                    // }
 
                     let type = data.method.split('.');
                     type = type[type.length - 1];
@@ -143,7 +143,9 @@
                 if (data.method.startsWith('read.') && this.socket.has(data.socketId)) {
                     const self = this
                     let type = data.method.split(".")[1]
-                    let deletedItems = await this.getDeletedItems()
+                    if (!data[type] || !data[type].length)
+                        return
+                    // let deletedItems = await this.getDeletedItems()
                     let isDeleted = '' // this.isDeleted(type, items[i], deletedItems)
 
                     if (isDeleted) {
@@ -161,8 +163,11 @@
                             organization_id: data.organization_id
                         })
 
-                        if (response)
+
+                        if (response && response[type] && response[type].length) {
+                            console.log('crud synced: ', response)
                             self.socket.sendLocalMessage(response)
+                        }
                     }
 
                 } else if (this.socket.clientId != data.clientId) {
