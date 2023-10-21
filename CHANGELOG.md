@@ -1,3 +1,10 @@
+## [1.28.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.8...v1.28.9) (2023-10-21)
+
+
+### Bug Fixes
+
+* sync conditions ([2ab7b54](https://github.com/CoCreate-app/CoCreate-crud-client/commit/2ab7b548f988818d34f0e29dba9b7ae11a8f2f5d))
+
 ## [1.28.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.7...v1.28.8) (2023-10-20)
 
 
