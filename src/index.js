@@ -152,7 +152,11 @@
                         console.log('sync failed item recently deleted')
                     } else {
                         let response = await indexeddb.send({
+                            clientId: data.clientId,
+                            frameId: data.frameId,
+                            socketId: data.socketId,
                             method: 'update.' + type,
+                            array: data.array,
                             [type]: data[type],
                             $filter: {
                                 query: [
@@ -160,9 +164,10 @@
                                     { key: 'modified.on', value: data.timeStamp, operator: '$lt' }
                                 ]
                             },
+                            upsert: true,
+                            user_id: data.user_id,
                             organization_id: data.organization_id
                         })
-
 
                         if (response && response[type] && response[type].length) {
                             console.log('crud synced: ', response)
