@@ -1,3 +1,10 @@
+## [1.28.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.9...v1.28.10) (2023-10-24)
+
+
+### Bug Fixes
+
+* sync need to transfer meta data ([8b8810c](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8b8810c71b97b4493e4c540664b607fec4b1213a))
+
 ## [1.28.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.8...v1.28.9) (2023-10-21)
 
 
