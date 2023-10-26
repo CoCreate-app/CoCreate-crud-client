@@ -1,3 +1,10 @@
+## [1.28.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.11...v1.28.12) (2023-10-26)
+
+
+### Bug Fixes
+
+* socket.send(response || data) ([8f0ce92](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8f0ce92676a042a58eacecfacae1a85c49e846d6))
+
 ## [1.28.11](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.10...v1.28.11) (2023-10-25)
 
 
