@@ -106,7 +106,7 @@
                         response.status = 'resolve'
                         this.socket.send(response)
                     } else {
-                        this.socket.send(response).then((response) => {
+                        this.socket.send(response || data).then((response) => {
                             resolve(response);
                         })
                     }
@@ -176,7 +176,7 @@
                     }
 
                 } else if (this.socket.clientId != data.clientId) {
-                    indexeddb.send({ ...data })
+                    // indexeddb.send({ ...data })
                 }
             }
         },
