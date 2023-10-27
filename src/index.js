@@ -139,44 +139,46 @@
         },
 
         sync: async function (data) {
-            if (indexeddb && data.uid && data.status == 'received') {
-                if (data.method.startsWith('read.') && this.socket.has(data.socketId)) {
-                    const self = this
-                    let type = data.method.split(".")[1]
-                    if (!data[type] || !data[type].length)
-                        return
-                    // let deletedItems = await this.getDeletedItems()
-                    let isDeleted = '' // this.isDeleted(type, items[i], deletedItems)
+            if (indexeddb && data.uid && data.status && data.status == 'received') {
+                if (data.method.startsWith('read.')) {
+                    if (this.socket.has(data.socketId)) {
+                        const self = this
+                        let type = data.method.split(".")[1]
+                        if (!data[type] || !data[type].length)
+                            return
+                        // let deletedItems = await this.getDeletedItems()
+                        let isDeleted = '' // this.isDeleted(type, items[i], deletedItems)
 
-                    if (isDeleted) {
-                        console.log('sync failed item recently deleted')
-                    } else {
-                        let response = await indexeddb.send({
-                            clientId: data.clientId,
-                            frameId: data.frameId,
-                            socketId: data.socketId,
-                            method: 'update.' + type,
-                            array: data.array,
-                            [type]: data[type],
-                            $filter: {
-                                query: [
-                                    // { key: 'modified.on', value: data.modified.on, operator: '$gt' },
-                                    { key: 'modified.on', value: data.timeStamp, operator: '$lt' }
-                                ]
-                            },
-                            upsert: true,
-                            user_id: data.user_id,
-                            organization_id: data.organization_id
-                        })
+                        if (isDeleted) {
+                            console.log('sync failed item recently deleted')
+                        } else {
+                            for (let i = 0; i < data[type].length; i++) {
+                                let response = await indexeddb.send({
+                                    clientId: data.clientId,
+                                    frameId: data.frameId,
+                                    socketId: data.socketId,
+                                    method: 'update.' + type,
+                                    array: data.array,
+                                    [type]: data[type][i],
+                                    $filter: {
+                                        query: [
+                                            { key: 'modified.on', value: data[type][i].modified.on, operator: '$lt' },
+                                        ]
+                                    },
+                                    upsert: true,
+                                    user_id: data.user_id,
+                                    organization_id: data.organization_id
+                                })
 
-                        if (response && response[type] && response[type].length) {
-                            console.log('crud synced: ', response)
-                            self.socket.sendLocalMessage(response)
+                                if (response && response[type] && response[type].length) {
+                                    console.log('crud synced: ', response)
+                                    self.socket.sendLocalMessage(response)
+                                }
+                            }
                         }
                     }
-
                 } else if (this.socket.clientId != data.clientId) {
-                    // indexeddb.send({ ...data })
+                    indexeddb.send({ ...data })
                 }
             }
         },
