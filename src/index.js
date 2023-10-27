@@ -90,14 +90,6 @@
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     let response = await indexeddb.send(data)
 
-                    // if (data.method.startsWith('delete.')) {
-                    //     indexeddb.send({
-                    //         method: 'create.object',
-                    //         database: 'crudSync',
-                    //         array: 'deleted',
-                    //         object: { _id: ObjectId(), item: response }
-                    //     })
-                    // }
 
                     let type = data.method.split('.');
                     type = type[type.length - 1];
@@ -183,57 +175,6 @@
             }
         },
 
-        getDeletedItems: async function () {
-            // TODO: filter by timestamp and remove old deleteItems lastSocketConnection
-            let deletedItems = await indexeddb.send({
-                method: 'read.object',
-                database: 'crudSync',
-                array: 'deleted'
-            })
-
-            // let filteredItems = []
-            // let deleteItems = []
-            // for (let i = 0; i < deletedItems.length; i++) {
-            //     let lastSyncDate = new Date()
-            //     if (deletedItems[i].timeStamp > lastSyncDate)
-            //         filteredItems.push(deletedItems[i])
-            //     else
-            //         deleteItems.push(deletedItems[i])
-            // }
-
-            // indexeddb.send({
-            //     method: 'delete.objects',
-            //     database: 'crudSync',
-            //     array: 'deleted',
-            //     object: deleteItems
-            // })
-
-            return deletedItems.object
-        },
-
-        isDeleted: function (type, item, deletedItems) {
-            for (let i = 0; i < deletedItems.length; i++) {
-                let deletedItem = deletedItems[i].item[type]
-                for (let i = 0; i < deletedItem.length; i++) {
-                    if (type == 'database' && deletedItem[i].name == item.name) {
-                        return true
-                    } else if (deletedItem[i].$database == item.database) {
-                        if (type == 'array' && deletedItem[i].name == item.name) {
-                            return true
-                        } else if (deletedItem[i].$array == item.array) {
-                            if (type == 'index' && deletedItem[i].name == item.name) {
-                                return true
-                            }
-                            if (type == 'object' && deletedItem[i]._id == item._id) {
-                                return true
-                            }
-                        }
-                    }
-                }
-            }
-            return false
-        },
-
         syncServer: function () {
             const self = this;
             const promise = indexedDB.databases()
@@ -310,7 +251,7 @@
             // row: 'object',
             key: 'key',
             // property: 'key',
-            // name: 'key',
+            // name: 'key', 
             updateName: 'updateName',
             index: 'index',
             crud: 'isCrud',
