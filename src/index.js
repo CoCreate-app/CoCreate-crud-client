@@ -145,6 +145,8 @@
                             console.log('sync failed item recently deleted')
                         } else {
                             for (let i = 0; i < data[type].length; i++) {
+                                if (!data[type][i].modified || !data[type][i].modified.on)
+                                    continue
                                 let response = await indexeddb.send({
                                     clientId: data.clientId,
                                     frameId: data.frameId,
