@@ -64,8 +64,10 @@
             return new Promise(async (resolve, reject) => {
                 if (!data)
                     return resolve(null);
-                if (!data.method)
+                if (!data.method) {
+                    // TODO: errorhandler(data, 'data.method is required')
                     return resolve(data);
+                }
 
                 data['timeStamp'] = new Date()
 
