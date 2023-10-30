@@ -71,9 +71,9 @@
 
                 data['timeStamp'] = new Date()
 
-                if (data.method.startsWith('read.'))
-                    data.broadcast = false
-                if (data.method.startsWith('update.') && data.upsert != false)
+                if (data.method.endsWith('.read'))
+                    data.broadcast = data.broadcastBrowser = false
+                if (data.method.endsWith('.update') && data.upsert != false)
                     data.upsert = true
                 if (!data.organization_id)
                     data.organization_id = await this.socket.organization_id()
@@ -83,18 +83,13 @@
                         data['storage'] = ['indexeddb', 'mongodb']
                     if (!data.database)
                         data['database'] = data.organization_id
-                    if (!data.user_id)
-                        data['user_id'] = this.socket.user_id
-                    if (data.method.startsWith('read.'))
-                        data.broadcastBrowser = false
                 }
 
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
                     let response = await indexeddb.send(data)
 
-
-                    let type = data.method.split('.');
-                    type = type[type.length - 1];
+                    let type = data.method.split('.')[0];
+                    // type = type[type.length - 1];
                     if (data.status !== 'await' && type && response && response[type] && response[type].length) {
                         resolve(response);
                         response.status = 'resolve'
@@ -118,12 +113,12 @@
         },
 
         syncListeners: function () {
-            const method = ['create', 'read', 'update', 'delete'];
             const type = ['storage', 'database', 'array', 'index', 'object'];
+            const method = ['create', 'read', 'update', 'delete'];
 
-            for (let i = 0; i < method.length; i++) {
-                for (let j = 0; j < type.length; j++) {
-                    const action = method[i] + '.' + type[j];
+            for (let i = 0; i < type.length; i++) {
+                for (let j = 0; j < method.length; j++) {
+                    const action = type[i] + '.' + method[j];
                     const self = this
                     this.listen(action, function (data) {
                         self.sync(data)
@@ -134,10 +129,10 @@
 
         sync: async function (data) {
             if (indexeddb && data.uid && data.status && data.status == 'received') {
-                if (data.method.startsWith('read.')) {
+                if (data.method.endsWith('.read')) {
                     if (this.socket.has(data.socketId)) {
                         const self = this
-                        let type = data.method.split(".")[1]
+                        let type = data.method.split(".")[0]
                         if (!data[type] || !data[type].length)
                             return
                         // let deletedItems = await this.getDeletedItems()
@@ -153,7 +148,7 @@
                                     clientId: data.clientId,
                                     frameId: data.frameId,
                                     socketId: data.socketId,
-                                    method: 'update.' + type,
+                                    method: type + '.update',
                                     array: data.array,
                                     [type]: data[type][i],
                                     $filter: {

@@ -1,6 +1,6 @@
 async function testObjects() {
     let createObject = await CoCreate.crud.send({
-        method: 'create.object',
+        method: 'object.create',
         database: ['testDB', 'testDB1', 'testDB2'],
         array: ['testCollection', 'testCollection1', 'testCollection2'],
         object: {
@@ -13,7 +13,7 @@ async function testObjects() {
     // let _id = createObject.object[0]._id
 
     let readObject = await CoCreate.crud.send({
-        method: 'read.object',
+        method: 'object.read',
         database: ['testDB', 'testDB1', 'testDB2'],
         array: ['testCollection', 'testCollection1', 'testCollection2'],
         // object: {
@@ -23,7 +23,7 @@ async function testObjects() {
     console.log('readObject', readObject)
 
     let updateObject = await CoCreate.crud.send({
-        method: 'update.object',
+        method: 'object.update',
         database: ['testDB', 'testDB1', 'testDB2'],
         array: ['testCollection', 'testCollection1', 'testCollection2'],
         object: {
@@ -41,7 +41,7 @@ async function testObjects() {
     console.log('updateObject', updateObject)
 
     let deleteObject = await CoCreate.crud.send({
-        method: 'delete.object',
+        method: 'object.delete',
         database: ['testDB', 'testDB1', 'testDB2'],
         array: ['testCollection', 'testCollection1', 'testCollection2'],
         object: {
