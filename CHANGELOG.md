@@ -1,3 +1,16 @@
+## [1.28.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.12...v1.28.13) (2023-11-03)
+
+
+### Bug Fixes
+
+*  removed deleted logic as it will now be handled by log ([f0194e9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f0194e9d85dbc5fcfe1cca0caa05ce229f6f5011))
+* favicon.ico path ([d9ddf02](https://github.com/CoCreate-app/CoCreate-crud-client/commit/d9ddf029dc749882a17717d2fc8dbf100420c68d))
+* removed dead code ([dc66410](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dc66410a21de9c5cbb3de9f9949488c494827d0c))
+* sync conditions ([9570e14](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9570e14df5d80cd9bfc8994122a18b15ffdcc906))
+* sync continues if no modified.on ([53e0888](https://github.com/CoCreate-app/CoCreate-crud-client/commit/53e088855db5255ca4f12fcf9656ee10ed7ea73f))
+* update dependencies to the lates versions ([fc8ee1a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/fc8ee1aac80c18b3452a7d911576cef871875030))
+* update method to use object.update etc ([5df311e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/5df311eda070c50b269b398fb00e5820c274758e))
+
 ## [1.28.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.11...v1.28.12) (2023-10-26)
 
 
