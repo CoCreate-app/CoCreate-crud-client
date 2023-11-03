@@ -89,7 +89,6 @@
                     let response = await indexeddb.send(data)
 
                     let type = data.method.split('.')[0];
-                    // type = type[type.length - 1];
                     if (data.status !== 'await' && type && response && response[type] && response[type].length) {
                         resolve(response);
                         response.status = 'resolve'
