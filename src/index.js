@@ -69,7 +69,7 @@
                     return resolve(data);
                 }
 
-                data['timeStamp'] = new Date()
+                data.timeStamp = new Date().toISOString();
 
                 if (data.method.endsWith('.read'))
                     data.broadcast = data.broadcastBrowser = false
@@ -161,7 +161,8 @@
                                 })
 
                                 if (response && response[type] && response[type].length) {
-                                    console.log('crud synced: ', response)
+                                    console.log('crud synced: ', response[type])
+                                    response.isSync = true
                                     self.socket.sendLocalMessage(response)
                                 }
                             }
