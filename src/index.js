@@ -162,7 +162,6 @@
 
                                 if (response && response[type] && response[type].length) {
                                     console.log('crud synced: ', response[type])
-                                    response.isSync = true
                                     self.socket.sendLocalMessage(response)
                                 }
                             }
