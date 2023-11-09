@@ -1,3 +1,13 @@
+## [1.28.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.13...v1.28.14) (2023-11-09)
+
+
+### Bug Fixes
+
+* date updated to ISO format ([91fb8fb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/91fb8fb7437c759b1c08a5810a711fadf05bb52e))
+* meta name typo ([7fe0a99](https://github.com/CoCreate-app/CoCreate-crud-client/commit/7fe0a9906d6aca1119d7ab48af7c384c829bd220))
+* removed testing param isSync ([43ccbf6](https://github.com/CoCreate-app/CoCreate-crud-client/commit/43ccbf682743d47a11a6962ebb4b312a37a14c2a))
+* update host ([3ff5f21](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3ff5f21bf6ca2ee74fa47de659fc238c4327b4fb))
+
 ## [1.28.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.28.12...v1.28.13) (2023-11-03)
 
 
