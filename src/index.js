@@ -141,8 +141,16 @@
                             console.log('sync failed item recently deleted')
                         } else {
                             for (let i = 0; i < data[type].length; i++) {
-                                if (!data[type][i].modified || !data[type][i].modified.on)
+                                let key, value
+                                if (data[type][i].modified && data[type][i].modified.on) {
+                                    key = 'modified.on'
+                                    value = data[type][i].modified.on
+                                } else if (data[type][i].created && data[type][i].created.on) {
+                                    key = 'created.on'
+                                    value = data[type][i].created.on
+                                } else
                                     continue
+
                                 let response = await indexeddb.send({
                                     clientId: data.clientId,
                                     frameId: data.frameId,
@@ -152,7 +160,7 @@
                                     [type]: data[type][i],
                                     $filter: {
                                         query: [
-                                            { key: 'modified.on', value: data[type][i].modified.on, operator: '$lt' },
+                                            { key, value, operator: '$lt' },
                                         ]
                                     },
                                     upsert: true,
