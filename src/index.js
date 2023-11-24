@@ -273,8 +273,8 @@
             'broadcast-sender': 'broadcastSender',
             'broadcast-browser': 'broadcastBrowser',
             room: 'room',
-            pass_id: 'pass_id',
-            'pass-overwrite': 'passOverwrite'
+            state_id: 'state_id',
+            'state-overwrite': 'stateOverwrite'
         }
 
         if (!window.CoCreateConfig)
