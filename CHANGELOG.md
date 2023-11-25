@@ -1,3 +1,16 @@
+# [1.31.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.30.0...v1.31.0) (2023-11-25)
+
+
+### Bug Fixes
+
+* pass attributes renamed to state ([887d8b0](https://github.com/CoCreate-app/CoCreate-crud-client/commit/887d8b09a5f7bd776d207a2de9de8d60a1b4abf7))
+* update nav, edit button and css path ([bbd9c94](https://github.com/CoCreate-app/CoCreate-crud-client/commit/bbd9c94911f889684b524abf3465560192800afe))
+
+
+### Features
+
+* upgrade dependencies for latest features and fixes ([ca7e012](https://github.com/CoCreate-app/CoCreate-crud-client/commit/ca7e0128b90fa797818925a005b2d407e6800ceb))
+
 # [1.30.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.29.0...v1.30.0) (2023-11-19)
 
 
