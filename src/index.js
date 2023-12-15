@@ -59,7 +59,6 @@
          * @return { Promise } The data read from the defined db's. Errors are logged and can be found in the data object
          * @throws \method failed
          */
-
         send: function (data) {
             return new Promise(async (resolve, reject) => {
                 if (!data)
