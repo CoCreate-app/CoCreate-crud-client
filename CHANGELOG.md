@@ -1,3 +1,10 @@
+## [1.32.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.32.0...v1.32.1) (2023-12-15)
+
+
+### Bug Fixes
+
+* remove break after comment ([dddb479](https://github.com/CoCreate-app/CoCreate-crud-client/commit/dddb47959ca86ae463d4b993510cc09bff0a1c93))
+
 # [1.32.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.31.0...v1.32.0) (2023-11-25)
 
 
