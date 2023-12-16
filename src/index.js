@@ -91,6 +91,8 @@
                     if (data.status !== 'await' && type && response && response[type] && response[type].length) {
                         resolve(response);
                         response.status = 'resolve'
+                        response.resolved = true
+
                         this.socket.send(response)
                     } else {
                         this.socket.send(response || data).then((response) => {
