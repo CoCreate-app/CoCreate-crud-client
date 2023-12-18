@@ -1,3 +1,10 @@
+## [1.32.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.32.1...v1.32.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* prpperty resolved ([0ca7cc2](https://github.com/CoCreate-app/CoCreate-crud-client/commit/0ca7cc268811c9af5b77edd65f72481d525eb6f8))
+
 ## [1.32.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.32.0...v1.32.1) (2023-12-15)
 
 
