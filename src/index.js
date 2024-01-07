@@ -80,6 +80,7 @@
                 if (data.database || data.array || data.type) {
                     if (!data.storage)
                         data['storage'] = ['indexeddb', 'mongodb']
+                    // TODO: if (!data.database, config.database) config will work in client and server or localStorage.database
                     if (!data.database)
                         data['database'] = data.organization_id
                 }
