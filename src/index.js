@@ -161,9 +161,7 @@
                                     array: data.array,
                                     [type]: data[type][i],
                                     $filter: {
-                                        query: [
-                                            { key, value, operator: '$lt' },
-                                        ]
+                                        query: { [key]: { $lt: value } },
                                     },
                                     upsert: true,
                                     user_id: data.user_id,
