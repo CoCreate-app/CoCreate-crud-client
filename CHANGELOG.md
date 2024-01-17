@@ -1,3 +1,10 @@
+## [1.33.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.0...v1.33.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* update to support new query system ([3e6e3ad](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3e6e3ad123fa06158359fbbb63b1c92da106596e))
+
 # [1.33.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.32.2...v1.33.0) (2024-01-08)
 
 
