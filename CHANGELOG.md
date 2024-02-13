@@ -1,3 +1,10 @@
+## [1.33.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.2...v1.33.3) (2024-02-13)
+
+
+### Bug Fixes
+
+* upsert defaults to false if undefined ([6742b91](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6742b91ae633a5837e32fdb1ef2e17d86c2c23a1))
+
 ## [1.33.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.1...v1.33.2) (2024-02-05)
 
 
