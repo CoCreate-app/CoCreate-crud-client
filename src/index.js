@@ -72,8 +72,7 @@
 
                 if (data.method.endsWith('.read'))
                     data.broadcast = data.broadcastBrowser = false
-                if (data.method.endsWith('.update') && data.upsert != false)
-                    data.upsert = true
+
                 if (!data.organization_id)
                     data.organization_id = await this.socket.organization_id()
 
