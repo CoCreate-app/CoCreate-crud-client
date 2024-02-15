@@ -174,7 +174,7 @@
                             }
                         }
                     }
-                } else if (this.socket.clientId != data.clientId) {
+                } else if (this.socket.clientId != data.clientId || data.updateDB) {
                     indexeddb.send({ ...data })
                 }
             }
