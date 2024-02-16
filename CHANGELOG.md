@@ -1,3 +1,10 @@
+## [1.33.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.3...v1.33.4) (2024-02-16)
+
+
+### Bug Fixes
+
+* updateDb param to allow same clientId to updatedb ([6df59cb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/6df59cbd1d492813cd81d71b09cef478f952cfde))
+
 ## [1.33.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.2...v1.33.3) (2024-02-13)
 
 
