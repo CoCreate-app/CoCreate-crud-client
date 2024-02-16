@@ -181,7 +181,7 @@
 
                     // TODO: returned from server socket.send authorize
                     if (data.$filter && data.$filter.query && data.$filter.query._id && data.$filter.query._id.$eq === '$user_id')
-                        data.$filter.query.$eq = this.socket.user_id
+                        data.$filter.query._id.$eq = this.socket.user_id
 
                     indexeddb.send({ ...data })
                 }
