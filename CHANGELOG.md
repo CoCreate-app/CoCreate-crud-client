@@ -1,3 +1,10 @@
+## [1.33.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.4...v1.33.5) (2024-02-16)
+
+
+### Bug Fixes
+
+* temp handling of _id.$eq $usei_id returned from server ([56e3138](https://github.com/CoCreate-app/CoCreate-crud-client/commit/56e3138bf89485e2b1022492df8b1e451d72e493))
+
 ## [1.33.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.3...v1.33.4) (2024-02-16)
 
 
