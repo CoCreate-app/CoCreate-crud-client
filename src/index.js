@@ -175,6 +175,14 @@
                         }
                     }
                 } else if (this.socket.clientId != data.clientId || data.updateDB) {
+                    // TODO: if database was updated due to host and environment handling
+                    if (data.updateDB)
+                        data.database = data.organization_id
+
+                    // TODO: returned from server socket.send authorize
+                    if (data.$filter && data.$filter.query && data.$filter.query._id && data.$filter.query._id.$eq === '$user_id')
+                        data.$filter.query.$eq = this.socket.user_id
+
                     indexeddb.send({ ...data })
                 }
             }
