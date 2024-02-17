@@ -28,20 +28,20 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(["@cocreate/socket-client", "@cocreate/indexeddb", "@cocreate/utils"],
-            function (CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames }) {
-                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames });
+            function (CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames, isValidDate }) {
+                return factory(true, CoCreateSocket, indexeddb = indexeddb.default, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames, isValidDate });
             }
         )
     }
     else if (typeof module === 'object' && module.exports) {
         const CoCreateSocket = require("@cocreate/socket-client");
-        const { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames } = require("@cocreate/utils");
-        module.exports = factory(false, CoCreateSocket, null, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames });
+        const { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames, isValidDate } = require("@cocreate/utils");
+        module.exports = factory(false, CoCreateSocket, null, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames, isValidDate });
     }
     else {
         root.returnExports = factory(true, root["@cocreate/socket-client"], root["@cocreate/indexeddb"], root["@cocreate/utils"]);
     }
-}(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames }) {
+}(typeof self !== 'undefined' ? self : this, function (isBrowser, CoCreateSocket, indexeddb, { ObjectId, getValueFromObject, getAttributeNames, setAttributeNames, isValidDate }) {
 
     const CoCreateCRUD = {
         socket: CoCreateSocket,
@@ -152,24 +152,52 @@
                                 } else
                                     continue
 
-                                let response = await indexeddb.send({
+
+                                let response = {
                                     clientId: data.clientId,
                                     frameId: data.frameId,
                                     socketId: data.socketId,
-                                    method: type + '.update',
-                                    array: data.array,
-                                    [type]: data[type][i],
-                                    $filter: {
-                                        query: { [key]: { $lt: value } },
-                                    },
-                                    upsert: true,
+                                    method: type + '.read',
                                     user_id: data.user_id,
                                     organization_id: data.organization_id
-                                })
+                                }
 
-                                if (response && response[type] && response[type].length) {
-                                    console.log('crud synced: ', response[type])
+                                if (type === 'object') {
+                                    response[type] = { _id: data[type][i]._id }
+                                    response.array = data.array
+                                } else {
+                                    response[type] = data[type][i].name
+                                }
+
+                                response = await indexeddb.send(response)
+
+                                if (!response[type].length || !response[type][0].organization_id) {
+                                    response.method = type + '.create'
+                                    response[type] = data[type][i]
+                                    response = await indexeddb.send(response)
+
                                     self.socket.sendLocalMessage(response)
+                                } else {
+                                    let queryValue = value
+                                    let dataValue = getValueFromObject(response[type][0], key)
+                                    if (isValidDate(queryValue) && isValidDate(dataValue)) {
+                                        queryValue = new Date(queryValue)
+                                        dataValue = new Date(dataValue)
+                                    } else if (!response[type][0].organization_id) {
+                                        console.log('invalid date')
+                                    }
+
+                                    if (dataValue < queryValue) {
+                                        console.log('crud synced: ', response[type])
+                                        if (data[type][i].subscriptionItemId)
+                                            console.log('test')
+
+                                        response.method = type + '.update'
+                                        response[type] = data[type][i]
+                                        response = await indexeddb.send(response)
+
+                                        self.socket.sendLocalMessage(response)
+                                    }
                                 }
                             }
                         }
