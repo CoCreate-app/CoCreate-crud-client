@@ -1,3 +1,10 @@
+## [1.33.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.5...v1.33.6) (2024-02-17)
+
+
+### Bug Fixes
+
+* query $user_id path ([c9c8930](https://github.com/CoCreate-app/CoCreate-crud-client/commit/c9c8930dc11aa1572c0cb833eee162b32be01fd2))
+
 ## [1.33.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.4...v1.33.5) (2024-02-16)
 
 
