@@ -188,10 +188,6 @@
                                     }
 
                                     if (dataValue < queryValue) {
-                                        console.log('crud synced: ', response[type])
-                                        if (data[type][i].subscriptionItemId)
-                                            console.log('test')
-
                                         response.method = type + '.update'
                                         response[type] = data[type][i]
                                         response = await indexeddb.send(response)
