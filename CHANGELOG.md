@@ -1,3 +1,10 @@
+## [1.33.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.6...v1.33.7) (2024-02-19)
+
+
+### Bug Fixes
+
+* sync function ([19ca2aa](https://github.com/CoCreate-app/CoCreate-crud-client/commit/19ca2aa3ef1116bdc83bb76e31500427d34f9a58))
+
 ## [1.33.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.5...v1.33.6) (2024-02-17)
 
 
