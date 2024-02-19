@@ -1,3 +1,10 @@
+## [1.33.8](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.7...v1.33.8) (2024-02-19)
+
+
+### Bug Fixes
+
+* removed console.logs ([9d3acec](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9d3acec83800683bd12af36edea716a2ec1093de))
+
 ## [1.33.7](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.6...v1.33.7) (2024-02-19)
 
 
