@@ -1,3 +1,11 @@
+## [1.33.10](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.9...v1.33.10) (2024-06-12)
+
+
+### Bug Fixes
+
+* bump cocreate dependencies ([b3e3a7e](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b3e3a7ec1d01b259c5264b84bba1d4a6b85f2214))
+* svg icon class ([b6a3489](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b6a34890126e11627303788d7bb98d7f17069d02))
+
 ## [1.33.9](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.8...v1.33.9) (2024-04-29)
 
 
