@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@cocreate/indexeddb": "^1.22.4",
-    "@cocreate/socket-client": "^1.5.7",
-    "@cocreate/uuid": "^1.11.3"
+    "@cocreate/socket-client": "^1.39.4",
+    "@cocreate/uuid": "^1.11.4"
   }
 }
