@@ -128,7 +128,10 @@
         },
 
         sync: async function (data) {
-            if (indexeddb && data.uid && data.status && data.status == 'received') {
+            if (indexeddb && data.uid && data.status && data.status == 'received' && !data.synced) {
+                if (data.host && data.host.startsWith('dev.') || data.host.startsWith('test.'))
+                    data.database = data.organization_id
+
                 if (data.method.endsWith('.read')) {
                     if (this.socket.has(data.socketId)) {
                         const self = this
@@ -199,15 +202,19 @@
                         }
                     }
                 } else if (this.socket.clientId != data.clientId || data.updateDB) {
+                    data.synced = true
                     // TODO: if database was updated due to host and environment handling
                     if (data.updateDB)
                         data.database = data.organization_id
 
-                    // TODO: returned from server socket.send authorize
+                    // TODO: returned from server socket.send authorize perhaps requires a flag so that it can be removed after autorization..
                     if (data.$filter && data.$filter.query && data.$filter.query._id && data.$filter.query._id.$eq === '$user_id')
                         data.$filter.query._id.$eq = this.socket.user_id
 
+                    this.socket.sendLocalMessage(data);
+
                     indexeddb.send({ ...data })
+
                 }
             }
         },
