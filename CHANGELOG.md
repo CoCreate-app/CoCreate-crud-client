@@ -1,3 +1,10 @@
+## [1.33.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.12...v1.33.13) (2024-07-09)
+
+
+### Bug Fixes
+
+* handling converting host dev and test to organization_id ([a95686a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a95686ae2cb3df7186df8f758a38b807a9b29b90))
+
 ## [1.33.12](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.11...v1.33.12) (2024-06-23)
 
 
