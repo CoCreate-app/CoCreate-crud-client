@@ -1,3 +1,10 @@
+## [1.33.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.13...v1.33.14) (2024-11-02)
+
+
+### Bug Fixes
+
+* improved socket.send conditions and sync conditions ([355308f](https://github.com/CoCreate-app/CoCreate-crud-client/commit/355308f6e63ea136bd0de2c9f8fd1d785e1e0766))
+
 ## [1.33.13](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.12...v1.33.13) (2024-07-09)
 
 
