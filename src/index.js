@@ -84,8 +84,9 @@
                         data['database'] = data.organization_id
                 }
 
+                let response
                 if (isBrowser && indexeddb && data['storage'].includes('indexeddb')) {
-                    let response = await indexeddb.send(data)
+                    response = await indexeddb.send(data)
 
                     let type = data.method.split('.')[0];
                     if (data.status !== 'await' && type && response && response[type] && response[type].length) {
@@ -94,15 +95,14 @@
                         response.resolved = true
 
                         this.socket.send(response)
-                    } else {
-                        this.socket.send(response || data).then((response) => {
-                            resolve(response);
-                        })
                     }
-                } else {
-                    this.socket.send(data).then((response) => {
+                }
+
+                if (!response || response.status !== 'resolve') {
+                    this.socket.send(response || data).then((response) => {
                         resolve(response);
                     })
+
                 }
             })
         },
@@ -173,8 +173,7 @@
                                 }
 
                                 response = await indexeddb.send(response)
-
-                                if (!response[type].length || !response[type][0].organization_id) {
+                                if (!response[type].length || type === 'object' && response[type][0] && response[type][0]._id && Object.keys(response[type][0]).length === 1) {
                                     response.method = type + '.create'
                                     response[type] = data[type][i]
                                     response = await indexeddb.send(response)
