@@ -1,3 +1,16 @@
+# [1.34.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.14...v1.34.0) (2024-11-04)
+
+
+### Bug Fixes
+
+* pretier.config.js and file formating ([9f9aae3](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9f9aae30fed40613baa4d0932226842839f7b13b))
+
+
+### Features
+
+* add prettier.config.js and format files ([4747f07](https://github.com/CoCreate-app/CoCreate-crud-client/commit/4747f072bcfda9d18c707a508c68bfab191e2d2e))
+* add prettier.config.js and format files ([44d6d9b](https://github.com/CoCreate-app/CoCreate-crud-client/commit/44d6d9b8a588d2933f8de8a86454c29fcfc29ce8))
+
 ## [1.33.14](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.13...v1.33.14) (2024-11-02)
 
 
