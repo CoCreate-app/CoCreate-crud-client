@@ -159,7 +159,15 @@
 								response.resolved = true;
 
 								this.socket.send(response);
+								return;
 							}
+						} else if (
+							data.status !== "await" &&
+							(typeof data["storage"] === "string" ||
+								(Array.isArray(data["stoarge"]) &&
+									data["storage"].length > 1))
+						) {
+							return resolve(response);
 						}
 					}
 
