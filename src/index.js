@@ -150,6 +150,7 @@
 							response[type].length
 						) {
 							if (
+								type === "object" &&
 								response.object.length === 1 &&
 								!response.object[0].organization_id
 							) {
