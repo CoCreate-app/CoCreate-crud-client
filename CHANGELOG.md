@@ -1,3 +1,12 @@
+## [1.34.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.0...v1.34.1) (2024-12-14)
+
+
+### Bug Fixes
+
+* (send) improved logic for handeling data after indexeddb. ([71e7151](https://github.com/CoCreate-app/CoCreate-crud-client/commit/71e71510aeb324c92408d7724851b2af132029b5))
+* if type === object ([b3d00bb](https://github.com/CoCreate-app/CoCreate-crud-client/commit/b3d00bb567bb1af0db832b5164e95e3af6c69bf5))
+* send over socket if object returned has ony the document_id ([f168bab](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f168babb8252d6515c46af47511be33bb4e38a03))
+
 # [1.34.0](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.33.14...v1.34.0) (2024-11-04)
 
 
