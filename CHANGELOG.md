@@ -1,3 +1,13 @@
+## [1.34.2](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.1...v1.34.2) (2025-04-30)
+
+
+### Bug Fixes
+
+* added css-loader ([a6899fe](https://github.com/CoCreate-app/CoCreate-crud-client/commit/a6899fe3331acfcfdd9a41abe81bba6421801103))
+* update query attributes ([72f7b7a](https://github.com/CoCreate-app/CoCreate-crud-client/commit/72f7b7af1d8326ac7de7bea6712fa8b9a363c180))
+* updated cocreate modules versions ([3210fa9](https://github.com/CoCreate-app/CoCreate-crud-client/commit/3210fa979697d4f7fbe0143fca3e803e95a8eb18))
+* webpack.config and devdependencies ([9826ea8](https://github.com/CoCreate-app/CoCreate-crud-client/commit/9826ea8ff45467e478a1c04de9a12dadb6a7c0f7))
+
 ## [1.34.1](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.0...v1.34.1) (2024-12-14)
 
 
