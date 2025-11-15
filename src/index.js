@@ -268,13 +268,13 @@
 									}
 
 									response = await indexeddb.send(response);
+									let objLength = Object.keys(response[type][0]).length
 									if (
 										!response[type].length ||
 										(type === "object" &&
 											response[type][0] &&
 											response[type][0]._id &&
-											Object.keys(response[type][0])
-												.length === 1)
+											objLength === 1)
 									) {
 										response.method = type + ".create";
 										response[type] = data[type][i];
