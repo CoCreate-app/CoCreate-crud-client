@@ -1,3 +1,10 @@
+## [1.34.4](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.3...v1.34.4) (2025-11-16)
+
+
+### Bug Fixes
+
+* simplify object length check in sync method ([f9633f5](https://github.com/CoCreate-app/CoCreate-crud-client/commit/f9633f5694f676c5e9f4d1ebc49aa02551c0889e))
+
 ## [1.34.3](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.2...v1.34.3) (2025-05-01)
 
 
