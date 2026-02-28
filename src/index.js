@@ -124,11 +124,15 @@
 					if (!data.organization_id)
 						data.organization_id =
 							await this.socket.organization_id();
+							
+					if (!data.user_id)
+						data.user_id =
+							await this.socket.user_id;
 
 					if (data.database || data.array || data.type) {
 						if (!data.storage)
 							data["storage"] = ["indexeddb", "mongodb"];
-						// TODO: if (!data.database, config.database) config will work in client and server or localStorage.database
+						// TODO: if (!data.database, config.database) config will work in client and server or localStorage.database.
 						if (!data.database)
 							data["database"] = data.organization_id;
 					}
@@ -143,6 +147,7 @@
 
 						let type = data.method.split(".")[0];
 						if (
+							!this.socket.connected || 
 							data.status !== "await" &&
 							type &&
 							response &&
@@ -169,7 +174,7 @@
 									data["storage"].length > 1))
 						) {
 							return resolve(response);
-						}
+						} 
 					}
 
 					if (!response || response.status !== "resolve") {
