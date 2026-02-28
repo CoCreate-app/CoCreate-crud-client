@@ -1,3 +1,10 @@
+## [1.34.6](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.5...v1.34.6) (2026-02-28)
+
+
+### Bug Fixes
+
+* apply user_id if it does not exist ([8b65d69](https://github.com/CoCreate-app/CoCreate-crud-client/commit/8b65d69693fb1c8b22f264cad2cb6f58acf7df87))
+
 ## [1.34.5](https://github.com/CoCreate-app/CoCreate-crud-client/compare/v1.34.4...v1.34.5) (2026-01-18)
 
 
